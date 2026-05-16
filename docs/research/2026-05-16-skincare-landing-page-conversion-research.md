@@ -9,7 +9,40 @@
 ---
 
 ## 1. Executive Summary
-<!-- Filled in Task 10 (last) — top 10 patterns ranked by evidence strength -->
+
+**Context:** This report is for the Clarté MD product team and audits `acne-protocol.html` — the Google Search Ads landing page for the acne protocol — against the Pakistan DTC skincare market, where COD dominates transactions, counterfeit anxiety is the primary purchase barrier, and no competitor currently holds the named-dermatologist above-fold position.
+
+**Methodology:** 14 competitor teardowns (5 global Rx-DTC, 3 India DTC, 4 Pakistan DTC, 2 pharma legacy anti-examples) + audit of `acne-protocol.html` against 12 universal patterns + PK buyer psychology (§3) + Google Search Ads channel review covering Quality Score, CWV thresholds, and message-match rules.
+
+### The top 10 patterns ranked by evidence strength
+
+1. **COD-as-trust framing** — Dominates 80–95% of PK e-commerce as a trust behaviour (§3.2), is absent above the fold on all 4 PK brands and on `acne-protocol.html`, and The Derma Co. (India) already demonstrates the three-badge hero implementation — the highest-order-cost gap with a ready-made blueprint.
+2. **Money-back / fake-product guarantee positioning** — Fake-product anxiety blocks 71.6% of PK purchases (§3.1); Clarté MD's "2× refund if fake" exists in footer copy; no PK competitor surfaces a guarantee above the fold — the most impactful pre-purchase risk signal is at the wrong address.
+3. **Dermatologist / medical authority signal** — Named doctor is the dominant PK trust currency (§3.4); none of the 4 PK brands audited names a derm above the fold; Geologie and Dermatica both prove named-credential placement converts; Dr. Ahmad in the hero trust strip is open competitive whitespace.
+4. **Sticky mobile CTA** — `.sticky-cta` CSS is defined but no HTML element exists on `acne-protocol.html`, leaving every mobile visitor who scrolls past the hero with zero persistent conversion path; Hers' A/B-tested bottom bar is the validated exemplar, higher-leverage on PK's variable-LTE audience.
+5. **Above-fold problem statement** — The hero opens with the regimen name before naming the visitor's problem (§7, 🔴); Apostrophe and Curology show problem-first copy triggers the micro-commitment that keeps a search-intent visitor reading past the five-second bounce window (§2.1).
+6. **Ingredient transparency with percentages** — Minimalist, Geologie, and Dermatica all use percentage-in-name as an anti-counterfeit signal; `acne-protocol.html` partially delivers (niacinamide 10%, BHA 2%) but omits azelaic acid concentration — the exact dose is faster PK authenticity recognition than any badge.
+7. **Reviews with photos and specific outcomes** — Zero review infrastructure on `acne-protocol.html` (Strength 0, 🔴); "About › Reviews" routes to a dead anchor; photo + city + specific outcome proof addresses doubt types authority alone cannot close, as The Derma Co. and Curology demonstrate.
+8. **Real before/after evidence** — No patient B-A photography appears anywhere on the page (Strength 0, 🔴); Curology places B-A in the first scroll unit to convert outcome skepticism before the copy asks for commitment — the proof type PK repeat-failure acne buyers require.
+9. **Message-match with Google ad headline** — Unbounce documents 4%→13% CVR from enforcing message match (§2.5); `acne-protocol.html` opens with brand voice before the search query phrase; fixing the first two words simultaneously raises CVR and lifts Quality Score to reduce CPC.
+10. **Mobile form friction reduction** — Five mandatory fields versus the 3 (name, mobile, city) a COD order needs; each extra field is a variable-LTE dropout risk; Hers and Curology's progressive collection models show minimisation raises completion without degrading order quality.
+
+(2 of the 12 patterns from §5 do not appear in this top-10 because their evidence base is thinner — they remain in the locked changes list as Nice-to-have: **Single-purpose hero** already scores Strength 2, 🟢 and the gap is polish; **Urgency mechanic** is exemplified by Geologie and The Derma Co. but The Derma Co.'s always-on "Ends Tonight" also documents the credibility-collapse risk.)
+
+### The 3 patterns most underused by acne-protocol.html
+
+Based on the audit in §7, these are the highest-impact unaddressed gaps on the existing landing page:
+
+- **COD-as-trust framing** — No above-fold trust strip exists; COD surfaces only in the mid-page intake section and footer; the FAQ question "Is cash on delivery actually available?" confirms visitors leave without finding the signal 80–95% of PK buyers need before committing.
+- **Sticky mobile CTA** — CSS class defined, HTML element absent; every mobile visitor scrolling into the protocol or AI section has no thumb-reachable order path and must reverse-scroll — a structural gap, not a copy problem.
+- **Reviews with photos and specific outcomes** — Zero social proof infrastructure; Dr. Ahmad's credential is the only trust input; a paid-search visitor has no peer evidence that "someone like me cleared their acne" — the signal that closes skeptical repeat-failure buyers.
+
+### What this report does NOT cover
+
+- A/B test design and infrastructure (separate sub-project — needs traffic + testing tool)
+- Google Ads campaign structure, bidding strategy, negative keywords (out of scope — ad-copy parity guide is in §6 and the companion doc)
+- Ad creative / image asset production
+- The 3 sibling protocols (pigmentation, anti-ageing, barrier) — pattern library and audit framework are reusable for those, but those pages are not audited or modified in this sub-project
 
 ## 2. Google Search Ads Context for Skincare
 
