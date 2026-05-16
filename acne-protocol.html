@@ -345,6 +345,49 @@
 
     .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
+    .hero-sub {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-variation-settings: 'opsz' 36;
+      font-size: 19px;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.72);
+      max-width: 38em;
+      margin: 0 0 28px;
+    }
+    .hero-sub em {
+      font-style: italic;
+      color: var(--cobalt-glow);
+      font-variation-settings: 'opsz' 36, 'SOFT' 100, 'WONK' 1;
+    }
+    @media (max-width: 640px) {
+      .hero-sub { font-size: 17px; }
+    }
+
+    .hero-trust {
+      list-style: none;
+      padding: 0;
+      margin: 22px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .hero-trust li { display: inline-flex; align-items: center; gap: 8px; margin: 0; }
+    .ht-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--cobalt-glow);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    @media (max-width: 640px) {
+      .hero-trust { gap: 10px 16px; font-size: 10px; }
+    }
+
     /* Hero AI card — glassy white on navy */
     .ai-card {
       position: relative;
@@ -1917,19 +1960,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container">
     <div class="hero-grid">
       <div>
-        <div class="hero-eyebrow">Case Study 001 · The Clear Skin Protocol</div>
+        <div class="hero-eyebrow">Acne · Case Study 001 · The Clear Skin Protocol</div>
         <h1 class="display">
           A clinical answer to <span class="h-em">acne</span>, dispensed in Lahore.
         </h1>
         <p class="lede">
           The Clear Skin Protocol is a four-product regimen formulated by <strong>Dr. Muhammad Tauqir Ahmad</strong> — GMC-registered dermatologist, London — at our Lahore clinic. Built around <strong>niacinamide 10%, azelaic, and 2% salicylic.</strong> Clinically dosed actives. Honest expectations. Twelve weeks to clear.
         </p>
+        <p class="hero-sub">For active <em>acne</em>, post-acne <em>marks</em>, and the cycle that won't break.</p>
         <div class="hero-actions">
           <a href="#ai-generator" class="btn btn-light">
             See my 12-week skin <span class="ar">→</span>
           </a>
           <a href="#rx" class="btn btn-ghost-dark">View the prescription</a>
         </div>
+        <ul class="hero-trust">
+          <li><span class="ht-dot"></span> Dermatologist-formulated</li>
+          <li><span class="ht-dot"></span> COD nationwide</li>
+          <li><span class="ht-dot"></span> 2× refund if fake</li>
+        </ul>
         <dl class="hero-meta">
           <div><dt>Case</dt><dd>CS-001</dd></div>
           <div><dt>Concern</dt><dd>Acne &amp; PIH</dd></div>

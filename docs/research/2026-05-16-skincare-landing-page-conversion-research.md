@@ -667,3 +667,13 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 ### Change entries
 
 <!-- One subsection per applied change is appended here as Tasks 13-23 execute. -->
+
+#### Change #1–3 — Hero (sub-headline + "acne" message-match + trust strip)
+
+- **File:** acne-protocol.html
+- **Lines modified:** CSS added at lines 348–389 (`.hero-sub`, `.hero-sub em`, `.hero-trust`, `.ht-dot` rules + responsive breakpoints); HTML eyebrow edited at line 1963; `.hero-sub` inserted at line 1970; `.hero-trust` inserted at lines 1977–1981
+- **Pattern citations:** §5.1 (Message-match), §5.3 (Above-fold problem statement), §5.8 (Money-back / fake-product guarantee)
+- **Audit references:** §7 prioritized fix list — addresses 3 must-fix gaps simultaneously
+- **Before screenshot:** competitor-screenshots/audit-desktop-baseline.png
+- **After screenshot:** competitor-screenshots/audit-desktop-after-task13.png
+- **Verdict:** Applied. Hero now repeats the search-intent noun ("acne") in the eyebrow + sub-headline, names the pain explicitly, and surfaces three trust badges above the fold (dermatologist-formulated, COD nationwide, 2× refund if fake).
