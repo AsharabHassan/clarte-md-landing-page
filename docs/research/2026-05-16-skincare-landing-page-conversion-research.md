@@ -781,3 +781,20 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Audit reference:** §7 — Pattern 7 scored 2/3 🟢; hero already names percentages, this strengthens at the rx-strip level.
 - **Actives surfaced (4 bundle SKUs):** rescue: Salicylic 2% · Zinc; acne: Niacinamide 10% · Azelaic 10%; ha: HA · Panthenol; spf: SPF 50+ PA++++ · Centella.
 - **Verdict:** Applied.
+
+#### Change #13 — Lighthouse-friendly perf pass
+
+- **File:** acne-protocol.html
+- **GTM modification at lines:** 7–17 (deferred `<script>` block in `<head>`, wrapped inside `window.addEventListener('load', ...)`)
+- **Image attribute additions at multiple lines:** line 2346 (`previewImg` — added `loading="lazy" decoding="async"`)
+- **Pattern citation:** §6.1 (Lighthouse thresholds gate Quality Score)
+- **Behavior changes:**
+  - GTM (`GTM-P8VD7TBS`) is now deferred to `window.load` — protects LCP and reduces render-blocking JS.
+  - All below-fold `<img>` tags carry `loading="lazy"` and `decoding="async"` — reduces initial network requests and main-thread blocking.
+- **Playwright verification results:**
+  - `dataLayer_present: true`, `dataLayer_size: 3` (GTM fires after load as expected)
+  - Total images: 11 | lazy: 9 | auto: 2 (the 2 `auto` are `imgAfter`/`imgBefore` — AI result pair, intentionally untouched per task spec) | eager: 0
+  - JS-generated images in `renderRxStrip` (line 3269) and `renderCrossSell` (line 2978) already carried `loading="lazy"` from prior tasks
+  - Zero new console errors
+- **Limitation:** A full Lighthouse audit was NOT executed in this task (requires Lighthouse CLI or DevTools Performance panel). Performance verification was structural only (GTM defers, images lazy-load attributes present). Full Lighthouse measurement is a follow-up.
+- **Verdict:** Applied.

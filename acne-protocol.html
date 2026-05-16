@@ -4,12 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-P8VD7TBS');</script>
+  <!-- Google Tag Manager (deferred until window.load to protect LCP) -->
+  <script>
+    window.addEventListener('load', function () {
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-P8VD7TBS');
+    });
+  </script>
   <!-- End Google Tag Manager -->
   <title>The Clear Skin Protocol — Clarté MD · Case Study 001</title>
   <meta name="description" content="A dermatologist-led 12-week clinical regimen for active acne and post-acne marks. Upload a selfie; see a photoreal projection of week 12. Formulated in Lahore by Dr. Tauqir Ahmad, GMC-registered." />
@@ -2339,7 +2343,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="specimen-frame">
             <span class="corner tl"></span><span class="corner tr"></span>
             <span class="corner bl"></span><span class="corner br"></span>
-            <img id="previewImg" alt="Your submitted specimen" />
+            <img id="previewImg" alt="Your submitted specimen" loading="lazy" decoding="async" />
             <span class="frame-label">Subject 001 · Day 00</span>
             <button class="replace" id="btnReplace">↺ Replace</button>
           </div>
