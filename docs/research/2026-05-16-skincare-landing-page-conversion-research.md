@@ -677,3 +677,15 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Before screenshot:** competitor-screenshots/audit-desktop-baseline.png
 - **After screenshot:** competitor-screenshots/audit-desktop-after-task13.png
 - **Verdict:** Applied. Hero now repeats the search-intent noun ("acne") in the eyebrow + sub-headline, names the pain explicitly, and surfaces three trust badges above the fold (dermatologist-formulated, COD nationwide, 2× refund if fake).
+
+#### Change #4 — Sticky mobile CTA bar
+
+- **File:** acne-protocol.html
+- **HTML insertion at line:** 2565 (`<aside class="sticky-cta" id="stickyCta" …>`)
+- **CSS additions at lines:** 1875–1912 (base `.sticky-cta` block + child rules + `@media (max-width: 768px)` display toggle)
+- **JS additions at lines:** 2912–2930 (`initStickyCta` IIFE — scroll/resize listener, show/hide logic)
+- **Pattern citation:** §5.11 (Sticky mobile CTA)
+- **Audit reference:** §7 — Pattern 11 scored 0/3 🔴; pre-existing CSS shell (3 override rules inside `@media (max-width: 360px)`) was incomplete — full base block added as a reconnection + extension.
+- **Behavior:** Shows on viewports ≤ 768px after the user scrolls past the hero (heroBottom < 80px from viewport top), hides when the intake section enters the lower half of the viewport. Slides up from bottom via `transform: translateY(100%) → translateY(0)` over 280ms ease-out. Safe-area-inset-bottom respected for iPhone home indicator. Button min-height 44px (Apple HIG).
+- **Playwright results:** element present ✓ · show class fires at scroll 1800px (heroBottom −93px, past threshold) ✓ · desktop `display: none` ✓ · 0 console errors ✓
+- **Verdict:** Applied.

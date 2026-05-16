@@ -1871,6 +1871,46 @@
 
     .file-input { position: absolute; opacity: 0; pointer-events: none; }
 
+    /* ── Sticky mobile CTA bar ─────────────────────────────────────────── */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 60;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--rule);
+      box-shadow: 0 -8px 24px -12px rgba(14,31,58,0.18);
+      transform: translateY(100%);
+      transition: transform 0.28s ease-out;
+    }
+    .sticky-cta.show { transform: translateY(0); }
+    .sticky-cta-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 10px 16px;
+      padding-bottom: calc(10px + env(safe-area-inset-bottom));
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .sticky-cta-price { display: flex; flex-direction: column; line-height: 1.15; }
+    .sc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .sc-price {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--ink);
+      font-variation-settings: 'opsz' 36, 'SOFT' 100, 'WONK' 1;
+    }
+    .sticky-cta-btn { padding: 12px 18px; min-height: 44px; font-size: 13.5px; }
+    @media (max-width: 768px) { .sticky-cta { display: block; } }
+
     a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
       outline: 2px solid var(--cobalt);
       outline-offset: 3px;
@@ -2522,6 +2562,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
+<aside class="sticky-cta" id="stickyCta" aria-hidden="true">
+  <div class="sticky-cta-inner">
+    <div class="sticky-cta-price">
+      <span class="sc-label">The Clear Skin Protocol</span>
+      <span class="sc-price">Rs. 6,499</span>
+    </div>
+    <a href="#intake" class="btn btn-primary sticky-cta-btn">Order the Protocol →</a>
+  </div>
+</aside>
+
 <script>
   // ─────────────────── CONFIG ───────────────────
   const CONCERN = 'acne';
@@ -2858,6 +2908,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       return `<div class="rx-strip-tile"><img src="${p.image}" alt="${p.name}" loading="lazy" /></div>`;
     }).join('');
   }
+
+  (function initStickyCta() {
+    const el = document.getElementById('stickyCta');
+    const intake = document.getElementById('intake');
+    if (!el || !intake) return;
+    const hero = document.querySelector('.hero');
+    function update() {
+      const heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
+      const intakeTop = intake.getBoundingClientRect().top;
+      const past = heroBottom < 80;
+      const beforeIntake = intakeTop > window.innerHeight * 0.5;
+      if (past && beforeIntake) el.classList.add('show');
+      else el.classList.remove('show');
+      el.setAttribute('aria-hidden', el.classList.contains('show') ? 'false' : 'true');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
 
   renderRxStrip();
   renderCrossSell();
