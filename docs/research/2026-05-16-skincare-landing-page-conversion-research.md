@@ -12,7 +12,43 @@
 <!-- Filled in Task 10 (last) — top 10 patterns ranked by evidence strength -->
 
 ## 2. Google Search Ads Context for Skincare
-<!-- Filled in Task 7 — search-intent traffic, 5-second window, Quality Score implications -->
+
+### 2.1 Search-intent traffic behaves differently from social
+
+A visitor who types "acne treatment Pakistan" or "best serum for dark spots" into Google has already moved past brand discovery — they are mid-funnel, problem-shopping, and carrying a specific unresolved need. That intent changes everything about how the landing page must perform. Social-media visitors are pre-discovery: they encounter the brand while browsing, are open to storytelling, and tolerate a brand-narrative hook before a product ask. Search visitors have already named their problem; they are scanning for confirmation that the page they just landed on is the right answer. The patience window for that confirmation is roughly five seconds — approximately the time it takes to read an above-fold headline, a subheadline, and a trust signal ([Nielsen Norman Group, First Impressions research](https://www.nngroup.com/articles/first-impressions-human-automaticity/)). If those five seconds fail to reflect the visitor's query back at them in recognisable language, they return to the SERP. This is not a copywriting preference — it is the structural difference between search intent and social intent, and it determines the entire above-fold hierarchy for a Google Ads landing page.
+
+For Pakistan's mobile-dominant audience arriving via Google Search, network conditions amplify the risk: a slow-loading hero that fails to render within five seconds is functionally the same as a message-mismatch bounce.
+
+### 2.2 Quality Score gates your CPC
+
+Google Ads Quality Score is a 1–10 diagnostic metric composed of three equally weighted components: expected click-through rate, ad relevance, and landing page experience ([Google Ads Help — About Quality Score](https://support.google.com/google-ads/answer/6167118?hl=en)). Landing page experience is not a minor sub-signal — it is one third of the score that determines both cost-per-click and ad position. A higher Quality Score lowers the CPC Google charges and raises the ad's placement in the auction; a lower Quality Score forces a higher bid to achieve the same position. This means every improvement made to a landing page is simultaneously a CRO intervention and a paid-media cost reduction — the two budgets are not separate.
+
+Google evaluates landing page experience across five levers: page load speed (tied to Core Web Vitals), mobile usability, content relevance to the ad's keywords, transparency (privacy policy, contact info), and content originality ([Google Ads Help — Evaluate landing page performance](https://support.google.com/google-ads/answer/7543502?hl=en)). For Clarté MD serving Pakistani mobile traffic, the highest-risk levers are load speed on mid-tier Android devices and keyword relevance — whether the page H1 contains the exact phrase the ad targeted. Landing-page work is paid-search budget work.
+
+### 2.3 Benchmark conversion rates for health & beauty Google Ads
+
+WordStream's 2024 Google Ads Benchmarks — across 23 industries — show Beauty & Personal Care CTR rising 15% YoY and conversion rate up ~10.76% YoY, against a cross-industry average CVR of 6.96% ([WordStream, Google Ads Benchmarks 2024](https://www.wordstream.com/blog/2024-google-ads-benchmarks)). Unbounce's 2024 Conversion Benchmark Report (464 million visits, 41,000+ landing pages) benchmarks the median beauty landing-page CVR at just 1.3% ([Unbounce, 2024 Conversion Benchmark Report](https://unbounce.com/conversion-benchmark-report/)) — a gap that reflects the difference between paid-search intent traffic and cold browse traffic reaching the same page.
+
+| Metric | Health & Beauty (US baseline) | Pakistan variance note |
+|---|---|---|
+| Average CTR | ~6–8% (search) | Lower absolute volume; CPCs ~$0.10–0.50 USD vs US $1–3 |
+| Conversion rate | ~3–6% (paid search) | Likely lower: weaker payment infrastructure, higher cold-traffic skepticism |
+| Median landing-page CVR | 1.3% (Unbounce beauty) | Further compressed by COD friction at checkout |
+| Average CPA | $20–50 USD (US) | PKR-denominated; PK CPA data not publicly benchmarked |
+
+**Important caveat:** All figures are US-market baselines. No Pakistan-specific Google Ads benchmarks are publicly available. Pakistani CPCs are lower (~$0.10–0.50 vs. US $1–3), but PK conversion rates in medical skincare are suppressed by weaker payment infrastructure, counterfeit skepticism, and COD's added logistics step. Treat US benchmarks as an optimistic ceiling.
+
+### 2.4 The 5-second above-the-fold test
+
+Google's research establishes that 53% of mobile visits are abandoned if load time exceeds three seconds, and a one-second delay can cut retail conversions by up to 20% ([Google blog — mobile landing page speed](https://blog.google/products/ads/mobile-landing-page-speed-score/)). Even on a fast load, the content faces an equally ruthless five-second judgement. Nielsen Norman Group's research on cognitive automaticity shows users assess a page's relevance before conscious reading begins ([Nielsen Norman Group, First Impressions](https://www.nngroup.com/articles/first-impressions-human-automaticity/)). For a search visitor, the verdict is binary: right page or wrong page.
+
+The above-fold unit must accomplish three things simultaneously to pass: (1) repeat the ad's promise — the visitor's working memory was primed by the ad headline; (2) name the problem in the visitor's own words ("acne that hasn't cleared with pharmacy creams" beats "skincare solutions"); and (3) present a single unambiguous CTA. Miss any one of the three and the visitor bounces — the rest of the page never loads in their eyes.
+
+### 2.5 Headline ↔ ad-headline parity (the "message match" rule)
+
+Message match is the degree to which a landing page H1 mirrors the phrasing of the ad that generated the click — one of Unbounce's three primary conversion levers alongside traffic quality and offer relevance ([Unbounce, Message Match definition](https://unbounce.com/conversion-glossary/definition/message-match/)). If the ad headline reads "Best Acne Treatment", the H1 must contain "Acne Treatment" or a close synonym. A mismatch silently kills CVR even when the page copy is objectively stronger — because the visitor's five-second scan is keyword recognition, not persuasion evaluation. Unbounce documented one case where enforcing message match cut cost-per-converted-click from $482 to $147 while lifting CVR from 4% to 13% ([Unbounce, PPC landing page optimisation guide](https://unbounce.com/ppc/optimize-your-landing-page-for-ppc/)).
+
+For Clarté MD, this rule shapes the companion ad-copy parity guide (Task 23): each ad group targeting an acne query needs a headline variant containing that query's keyword cluster. On Shopify, the simplest implementation is dedicated landing pages per ad group (`/acne-protocol`, `/dark-spots-treatment`, `/tretinoin-pakistan`) — routing all traffic to the homepage cannot message-match any specific search intent by definition.
 
 ## 3. Pakistan-Specific Buyer Psychology
 
