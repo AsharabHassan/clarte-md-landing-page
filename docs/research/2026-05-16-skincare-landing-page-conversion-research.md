@@ -768,3 +768,16 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Audit reference:** Addresses PK-specific buyer behavior gap — no PK competitor surfaces WhatsApp as a mid-page conversion CTA.
 - **Behavior:** Clicking opens WhatsApp web/native with the number `+92 324 9986822` and the pre-filled greeting "Assalam-o-alaikum, I'd like to order the Clear Skin Protocol." in a new tab.
 - **Verdict:** Applied.
+
+---
+
+#### Change #12 — Ingredient % overlay on rx product tiles
+
+- **File:** acne-protocol.html
+- **PRODUCTS config modification lines:** 2942–2951 (`actives` field added to all 8 SKUs)
+- **renderRxStrip modification lines:** 3263–3268 (added `<span class="rx-actives mono">` conditional inside each tile)
+- **CSS additions at lines:** 1284–1300 (`.rx-actives` block + `@media (max-width: 640px)` override; `position: relative` added to `.rx-aside .rx-strip-tile` at line 1269)
+- **Pattern citation:** §5.7 (Ingredient transparency with percentages)
+- **Audit reference:** §7 — Pattern 7 scored 2/3 🟢; hero already names percentages, this strengthens at the rx-strip level.
+- **Actives surfaced (4 bundle SKUs):** rescue: Salicylic 2% · Zinc; acne: Niacinamide 10% · Azelaic 10%; ha: HA · Panthenol; spf: SPF 50+ PA++++ · Centella.
+- **Verdict:** Applied.
