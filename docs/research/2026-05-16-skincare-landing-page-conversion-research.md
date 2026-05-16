@@ -746,6 +746,19 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Background context:** Form section uses `background: var(--canvas)` (#fafbfd — light). Default CSS tokens applied (no dark-background adaptation needed).
 - **Verdict:** Applied.
 
+#### Change #11 — FAQ purchase-objection questions
+
+- **File:** acne-protocol.html
+- **HTML insertion at lines:** 2736–2747 (after the existing 6th FAQ item, before the closing `</div>` of `.faq` at line 2748)
+- **Existing FAQ items:** 6
+- **Total FAQ items after:** 9
+- **Pattern citation:** §5.6 (Reviews + objection handling)
+- **Audit reference:** §7 — FAQ was thin on purchase-blocking objections.
+- **Questions added:** (1) Is it safe for sensitive skin? (2) What if it doesn't work for me? (3) How long until I see results?
+- **Verdict:** Applied.
+
+---
+
 #### Change #10 — WhatsApp quick-buy link mid-page
 
 - **File:** acne-protocol.html
