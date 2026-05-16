@@ -806,3 +806,75 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Pattern citation:** §6.3 (Headline ↔ ad-headline parity rules)
 - **Contents:** 4 keyword clusters × ad headlines mapped to landing-page elements; the 3 message-match rules; pre-flight checklist; maintenance guidance for protocol page evolutions.
 - **Verdict:** Applied.
+
+---
+
+### Final smoke verification — 2026-05-16
+
+All 14 applied changes verified present (Tasks 13–23). Sacred boundaries upheld:
+- AI generator section: byte-stable (no removed lines from id=ai-generator block).
+- Order form payload shape: unchanged. Top-level keys present: concern, page, contact, shipping, payment, items, totals, bundle_in_cart, used_ai_preview, ts.
+- GTM (`GTM-P8VD7TBS`) deferred to window.load and fires correctly — `dataLayer.length > 0` after load.
+
+**Verification matrix:**
+
+| Task | Component | Verified |
+|---|---|---|
+| 13 | Hero sub-headline, "acne" message-match, trust strip (3 items) | ✓ |
+| 14 | Sticky mobile CTA (#stickyCta) | ✓ |
+| 15 | COD trust framing (.trust-cod), next-dispatch line (#nextDispatch, >30 chars) | ✓ |
+| 16 | Reviews section (4 cards, data-content-state=placeholder, disclaimer banner) | ✓ |
+| 17 | B/A patient grid (3 pairs, data-content-state=placeholder) | ✓ |
+| 18 | Form optional (details collapsed, fPost/fNotes names preserved) | ✓ |
+| 19 | WhatsApp quickbuy link (correct href, wa.me/923249986822) | ✓ |
+| 20 | 3 FAQ purchase-objection entries (FAQ count 9) | ✓ |
+| 21 | Rx actives overlays (4 .rx-actives elements) | ✓ |
+| 22 | GTM defer + below-fold images lazy-loaded (eager count: 0) | ✓ |
+| 23 | Ad-copy parity guide file present (6.6 KB) | ✓ |
+
+**Full evaluate output (Step 2):**
+
+```json
+{
+  "dataLayer_present": true,
+  "dataLayer_size": 3,
+  "hero_sub": true,
+  "hero_trust": true,
+  "hero_trust_items": 3,
+  "acne_present_in_body": true,
+  "sticky_cta": true,
+  "trust_cod": true,
+  "next_dispatch": 81,
+  "review_cards": 4,
+  "reviews_placeholder_state": "placeholder",
+  "review_disclaimer": true,
+  "ba_pairs": 3,
+  "ba_placeholder_state": "placeholder",
+  "form_optional_present": true,
+  "form_optional_collapsed": true,
+  "fPost_present": true,
+  "fNotes_present": true,
+  "fPost_name": "postal",
+  "fNotes_name": "notes",
+  "wa_link": true,
+  "wa_href_correct": true,
+  "faq_count": 9,
+  "rx_actives": 4,
+  "ai_section_present": true,
+  "ai_dropzone_present": true,
+  "ai_compare_present": true,
+  "order_form_present": true,
+  "submitBtn_present": true
+}
+```
+
+**FormData dry-run:** `checkValidity()` → `true`. `postal` and `notes` keys present in FormData. Full key list: name, phone, email, address, city, postal, notes, pay.
+
+**Console:** zero errors, zero warnings (not even a favicon 404 was captured by Playwright — console was completely clean).
+
+**Final screenshots:** `audit-desktop-final.png` (1440×900, full-page), `audit-mobile-final.png` (390×844, viewport — full-page timed out on the large page at mobile width, tooling limitation, not a page defect).
+
+**Caveats:**
+- Reviews section content (Task 16) is placeholder; must be replaced before public launch.
+- B/A patient grid (Task 17) is placeholder; must be replaced before public launch.
+- Full Lighthouse audit (Task 22) was not executed in this work — structural perf improvements only. Recommend running Lighthouse CLI as follow-up.
