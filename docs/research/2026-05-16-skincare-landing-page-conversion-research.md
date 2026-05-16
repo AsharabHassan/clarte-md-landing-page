@@ -798,3 +798,11 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
   - Zero new console errors
 - **Limitation:** A full Lighthouse audit was NOT executed in this task (requires Lighthouse CLI or DevTools Performance panel). Performance verification was structural only (GTM defers, images lazy-load attributes present). Full Lighthouse measurement is a follow-up.
 - **Verdict:** Applied.
+
+#### Change #14 — Ad-copy parity guide (sibling document)
+
+- **File created:** docs/research/ad-copy-parity-guide.md
+- **Size:** 6606 bytes
+- **Pattern citation:** §6.3 (Headline ↔ ad-headline parity rules)
+- **Contents:** 4 keyword clusters × ad headlines mapped to landing-page elements; the 3 message-match rules; pre-flight checklist; maintenance guidance for protocol page evolutions.
+- **Verdict:** Applied.
