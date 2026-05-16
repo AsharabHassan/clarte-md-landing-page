@@ -734,3 +734,14 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Audit reference:** §7 — Pattern 5 scored 0/3 🔴; AI generator was sole proof mechanic.
 - **Placeholder status:** Section ships with 3 `[BEFORE]/[AFTER · WK N]` placeholder boxes + `data-content-state="placeholder"` + loud HTML comment. MUST be replaced with real consented patient photos before public launch.
 - **Verdict:** Applied (placeholder).
+
+#### Change #9 — Checkout form friction reduction
+
+- **File:** acne-protocol.html
+- **HTML modification lines:** 2712–2757 (postal code field extracted from `.field-row` alongside city, both postal and notes wrapped in `<details class="form-optional">`)
+- **CSS additions at lines:** 1757–1780 (`.form-optional`, `.form-optional summary`, `.form-optional summary::-webkit-details-marker`, `.form-optional[open] summary`, `.opt`)
+- **Pattern citation:** §5.10 (Mobile form friction reduction)
+- **Audit reference:** §7 — Pattern 10 scored 2/3 🟡; postal + notes fields visually competed with required fields.
+- **Implementation:** Postal code (`#fPost`, name=postal) and delivery notes (`#fNotes`, name=notes) are wrapped in a collapsed `<details class="form-optional">` element. Both inputs retain their original `id` and `name` attributes — order POST payload shape unchanged. `FormData` captures inputs inside closed `<details>` natively, so the submit handler reads both keys without modification.
+- **Background context:** Form section uses `background: var(--canvas)` (#fafbfd — light). Default CSS tokens applied (no dark-background adaptation needed).
+- **Verdict:** Applied.
