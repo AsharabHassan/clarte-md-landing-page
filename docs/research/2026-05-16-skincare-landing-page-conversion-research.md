@@ -317,7 +317,172 @@ URL not reachable on 2026-05-16 — HTTP 403 Forbidden returned on all attempted
 - **Take-away for Clarté MD:** Eucerin's 100-year heritage and dermatologist positioning are its only real assets on the homepage — and they are deployed passively, not as conversion arguments. Clarté MD should treat its clinical credentials as active persuasion copy tied to specific claims ("Tretinoin + Niacinamide protocol, formulated by Dr. Ahmad"), not as a trust badge sitting in a brand strip.
 
 ## 5. The 12 Universal Patterns That Move Skincare Landing-Page CVR
-<!-- Filled in Task 8 -->
+
+### 5.1 — Message-match with the Google ad headline
+
+**The pattern:** The landing page H1 mirrors the keyword phrase that triggered the ad click — using the visitor's problem vocabulary, not the brand's preferred marketing language.
+
+**Why it works:** Search visitors arrive with a query primed in working memory; cognitive fluency signals "right page" within five seconds only if the headline reflects that query — a mismatch triggers the back button even on a superior page.
+
+**Exemplars:** Dermatica — "Personalized skincare with powerful prescription ingredients" targets the "prescription skincare" cluster, qualifying high-intent visitors before body copy. Curology — "Proof over promises" matches the emotional register of skeptical acne searchers.
+
+**Violators:** Clarté MD sibling (clartemd.com.pk) — "Welcome to our store" is a default Shopify placeholder matching zero search query; a guaranteed bounce for every paid-search visitor. Conatural — "Rooted in Nature, Powered by Science & Made with Honesty" is a brand manifesto, not a problem answer.
+
+**How to apply at Clarté MD:** Set the `acne-protocol.html` H1 to the exact phrase cluster of the driving ad group — if the ad targets "acne treatment Pakistan," open with those words before any brand modifier.
+
+---
+
+### 5.2 — Single-purpose hero (one CTA, no nav distractions)
+
+**The pattern:** The above-fold unit contains exactly one primary CTA, with site navigation hidden or minimised, so the visitor's only meaningful choice is to act or scroll — not to wander.
+
+**Why it works:** Every nav link is an escape route; for a Google Ads visitor with specific intent, choosing among five nav items costs more cognitive bandwidth than clicking one button.
+
+**Exemplars:** Geologie — "TAKE THE QUIZ" is the only above-fold conversion path; no browsing option, no competing nav. Curology — dual CTAs ("Start in minutes" / "Find your Rx formula") both trigger the same action, making choice illusory.
+
+**Violators:** Eucerin — a full mega-menu with country selector offers roughly twelve exits before the first persuasion element. Cetaphil — "Shop Am + PM Serums" and "All Products" as parallel CTAs split attention with no hierarchy.
+
+**How to apply at Clarté MD:** Suppress the Shopify header nav on `acne-protocol.html` (logo-only bar) and keep a single above-fold CTA: "Start the Protocol — Pay on Delivery."
+
+---
+
+### 5.3 — Above-fold problem statement
+
+**The pattern:** The first sentence names the visitor's specific skin problem — in their own words — before any product name, brand story, or feature list appears.
+
+**Why it works:** Problem-first copy creates immediate recognition — the visitor feels seen, not sold to — and naming the specific condition creates a micro-commitment that keeps them reading.
+
+**Exemplars:** Apostrophe — "Clear skin is possible" opens from the visitor's desired outcome, not the brand's identity. Curology — "No trends, no guesswork" names two frustrations a chronic-acne visitor has lived before landing.
+
+**Violators:** Cetaphil — "Recommended Skincare Brand for Sensitive Skin" acknowledges no specific concern; a first-time acne visitor gets nothing. Clarté MD sibling (clartemd.com.pk) — no subheadline, no problem named above the fold.
+
+**How to apply at Clarté MD:** Open the `acne-protocol.html` subheadline with "For acne that hasn't cleared with pharmacy creams" before any product or doctor's name.
+
+---
+
+### 5.4 — Dermatologist / medical authority signal
+
+**The pattern:** A named, credentialed dermatologist is visible above the fold — full name, qualification, and institutional affiliation — not referenced generically as "dermatologist-formulated" or buried in an About page.
+
+**Why it works:** In Pakistan's healthcare culture, the named doctor holds the trusted-expert position a brand name holds in Western markets; a specific credential is hard to fake and counters counterfeit anxiety in ways generic "dermatologist-tested" language cannot.
+
+**Exemplars:** Geologie — Dr. Steve Xu is named with credential in the above-fold trust cluster, converting personal authority into brand authority. Dermatica — Medical Director Dr. Shendy Engelina named with "consultant dermatologist" qualification shortly after the fold, making a specific clinician accountable.
+
+**Violators:** AsraDerm — "Asraderm Doctors" nav link implies clinical positioning but no named derm appears above the fold; the credential is buried behind a click. Saeed Ghani — "Since 1888" is the sole authority signal; no medical professional named anywhere.
+
+**How to apply at Clarté MD:** Place "Formulated by Dr. Ahmad, MBBS, FCPS Dermatology, Lahore" in the hero trust strip on `acne-protocol.html` as the primary authority signal, before the CTA.
+
+---
+
+### 5.5 — Real before/after evidence (not stock)
+
+**The pattern:** Actual patient transformation photos — matched before/after framing, real faces — appear within the first scroll unit, not deferred to a testimonials section mid-page.
+
+**Why it works:** B-A imagery converts outcome skepticism into concrete proof faster than copy; for repeat-failure acne buyers, a real face clearing triggers the "this could be me" cognitive leap that stock illustrations suppress.
+
+**Exemplars:** Curology — B-A carousel in the first scroll unit closes on transformation evidence after authority and peer validation have done the opening work. Apostrophe — B-A imagery tied to specific conditions (acne, hyperpigmentation) makes proof condition-specific rather than generically aspirational.
+
+**Violators:** Cetaphil — no B-A imagery anywhere on the homepage; trust is entirely institutional, transformation proof absent. Eucerin — product-card star ratings are the closest thing to patient evidence; no B-A photography exists in the above-fold unit.
+
+**How to apply at Clarté MD:** Include at least three real patient B-A pairs in the first scroll unit of `acne-protocol.html`, labelled with duration ("Week 4 / Week 12") and condition, from Dr. Ahmad's clinical archive.
+
+---
+
+### 5.6 — Reviews with photos and specific outcomes
+
+**The pattern:** Reviews include a photo of the reviewer, name and city, and a specific outcome claim ("acne cleared in 6 weeks") rather than generic sentiment ("great product").
+
+**Why it works:** Outcome-specific reviews set concrete expectations and reduce post-purchase dissonance; photo-backed reviews signal a real human face, countering fake-review skepticism prevalent in Pakistan's online market.
+
+**Exemplars:** The Derma Co. — per-product counts (282 at 4.9 stars, 627 at 5.0 stars) at card level make proof density visible before a product page opens. Curology — "89% report effective" anchored to a 150-patient trial combines social proof volume with clinical outcome specificity.
+
+**Violators:** Saeed Ghani — no review counts, ratings, or testimonials anywhere; heritage alone. Clarté MD sibling (clartemd.com.pk) — zero review infrastructure; all products show "Sold out" with no reviews.
+
+**How to apply at Clarté MD:** Add eight reviews to `acne-protocol.html` with reviewer photo or B-A thumbnail, reviewer city (Lahore/Karachi/Islamabad), and a specific outcome naming condition, timeline, and result.
+
+---
+
+### 5.7 — Ingredient transparency with percentages
+
+**The pattern:** Active ingredient names and exact concentrations appear in the hero or trust strip — not in a product description or separate page — so a scanning visitor knows what they are buying before engaging further.
+
+**Why it works:** Exact percentages are an anti-fraud signal — a counterfeit cannot advertise "0.025% tretinoin" because that specificity invites verification; for a Pakistani buyer with a prior derm prescription, seeing the molecule in the hero creates instant recognition.
+
+**Exemplars:** Minimalist — percentage-in-product-name: "Niacinamide 10% Face Serum" — concentration known before the product page opens. Geologie — "We show them. Most brands hide them" turns transparency into a competitive positioning attack. Dermatica — lists Rx actives (tretinoin, clindamycin, adapalene, hydroquinone) on the landing page — most complete transparency in this teardown set.
+
+**Violators:** Saeed Ghani — functional-category naming ("Vitamin C," "Retinol") with zero percentages; clinical dose absent from every product. Cetaphil — correct ingredient vocabulary (niacinamide, ceramides) but no percentages; actives treated as marketing words, not clinical doses.
+
+**How to apply at Clarté MD:** Place "0.025% Tretinoin · 1% Clindamycin · 4% Niacinamide" in the hero trust strip of `acne-protocol.html`, paired with a one-line claim: "Every active named. Every percentage shown."
+
+---
+
+### 5.8 — Money-back / fake-product guarantee positioning
+
+**The pattern:** A specific, quantified guarantee — refund terms, fake-product compensation, or satisfaction clause with defined conditions — appears above the fold or in the first trust strip, not buried in a FAQ.
+
+**Why it works:** For Pakistani buyers the primary purchase barrier is risk — counterfeit or adverse-reaction anxiety, not price; a specific guarantee removes the financial consequence in a way vague "satisfaction guaranteed" language cannot.
+
+**Exemplars:** Apostrophe — "if you're not satisfied, we'll work with you" signals accountability without discount-brand associations. Dermatica — "cancel easily anytime" functions as a zero-risk-trial substitute for a formal guarantee.
+
+**Violators:** All four PK brands — Conatural, Saeed Ghani, AsraDerm, clartemd.com.pk sibling — show no guarantee language anywhere; with fake-product anxiety at 71.6% of Pakistani purchases, this is the category's largest structural conversion gap.
+
+**How to apply at Clarté MD:** Elevate "2× refund if fake" to the above-fold trust strip on `acne-protocol.html`: "Fake? We refund double. Guaranteed." — third element after COD and DRAP badges.
+
+---
+
+### 5.9 — COD-as-trust framing
+
+**The pattern:** "Cash on Delivery" is surfaced as a risk-reversal trust signal — with buyer-benefit framing ("pay only when your box arrives") — in the above-fold trust strip, not disclosed as a payment method at checkout.
+
+**Why it works:** COD dominates 80–95% of Pakistani e-commerce as a trust behaviour — the buyer refuses to commit until the product is in hand — making it a zero-cost money-back guarantee, but only if the buyer sees it before deciding to leave.
+
+**Exemplars:** The Derma Co. (India) — "COD Available" badge in a three-part hero trust strip alongside "Free Shipping" and "Easy Return," treating COD as a purchase-confidence anchor rather than a payment footnote. No other brand in this teardown set matches this placement.
+
+**Violators:** Saeed Ghani — COD in the footer as one of several payment methods; reaches only visitors already committed enough to scroll there. Conatural and clartemd.com.pk sibling — COD absent above the fold entirely.
+
+**How to apply at Clarté MD:** Make "Cash on Delivery — Pay when it arrives" the first trust-strip element on `acne-protocol.html`, with explicit framing: "No payment until the rider hands you the box."
+
+---
+
+### 5.10 — Mobile form friction reduction
+
+**The pattern:** The conversion path requires the fewest possible form fields and taps on mobile — COD pre-selected, phone number as the primary contact field (not email), and a slide-up checkout that does not route to a separate URL.
+
+**Why it works:** Pakistan's mobile-dominant audience on variable LTE treats each extra form field as both a cognitive barrier and a latency risk; COD pre-selection eliminates the payment-details step entirely, cutting checkout to three fields (name, phone, city).
+
+**Exemplars:** Hers — minimal-step flows reduce form entry to essential fields with mobile-first (not desktop-parity) checkout. Curology — "Start in minutes" sets a low-friction expectation; the quiz collects information progressively.
+
+**Violators:** AsraDerm — desktop-style catalogue; mobile users see the same layout with no COD-first orientation. Saeed Ghani — "Add to Bag" routes to multi-screen Shopify checkout; COD invisible until payment-method selection, three screens deep.
+
+**How to apply at Clarté MD:** Add a slide-up order form on `acne-protocol.html` with three fields — name, mobile, city — COD pre-selected, "Confirm Order" visible without scrolling inside the form.
+
+---
+
+### 5.11 — Sticky mobile CTA
+
+**The pattern:** A fixed bottom bar on mobile keeps the primary CTA permanently visible as the user scrolls, so conversion is never more than one thumb-tap away regardless of scroll depth.
+
+**Why it works:** Long-form landing pages require scrolling to build trust, but willingness to act once triggered mid-page decays rapidly if the CTA requires scrolling back; a sticky bar converts every scroll position into a conversion opportunity.
+
+**Exemplars:** Hers — the sticky mobile CTA bar is Hims/Hers' most documented CRO pattern, A/B-tested and maintained across multiple redesigns; no other brand in this teardown set has an equivalent.
+
+**Violators:** Foxtale — "ADD TO CART / BUY NOW" on the acne PDP is above-fold only; both buttons vanish at any further scroll depth, requiring an upward scroll on portrait mobile. Conatural — "SHOP NOW" at section breaks only; no immediate purchase path at scroll depth.
+
+**How to apply at Clarté MD:** Add a sticky bottom bar on `acne-protocol.html` for mobile: "Order Now — Cash on Delivery" with PKR price, activated after the hero scroll.
+
+---
+
+### 5.12 — Urgency mechanic (dispatch window, batch language)
+
+**The pattern:** A time-bound or supply-bound signal — dispatch cutoff, batch count, or production-run language — creates a reason to act today without fabricating scarcity or running permanent "sale ends tonight" copy.
+
+**Why it works:** Acne sufferers delay reorder until the skin crisis peaks; a dispatch-window mechanic ("order before 2 PM for same-day dispatch") is credible, logistically true, and creates urgency without discount erosion, while batch language adds supply scarcity that signals quality over desperation.
+
+**Exemplars:** Geologie — "When it's gone, it's gone" tied to a real calendar event creates credible scarcity. The Derma Co. — B1G1/B2G2 "Ends Tonight" banners show urgency-as-permanent-brand-voice: effective short-term, credibility-collapsing on repeat visits when the banner never turns off.
+
+**Violators:** Cetaphil — zero urgency; timeless institutional positioning is inert for conversion and gives an acne visitor no reason to act today. Clarté MD sibling (clartemd.com.pk) — "Sold out" on all featured products creates accidental urgency impossible to convert.
+
+**How to apply at Clarté MD:** Add "Order before 2 PM: dispatched today" to the `acne-protocol.html` hero or sticky bar, tied to the actual logistics cutoff, plus "Compounded in batches of 150 units" in the product section.
 
 ## 6. Channel-Specific Learnings — Google Search Ads
 <!-- Filled in Task 9 -->
