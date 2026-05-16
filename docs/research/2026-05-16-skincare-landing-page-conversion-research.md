@@ -639,20 +639,20 @@ The following checklist applies to `acne-protocol.html` before any ad spend goes
 
 | Order | Change | File | Severity | Status |
 |---|---|---|---|---|
-| 1 | Hero sub-headline naming the pain | acne-protocol.html | 🔴 | pending |
-| 2 | Add "acne" word to hero for message-match | acne-protocol.html | 🟡 | pending |
-| 3 | Hero trust strip (3 badges) | acne-protocol.html | 🔴 | pending |
-| 4 | Sticky mobile CTA bar | acne-protocol.html | 🔴 | pending |
-| 5 | COD trust framing copy | acne-protocol.html | 🔴 | applied |
-| 6 | Next-dispatch urgency line | acne-protocol.html | 🟡 | applied |
-| 7 | Reviews section (scaffold w/ placeholders) | acne-protocol.html | 🔴 | pending |
-| 8 | Real B/A patient grid (scaffold w/ placeholders) | acne-protocol.html | 🔴 | pending |
-| 9 | Checkout form friction reduction | acne-protocol.html | 🟡 | pending |
-| 10 | WhatsApp quick-buy link | acne-protocol.html | 🟡 | pending |
-| 11 | FAQ purchase-objection questions | acne-protocol.html | 🟡 | pending |
-| 12 | Ingredient % overlay on rx tiles | acne-protocol.html | 🟢 | pending |
-| 13 | Lighthouse perf pass (defer GTM, lazy-load) | acne-protocol.html | 🟢 | pending |
-| 14 | Ad-copy parity guide (sibling doc) | docs/research/ad-copy-parity-guide.md | 🟡 | pending |
+| 1 | Hero sub-headline naming the pain | acne-protocol.html | 🔴 | done |
+| 2 | Add "acne" word to hero for message-match | acne-protocol.html | 🟡 | done |
+| 3 | Hero trust strip (3 badges) | acne-protocol.html | 🔴 | done |
+| 4 | Sticky mobile CTA bar | acne-protocol.html | 🔴 | done |
+| 5 | COD trust framing copy | acne-protocol.html | 🔴 | done |
+| 6 | Next-dispatch urgency line | acne-protocol.html | 🟡 | done |
+| 7 | Reviews section (scaffold w/ placeholders) | acne-protocol.html | 🔴 | done |
+| 8 | Real B/A patient grid (scaffold w/ placeholders) | acne-protocol.html | 🔴 | done |
+| 9 | Checkout form friction reduction | acne-protocol.html | 🟡 | done |
+| 10 | WhatsApp quick-buy link | acne-protocol.html | 🟡 | done |
+| 11 | FAQ purchase-objection questions | acne-protocol.html | 🟡 | done |
+| 12 | Ingredient % overlay on rx tiles | acne-protocol.html | 🟢 | done |
+| 13 | Lighthouse perf pass (defer GTM, lazy-load) | acne-protocol.html | 🟢 | done |
+| 14 | Ad-copy parity guide (sibling doc) | docs/research/ad-copy-parity-guide.md | 🟡 | done |
 
 <!-- Detailed change entries are appended below in Task order 13-23. Each entry: file:line refs, before/after, pattern + section citation. -->
 
@@ -878,3 +878,54 @@ All 14 applied changes verified present (Tasks 13–23). Sacred boundaries uphel
 - Reviews section content (Task 16) is placeholder; must be replaced before public launch.
 - B/A patient grid (Task 17) is placeholder; must be replaced before public launch.
 - Full Lighthouse audit (Task 22) was not executed in this work — structural perf improvements only. Recommend running Lighthouse CLI as follow-up.
+
+### Appendix — Applying this pattern library to the other 3 protocols
+
+The pattern library (§5), audit framework (§7), and applied-changes log (§8) are designed to be reusable for the three sibling protocol landing pages once they exist: pigmentation (`even-tone-protocol.html`), anti-ageing (`renewal-protocol.html`), and barrier (`barrier-protocol.html`).
+
+#### Replication procedure
+
+1. **Duplicate the page.** Copy `acne-protocol.html` → `<concern>-protocol.html` and adapt brand/concern naming throughout (titles, hero copy, AI prompt strings, prescription bundle definition).
+
+2. **Re-run the audit (Task 11 framework).** Most pattern scores carry over because the design system is shared, but the following MUST be re-evaluated per protocol:
+   - Pattern 5.1 (message-match) — the search keyword cluster differs: "melasma treatment", "fine lines serum", "dry skin repair", not "acne treatment". The hero sub and eyebrow must echo the new noun phrases.
+   - Pattern 5.3 (above-fold problem statement) — the "pain" is different per concern. "Active acne and post-acne marks" → "stubborn pigmentation that survives bleaching creams" or "fine lines that creams promise to erase but don't".
+   - Pattern 5.7 (ingredient transparency) — the rx-strip actives overlay strings differ per protocol formulation.
+
+3. **Apply page-agnostic changes identically.** These are formula-independent and copy from Tasks 13-23 without modification:
+   - Sticky mobile CTA (Task 14) — copy the `#stickyCta` block; only the price needs updating per protocol.
+   - Hero trust strip (Task 13) — same 3 badges: dermatologist-formulated, COD nationwide, 2× refund if fake.
+   - COD trust framing (Task 15) — identical copy.
+   - Next-dispatch urgency (Task 15) — identical JS, different protocol name in the embedded copy.
+   - WhatsApp quickbuy (Task 19) — identical block; the pre-filled message can mention the protocol name.
+   - Form friction reduction (Task 18) — identical `<details>` wrapper.
+   - GTM defer + lazy-load (Task 22) — identical.
+
+4. **Apply concern-specific changes.** These need fresh copy per protocol:
+   - Hero sub-headline (Task 13) — re-write to name the new concern's pain.
+   - Eyebrow message-match noun (Task 13) — replace "Acne" with "Melasma", "Renewal", or "Barrier".
+   - Reviews section placeholder copy (Task 16) — re-write 4 quotes to reference the new concern (purging language for retinoids in anti-ageing, etc.).
+   - B/A patient grid placeholders (Task 17) — adjust week numbers if the protocol timeline differs (e.g., 16 weeks for melasma vs 12 for acne).
+   - FAQ purchase-objection answers (Task 20) — re-write to reference the new active set and timeline.
+   - Rx-strip actives overlays (Task 21) — different actives per protocol.
+
+5. **Update the ad-copy parity guide** by adding new keyword clusters per protocol. Each protocol gets its own parity guide file: `ad-copy-parity-guide-<concern>.md`.
+
+#### Expected work per additional protocol
+
+Based on Tasks 13–23 wall-clock effort × pattern library replication ratio:
+
+- Audit re-run (Task 11 framework): ~30 min per protocol
+- Lock changes list (Task 12 framework): ~15 min
+- Page-agnostic changes applied (Tasks 14, 15, 18, 19, 22): ~20 min (copy + commit)
+- Concern-specific changes (Tasks 13, 16, 17, 20, 21): ~60–90 min depending on how much new copy is needed
+- Verification + smoke (Task 24 framework): ~30 min
+- New parity guide (Task 23 framework): ~30 min
+
+**Total per additional protocol: ~3–4 hours.**
+
+#### What this appendix does NOT cover
+
+- Migrating the page to a shared template engine (the four pages share so much markup that a Nunjucks/Eleventy template would reduce maintenance — that's a separate sub-project).
+- Setting up A/B testing infrastructure to measure the lift of these patterns (separate sub-project).
+- The other 5 sub-projects from the original brainstorm: backend + database, GHL CRM automation, real AI features (replacing the mock generator), storefront shell, admin panel.
