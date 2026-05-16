@@ -601,4 +601,36 @@ The following checklist applies to `acne-protocol.html` before any ad spend goes
 - Add azelaic acid concentration (e.g., "Azelaic 20%") to both the hero lede and the prescription rx-active span for full ingredient transparency — Pattern 7 — `acne-protocol.html:1925` and `acne-protocol.html:2154`
 
 ## 8. Applied Changes Log
-<!-- Filled in Task 25 — file:line references for each edit -->
+
+**Locked changes plan (decided 2026-05-16 post-audit):**
+
+| Order | Change | File | Severity | Status |
+|---|---|---|---|---|
+| 1 | Hero sub-headline naming the pain | acne-protocol.html | 🔴 | pending |
+| 2 | Add "acne" word to hero for message-match | acne-protocol.html | 🟡 | pending |
+| 3 | Hero trust strip (3 badges) | acne-protocol.html | 🔴 | pending |
+| 4 | Sticky mobile CTA bar | acne-protocol.html | 🔴 | pending |
+| 5 | COD trust framing copy | acne-protocol.html | 🔴 | pending |
+| 6 | Next-dispatch urgency line | acne-protocol.html | 🟡 | pending |
+| 7 | Reviews section (scaffold w/ placeholders) | acne-protocol.html | 🔴 | pending |
+| 8 | Real B/A patient grid (scaffold w/ placeholders) | acne-protocol.html | 🔴 | pending |
+| 9 | Checkout form friction reduction | acne-protocol.html | 🟡 | pending |
+| 10 | WhatsApp quick-buy link | acne-protocol.html | 🟡 | pending |
+| 11 | FAQ purchase-objection questions | acne-protocol.html | 🟡 | pending |
+| 12 | Ingredient % overlay on rx tiles | acne-protocol.html | 🟢 | pending |
+| 13 | Lighthouse perf pass (defer GTM, lazy-load) | acne-protocol.html | 🟢 | pending |
+| 14 | Ad-copy parity guide (sibling doc) | docs/research/ad-copy-parity-guide.md | 🟡 | pending |
+
+<!-- Detailed change entries are appended below in Task order 13-23. Each entry: file:line refs, before/after, pattern + section citation. -->
+
+### Notes on changes
+
+Spec §8 listed 15 candidate items; the locked list carries 14. One candidate was folded rather than dropped: spec item 14 ("Specific-outcome testimonials") is merged into locked item 7 (Reviews section), since the audit found zero social proof on the page and the reviews scaffold is where specific-outcome copy belongs — separating them into two rows would produce a single half-section and a separate section that is functionally identical. No candidate was dropped on the grounds that the audit scored it at Strength 3; the highest-scored patterns (Pattern 7 ingredient transparency at Strength 2, Pattern 2 single-purpose hero at Strength 2) are both 🟢 nice-to-have and carry through as items 12 and not a separate row respectively. Pattern 2 (single-purpose hero) did not generate a dedicated locked item because its audit verdict was "slight deduction — secondary CTA visual weight" — a polish concern addressed inline during item 1 (hero sub-headline) edits rather than a standalone task.
+
+Two noteworthy discoveries from the audit affect implementation scope. First, the sticky mobile CTA bar (locked item 4) is half-built: the CSS at lines 1869–1871 defines `.sticky-cta` responsive overrides for screens ≤ 360 px, but no `<aside class="sticky-cta">` HTML element exists anywhere in the body. Task 14 is therefore a CSS reconnection plus minimal HTML insertion, not a from-scratch feature build — the severity remains 🔴 because the conversion path is missing for all mobile visitors regardless of implementation cost. Second, the hero trust strip (locked item 3) consolidates two independently 🔴-scored gaps (Pattern 8 — guarantee positioning, Pattern 9 — COD trust framing) plus the dermatologist badge (Pattern 4 — 🟡) into a single three-badge strip, matching the spec's original "COD nationwide · 2× refund if fake · Dermatologist-formulated" framing. Treating them as one insertion is more surgical than three separate hero edits and avoids layout churn.
+
+Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip) delivers the above-fold COD badge, while item 5 (COD trust framing copy) adds the mid-page and section-level COD reinforcement copy (intake section deck lines 2345–2346, FAQ answer). Both are 🔴 because the audit confirmed that COD is the dominant trust vector for Pakistani COD buyers and it does not appear above the fold in any form. Items 6, 9, 10, and 11 are 🟡 because the audit showed they have supporting infrastructure (FAQ exists, form has correct input types, WhatsApp pill exists in nav) and their absence does not immediately block purchase — they reduce friction rather than remove a blocker. Items 12 and 13 are 🟢 because the audit scored ingredient transparency at Strength 2 (already passing) and Lighthouse performance is a channel-quality concern rather than a direct CVR gap on the page.
+
+### Change entries
+
+<!-- One subsection per applied change is appended here as Tasks 13-23 execute. -->
