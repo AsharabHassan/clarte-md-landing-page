@@ -643,8 +643,8 @@ The following checklist applies to `acne-protocol.html` before any ad spend goes
 | 2 | Add "acne" word to hero for message-match | acne-protocol.html | 🟡 | pending |
 | 3 | Hero trust strip (3 badges) | acne-protocol.html | 🔴 | pending |
 | 4 | Sticky mobile CTA bar | acne-protocol.html | 🔴 | pending |
-| 5 | COD trust framing copy | acne-protocol.html | 🔴 | pending |
-| 6 | Next-dispatch urgency line | acne-protocol.html | 🟡 | pending |
+| 5 | COD trust framing copy | acne-protocol.html | 🔴 | applied |
+| 6 | Next-dispatch urgency line | acne-protocol.html | 🟡 | applied |
 | 7 | Reviews section (scaffold w/ placeholders) | acne-protocol.html | 🔴 | pending |
 | 8 | Real B/A patient grid (scaffold w/ placeholders) | acne-protocol.html | 🔴 | pending |
 | 9 | Checkout form friction reduction | acne-protocol.html | 🟡 | pending |
@@ -688,4 +688,29 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Audit reference:** §7 — Pattern 11 scored 0/3 🔴; pre-existing CSS shell (3 override rules inside `@media (max-width: 360px)`) was incomplete — full base block added as a reconnection + extension.
 - **Behavior:** Shows on viewports ≤ 768px after the user scrolls past the hero (heroBottom < 80px from viewport top), hides when the intake section enters the lower half of the viewport. Slides up from bottom via `transform: translateY(100%) → translateY(0)` over 280ms ease-out. Safe-area-inset-bottom respected for iPhone home indicator. Button min-height 44px (Apple HIG).
 - **Playwright results:** element present ✓ · show class fires at scroll 1800px (heroBottom −93px, past threshold) ✓ · desktop `display: none` ✓ · 0 console errors ✓
+- **Verdict:** Applied.
+
+#### Change #5 — COD trust framing
+
+- **File:** acne-protocol.html
+- **HTML insertion at line:** 2541 (`<div class="trust-cod">` block, inside Settlement step III of the intake form, immediately after the `.pay-options` div)
+- **CSS additions at lines:** 1498–1522 (`.trust-cod`, `.trust-cod .eyebrow`, `.trust-cod p`, `.trust-cod em`, `@media (max-width: 640px)` overrides)
+- **Pattern citation:** §5.9 (COD-as-trust framing)
+- **Audit reference:** §7 — Pattern 9 scored 1/3 🔴; COD was buried in checkout as a payment option but never reframed as a delivery-first guarantee. The page had "Cash on Delivery" as a radio label and "COD" in the footer icon strip — neither addressed the PK-buyer's core concern (authenticity and refusal rights).
+- **Placement rationale:** Inserted inside the Settlement step (Step III) of the intake aside, directly below the pay-options radio group. This is the highest-intent moment on the page — the user has already filled their name/address and is now choosing a payment method. Surfacing the COD guarantee here intercepts the "but what if it's wrong?" objection at the exact decision point. The colophon section (lines 2350–2380) is on `--navy` dark background, which would require a full color-scheme inversion for the block; the white/canvas intake step is the correct visual home for a card using `--canvas` background and `--ink` text tokens.
+- **Copy:** "Open the parcel at your door. *Then* pay the courier. If the bottle looks wrong, refuse it — no charge, no questions."
+- **Verdict:** Applied.
+
+#### Change #6 — Next-dispatch urgency
+
+- **File:** acne-protocol.html
+- **HTML insertion at line:** 2560 (`<p class="next-dispatch mono" id="nextDispatch"></p>`, above the submit button inside `.summary`)
+- **CSS additions at lines:** 1526–1533 (`.next-dispatch` and `.next-dispatch strong`; adapted for dark-navy `.summary` context: `color: var(--cobalt-glow)`, `strong { color: rgba(255,255,255,0.92) }` — not the body-section tokens from the task spec, which assume a light background)
+- **JS additions at lines:** 2978–2996 (`renderNextDispatch` IIFE — timezone-aware dispatch date computation using `Asia/Karachi` locale string, cutoff at 22:00 PKT)
+- **Pattern citation:** §5.12 (Urgency mechanic — logistics-anchored, brand-safe)
+- **Audit reference:** §7 — Pattern 12 scored 1/3 🟡; no batch/dispatch urgency existed anywhere on the page. Competing pages (The Derma Co., Minimalist) use countdown timers anchored to arbitrary deadlines that reset on reload, harming credibility. This implementation is logistics-anchored and honest.
+- **Color adaptation:** `.summary` has `background: var(--navy)`. The task spec's default colors (`--cobalt` + `--ink-2`) are for light-background sections. Adapted to `--cobalt-glow` (bright cobalt readable on dark) for the label text and `rgba(255,255,255,0.92)` for the strong/date portion — consistent with how `.summary .sum-sub` and `.totals .row` already style text on navy.
+- **Behavior:** Timezone-aware (Asia/Karachi). If current PKT hour ≥ 22, dispatch is day-after-tomorrow; otherwise tomorrow. Format: "Next dispatch · \<weekday\>, \<month\> \<day\>, 11am · Lahore — order by 10pm tonight to make it."
+- **Playwright runtime text:** "Next dispatch · Sunday, 17 May, 11am · Lahore — order by 10pm tonight to make it." (verified at 14:22 PKT, hour < 22, so dispatch = tomorrow = Sunday 17 May)
+- **Console errors:** 0
 - **Verdict:** Applied.

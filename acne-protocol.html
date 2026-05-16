@@ -1494,6 +1494,44 @@
     }
     .colo-item .v strong { color: var(--white); font-weight: 600; }
 
+    /* ──────── COD TRUST BLOCK ──────── */
+    .trust-cod {
+      padding: 18px 20px;
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      background: var(--canvas);
+      max-width: 520px;
+      margin: 18px 0 0;
+    }
+    .trust-cod .eyebrow { color: var(--ink-mute); }
+    .trust-cod p {
+      margin: 6px 0 0;
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      line-height: 1.45;
+      color: var(--ink-2);
+    }
+    .trust-cod em {
+      font-style: italic;
+      color: var(--cobalt);
+      font-variation-settings: 'opsz' 36, 'SOFT' 100, 'WONK' 1;
+    }
+    @media (max-width: 640px) {
+      .trust-cod { padding: 16px; max-width: none; }
+      .trust-cod p { font-size: 15.5px; }
+    }
+
+    /* ──────── NEXT-DISPATCH URGENCY ──────── */
+    /* Lives inside .summary (--navy background), so uses light tokens */
+    .next-dispatch {
+      margin: 10px 0 14px;
+      text-align: center;
+      color: var(--cobalt-glow);
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+    }
+    .next-dispatch strong { color: rgba(255,255,255,0.92); font-weight: 600; }
+
     /* ──────── FAQ ──────── */
     .faq-section {
       padding: 112px 0;
@@ -2500,6 +2538,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <label class="pay-opt"><input type="radio" name="pay" value="Card" /><div><div class="pay-name">Credit / Debit Card</div><span class="pay-sub">Visa · Mastercard · AmEx</span></div></label>
             <label class="pay-opt"><input type="radio" name="pay" value="Bank" /><div><div class="pay-name">Bank transfer</div><span class="pay-sub">IBFT — details on confirmation</span></div></label>
           </div>
+          <div class="trust-cod">
+            <span class="mono eyebrow">Pay on Delivery</span>
+            <p>Open the parcel at your door. <em>Then</em> pay the courier. If the bottle looks wrong, refuse it — no charge, no questions.</p>
+          </div>
         </div>
       </form>
 
@@ -2515,6 +2557,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="row"><span>Shipping</span><span id="sumShipping">—</span></div>
           <div class="row grand"><span>Total</span><span id="sumTotal">Rs. 0</span></div>
         </div>
+        <p class="next-dispatch mono" id="nextDispatch"></p>
         <button type="submit" form="orderForm" class="submit-btn" id="submitBtn">Place order →</button>
         <div class="sum-foot">By placing your order you agree to Clarté MD's return policy.</div>
       </aside>
@@ -2931,6 +2974,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   renderRxStrip();
   renderCrossSell();
   renderCart();
+
+  (function renderNextDispatch() {
+    const el = document.getElementById('nextDispatch');
+    if (!el) return;
+    const now = new Date();
+    const lahoreNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Karachi' }));
+    const cutoffHour = 22;
+    const dispatch = new Date(lahoreNow);
+    if (lahoreNow.getHours() >= cutoffHour) {
+      dispatch.setDate(dispatch.getDate() + 2);
+    } else {
+      dispatch.setDate(dispatch.getDate() + 1);
+    }
+    const day = dispatch.toLocaleDateString('en-PK', { weekday: 'long', month: 'short', day: 'numeric' });
+    el.innerHTML = `Next dispatch · <strong>${day}, 11am · Lahore</strong> — order by 10pm tonight to make it.`;
+  })();
 </script>
 
 </body>
