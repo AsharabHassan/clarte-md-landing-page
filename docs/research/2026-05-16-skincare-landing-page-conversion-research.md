@@ -724,3 +724,13 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Audit reference:** §7 — Pattern 6 scored 0/3 🔴; zero review infrastructure existed.
 - **Placeholder status:** Section ships with 4 fabricated reviews + `[REAL PATIENT PHOTO]` slots + loud HTML comment warning + visible disclaimer banner + `data-content-state="placeholder"` attribute. MUST be replaced with verified patient content (schema documented in HTML comment) before public launch.
 - **Verdict:** Applied (placeholder).
+
+#### Change #8 — Real B/A patient grid (scaffolded with placeholder photos)
+
+- **File:** acne-protocol.html
+- **HTML insertion at lines:** 2497–2559 (inside `.tl-section`, after `.section-head`, before `.tl-grid`)
+- **CSS additions at lines:** 1519–1552 (inserted before `/* ──────── COLOPHON / TRUST (navy) ──────── */` block)
+- **Pattern citation:** §5.5 (Real before/after evidence, not stock)
+- **Audit reference:** §7 — Pattern 5 scored 0/3 🔴; AI generator was sole proof mechanic.
+- **Placeholder status:** Section ships with 3 `[BEFORE]/[AFTER · WK N]` placeholder boxes + `data-content-state="placeholder"` + loud HTML comment. MUST be replaced with real consented patient photos before public launch.
+- **Verdict:** Applied (placeholder).

@@ -1515,6 +1515,40 @@
       margin: 0;
     }
 
+    /* ──────── B/A PATIENT GRID (timeline section) ──────── */
+    .ba-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin: 28px 0 44px;
+    }
+    @media (max-width: 768px) {
+      .ba-grid { grid-template-columns: 1fr; }
+    }
+    .ba-pair { display: flex; flex-direction: column; gap: 10px; }
+    .ba-imgs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .ba-img {
+      aspect-ratio: 3 / 4;
+      background: var(--sky-2);
+      display: flex; align-items: center; justify-content: center;
+      border: 1px dashed var(--rule-strong);
+    }
+    .ba-after { background: var(--sky); }
+    .ba-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .ba-meta strong { color: var(--ink-2); }
+
     /* ──────── COLOPHON / TRUST (navy) ──────── */
     .colophon {
       padding: 96px 0;
@@ -2493,6 +2527,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="specimen-label">Week by week</span>
       <h2 class="display">What actually happens — <span class="h-em">no miracles, no theatrics.</span></h2>
       <p class="deck">The clinical course Dr. Ahmad observes in practice. Adherence is the variable. Sun protection is non-negotiable.</p>
+    </div>
+    <!--
+      ⚠ PLACEHOLDER B/A PHOTOS — replace with real consented patient photos before launch.
+      Required schema per patient: before_url, after_url, weeks_elapsed, age, city, concern, consent_doc_ref.
+      Currently 3 placeholder pairs at varying timelines (10, 12, 14 weeks) for visual rhythm.
+    -->
+    <div class="ba-grid" data-content-state="placeholder">
+      <article class="ba-pair">
+        <div class="ba-imgs">
+          <div class="ba-img ba-before"><span class="photo-placeholder">[BEFORE]</span></div>
+          <div class="ba-img ba-after"><span class="photo-placeholder">[AFTER · WK 12]</span></div>
+        </div>
+        <footer class="ba-meta"><strong>Patient A</strong> · 23 · Lahore · 12 weeks</footer>
+      </article>
+      <article class="ba-pair">
+        <div class="ba-imgs">
+          <div class="ba-img ba-before"><span class="photo-placeholder">[BEFORE]</span></div>
+          <div class="ba-img ba-after"><span class="photo-placeholder">[AFTER · WK 10]</span></div>
+        </div>
+        <footer class="ba-meta"><strong>Patient B</strong> · 28 · Karachi · 10 weeks</footer>
+      </article>
+      <article class="ba-pair">
+        <div class="ba-imgs">
+          <div class="ba-img ba-before"><span class="photo-placeholder">[BEFORE]</span></div>
+          <div class="ba-img ba-after"><span class="photo-placeholder">[AFTER · WK 14]</span></div>
+        </div>
+        <footer class="ba-meta"><strong>Patient C</strong> · 31 · Islamabad · 14 weeks</footer>
+      </article>
     </div>
     <div class="tl-grid">
       <article class="tl-card">
