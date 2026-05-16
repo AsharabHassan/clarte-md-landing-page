@@ -150,7 +150,66 @@ URL not reachable on 2026-05-16 — HTTP 403 Forbidden returned on all attempted
 - **Take-away for Clarté MD:** The Derma Co.'s COD-as-hero-trust-signal pattern is the most important single lift for Clarté MD's Pakistan landing page: move "Cash on Delivery Available" out of the footer or checkout flow and into the above-fold trust strip, treating it as equivalent in weight to a money-back guarantee. Pair it with "Easy Return" to complete the risk-reversal stack that COD-dominant buyers need to see before scrolling.
 
 ### 4.3 Pakistan DTC
-<!-- Filled in Task 4 — Conatural, Saeed Ghani + 1-2 local Rx-acne -->
+
+#### Conatural (conaturalintl.com)
+
+- **Hero headline:** "Rooted in Nature, Powered by Science & Made with Honesty."
+- **Hero subheadline:** None — the headline transitions directly into category navigation with no supporting subheadline.
+- **Primary CTA:** "SHOP NOW" (section-level); "Add to Cart" (product cards).
+- **Above-fold structure:** Rotating product carousel with model imagery leads the viewport. Below: a flat product grid with discount badges ("15% OFF" site-wide, plus an Eid sale flag). No hero copy unit in the traditional sense — the brand uses visual merchandising where a DTC brand would put a value proposition. Above-fold trust is entirely product-led rather than message-led.
+- **Social proof type:** Certification icons ("Organic," "Halal," "Sulphate Free," "Paraben Free," "Cruelty Free") serve as the primary trust layer — ingredient-safety framing, not clinical validation. No review counts, no star ratings, and no dermatologist endorsement above the fold.
+- **Urgency mechanic:** "EID SALE Flat 15% off" discount banner + "Free Shipping on orders above PKR 4,999" threshold incentive. Promotion-led, not countdown-based.
+- **Trust signals:** Ethical certifications (Halal, Cruelty-Free, Organic) are the brand's trust language. No derm credentials, no named doctor, no money-back guarantee, no COD surfaced as trust. WhatsApp not detected in above-fold or floating button position. COD listed in footer as payment method, not framed as risk-reversal.
+- **Ingredient transparency:** Moderate — product titles carry named actives ("Niacinamide 10% + Zinc 1%," "Hyaluronic Acid 2% + B5") reflecting a Minimalist-adjacent naming convention. Full ingredient lists are below the fold on product pages.
+- **Money-back guarantee:** Not visible anywhere on the site.
+- **Doing well:** (1) Percentage-in-product-name for serums ("Niacinamide 10%," "HA 2%") creates clinical specificity within an organic-brand identity — a rare combination in Pakistan. (2) Ethical certifications (Halal, Cruelty-Free) address a real purchase-decision filter for Pakistani Muslim consumers that clinical-only brands ignore.
+- **Broken or weak:** The homepage has no articulated value proposition — no headline explains who Conatural is for or what problem it solves. A buyer arriving from a Google search for "acne serum Pakistan" sees a discount banner and a product grid with zero message-match to their search intent.
+- **Take-away for Clarté MD:** Conatural's ethical-certification trust layer targets a real anxiety (ingredient safety) but leaves clinical authority entirely unclaimed. Clarté MD can own the "dermatologist-formulated + named Rx actives" territory in Pakistan while Conatural occupies "organic + halal" — these are distinct trust axes, not competing ones. Clarté MD should make both its derm credential and its ingredient concentrations visible above the fold to differentiate immediately.
+
+#### Saeed Ghani (saeedghani.pk)
+
+- **Hero headline:** None in the conventional sense — the page is titled "Online Herbal & Skin Care Products Store | Saeed Ghani Since 1888" but this functions as metadata, not above-fold copy.
+- **Hero subheadline:** None identified above the fold.
+- **Primary CTA:** "Add to Bag" (product-card level, repeated throughout).
+- **Above-fold structure:** The viewport opens with a promotional banner ("UPTO 15% OFF" and "Free 30ml Sunblock on Orders Above Rs.1999"), followed immediately by a flat product grid with no editorial framing. The site looks and behaves like a traditional e-commerce catalogue — not a DTC brand page. There is no hero copy, no brand narrative, and no value proposition in the first scroll unit.
+- **Social proof type:** None above the fold. No review counts, no testimonials, no star ratings, no derm credentials. The sole brand-level trust signal is the "Since 1888" heritage marker embedded in the page title.
+- **Urgency mechanic:** Percentage-off banner ("UPTO 15% OFF") and threshold-based gift ("Free 30ml Sunblock on Orders Above Rs.1999"). Promotion-driven, not scarcity-driven.
+- **Trust signals:** "Since 1888" longevity signal is the brand's primary authority claim — heritage-based rather than clinical. WhatsApp is present as a social icon linking to `wa.me/922137130284`, positioned in the header/footer as a contact channel rather than a conversion mechanic. COD is listed in the footer ("Cash On Delivery & Bank Transfer") as a payment method, not surfaced as a trust signal or risk-reversal device.
+- **Ingredient transparency:** Functional-category naming only — "Vitamin C," "Retinol," "Charcoal," "Rose Water" appear in product names. No percentages, no mechanism-of-action explanation, no clinical context. Products are named by ingredient type, not by clinical dosage.
+- **Money-back guarantee:** Not mentioned anywhere on the page.
+- **Doing well:** (1) The "Since 1888" heritage signal is a genuine competitive asset — 130+ years in business is impossible to fake and implies supply-chain reliability in a market saturated with pop-up brands. (2) WhatsApp is at least present as a contact channel, which aligns with Pakistani buyer behavior even if not optimized for conversion.
+- **Broken or weak:** The page is a catalogue, not a landing page — no CRO intent whatsoever. A visitor searching for "acne treatment Pakistan" arrives to a discount banner and rows of products with no narrative, no segmentation by concern, and no trust-building before the ask. COD buried in footer is a significant missed opportunity given how central it is to Pakistani DTC conversion.
+- **Take-away for Clarté MD:** Saeed Ghani shows what the Pakistan skincare category default looks like — catalogue UX, heritage-as-only-trust, COD hidden. Clarté MD's opportunity is to be the first Pakistani acne brand that actually behaves like a DTC conversion page: a single clear value proposition, COD surfaced as hero trust, WhatsApp as a mid-page conversion path, and named Rx actives before the first scroll.
+
+#### AsraDerm (asraderm.pk)
+
+- **Hero headline:** "Best Skin, Hair & Health care Products in Pakistan"
+- **Hero subheadline:** "Shop By High Quality Products To Ensure The Best Quality For Your Health"
+- **Primary CTA:** "Add to cart" (product-card level); no dedicated above-fold CTA button.
+- **Above-fold structure:** Promotional Eid sale banner leads the viewport ("order now and get 10% off and free Eid pouch with every order"), followed by a flat product grid segmented by category. A "Celebrities Skincare Secret" section appears mid-page, suggesting the brand leans on influencer endorsement as its primary social proof mechanic. The above-fold lacks a clear brand promise — it reads as a promotional e-commerce store rather than a clinical skincare destination.
+- **Social proof type:** Celebrity/influencer testimonials in a dedicated "CELEBRITIES SKINCARE ROUTINE" section. Product-level review counts on the anti-acne collection page (231 reviews, 181 reviews). No named dermatologist above the fold despite the "Asraderm Doctors" navigation link implying clinical positioning.
+- **Urgency mechanic:** Seasonal Eid sale promotion (10% off + free pouch). No countdown timer; no "limited stock" language.
+- **Trust signals:** The most certification-heavy brand in this set: ISO Certified, GMP, DRAP Registered, Halal Certified, FDA Approved, EU compliance, ISO Itertek. These are displayed as badge icons — powerful signals for a Pakistani buyer anxious about counterfeit products but easy to miss in the current layout. WhatsApp is present as a floating button at bottom-right (`+92-341-722-5000`) — functional but not conversion-optimized. COD not explicitly surfaced as trust.
+- **Ingredient transparency:** Moderate-to-strong. The anti-acne collection page lists actives in product descriptions — salicylic acid, zinc PCA, niacinamide, retinol, tea tree extracts — by name but without percentages. Better than Saeed Ghani or Conatural, but below the percentage-transparency standard set by India DTC brands.
+- **Money-back guarantee:** Not mentioned.
+- **Doing well:** (1) DRAP registration surfaced as a badge is Pakistan-market-specific and directly addresses the "is this locally regulated?" anxiety that Indian-imported or grey-market products trigger. (2) Floating WhatsApp button is the right UX pattern for Pakistan — always visible, zero friction to initiate contact.
+- **Broken or weak:** The headline "Best Skin, Hair & Health care Products in Pakistan" is generic to the point of meaninglessness — it communicates no differentiation, no clinical authority, and no acne-specific relevance. The gap between the certification depth (DRAP, GMP, FDA) and the hero copy quality is the brand's biggest missed conversion opportunity.
+- **Take-away for Clarté MD:** AsraDerm's DRAP-registration badge is a pattern worth adopting — if Clarté MD's formulation is DRAP-compliant, surfacing that badge above the fold signals "this is a real regulated product" in a way that no copywriting can replicate. More importantly, AsraDerm proves that even a heavily certified clinical brand can fail to convert if the hero copy doesn't reflect the product's authority.
+
+#### Clarté MD — Sibling Brand (clartemd.com.pk)
+
+- **Hero headline:** "Welcome to our store." (verbatim — this is the live hero headline as of fetch date)
+- **Hero subheadline:** None identified above the fold.
+- **Primary CTA:** "Shop Now" (visible in a promotional banner section).
+- **Above-fold structure:** A stripped-down Shopify storefront. The hero viewport shows the placeholder headline, followed by trust-badge icons ("Free Shipping on Orders Over PKR 4000," "Best Skin Care Brand," "24/7 Customer Support," "Easy Returns Within 30 Days"). Featured products below the fold are all showing "Sold out" status — either genuine stock scarcity or placeholder products. The above-fold structure communicates nothing about the brand's clinical positioning, target concern (acne), or active-ingredient approach.
+- **Social proof type:** None — no review counts, no star ratings, no before/after imagery, no dermatologist credentials above or below the fold in the fetched content.
+- **Urgency mechanic:** Implicit scarcity from "Sold out" product badges across all featured items. Unintentional — likely placeholder stock, but could inadvertently read as high demand.
+- **Trust signals:** Four generic trust badges (Free Shipping, "Best Skin Care Brand" — self-declared, 24/7 Customer Support, Easy Returns). No derm credentials, no DRAP registration, no named doctor, no money-back guarantee. Contact number (+92 324 9986822) present but no WhatsApp CTA above the fold. COD not mentioned anywhere in fetched content.
+- **Ingredient transparency:** Minimal — product names reference actives (Vitamin C, Retinol, Hyaluronic Acid, "Acne Serum") but no concentrations or mechanism-of-action copy.
+- **Money-back guarantee:** Not mentioned.
+- **Doing well:** (1) The "Easy Returns Within 30 Days" badge is a risk-reversal signal — the only above-fold element that addresses purchase anxiety. (2) The product naming convention uses clinical-adjacent terms ("Acne Serum," "Retinol") that are the right vocabulary for the target audience, even if underdeveloped.
+- **Broken or weak:** "Welcome to our store" as a live hero headline is the single most damaging above-fold element in this entire teardown set — it is a default Shopify placeholder that signals an unfinished, uncommitted brand to any visitor. Combined with all-sold-out products and zero clinical credentials, the current site fails at every trust-building checkpoint a Pakistani acne buyer needs.
+- **Take-away for Clarté MD:** The new Clarté MD landing page (acne-protocol.html) is being built precisely to replace this. Priority one is replacing "Welcome to our store" with a claim that names the concern (acne), names the credential (dermatologist-formulated), and names the mechanism (Rx actives) — all in the first visible line. Every pattern this site is missing is the new page's checklist.
 
 ### 4.4 Pharma Legacy (Anti-Examples)
 <!-- Filled in Task 5 — Cetaphil PK, Eucerin PK -->
