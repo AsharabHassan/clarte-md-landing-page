@@ -714,3 +714,13 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Playwright runtime text:** "Next dispatch · Sunday, 17 May, 11am · Lahore — order by 10pm tonight to make it." (verified at 14:22 PKT, hour < 22, so dispatch = tomorrow = Sunday 17 May)
 - **Console errors:** 0
 - **Verdict:** Applied.
+
+#### Change #7 — Reviews section (scaffolded with placeholder content)
+
+- **File:** acne-protocol.html
+- **HTML insertion at lines:** 2308–2374 (between AI section close and `<!-- THE PRESCRIPTION -->` comment)
+- **CSS additions at lines:** 967–1039 (inserted before `/* ──────── PRESCRIPTION (BUNDLE) ──────── */` block)
+- **Pattern citation:** §5.6 (Reviews with photos and specific outcomes)
+- **Audit reference:** §7 — Pattern 6 scored 0/3 🔴; zero review infrastructure existed.
+- **Placeholder status:** Section ships with 4 fabricated reviews + `[REAL PATIENT PHOTO]` slots + loud HTML comment warning + visible disclaimer banner + `data-content-state="placeholder"` attribute. MUST be replaced with verified patient content (schema documented in HTML comment) before public launch.
+- **Verdict:** Applied (placeholder).

@@ -964,6 +964,79 @@
     .ai-error h3 em { color: var(--accent); font-style: italic; }
     .ai-error p { color: var(--ink-mute); margin: 0 0 24px; max-width: 42ch; margin-left:auto; margin-right:auto; }
 
+    /* ──────── REVIEWS SECTION ──────── */
+    .reviews-section {
+      padding: 96px 0 64px;
+      background: var(--white);
+      border-top: 1px solid var(--rule);
+    }
+    .reviews-section .lede {
+      max-width: 56ch;
+      font-size: 17px;
+      color: var(--ink-mute);
+      margin: 14px 0 36px;
+    }
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+    @media (max-width: 768px) {
+      .review-grid { grid-template-columns: 1fr; }
+    }
+    .review-card {
+      background: var(--sky);
+      border-radius: 18px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .review-photo {
+      width: 72px; height: 72px;
+      background: var(--sky-2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px dashed var(--rule-strong);
+    }
+    .photo-placeholder {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+      text-align: center;
+      padding: 0 6px;
+      line-height: 1.2;
+    }
+    .review-stars { color: var(--cobalt); letter-spacing: 0.1em; font-size: 17px; }
+    .review-card blockquote {
+      margin: 0;
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      line-height: 1.45;
+      color: var(--ink);
+      font-style: italic;
+      font-variation-settings: 'opsz' 36;
+    }
+    .review-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .review-meta strong { color: var(--ink-2); }
+    .review-disclaimer {
+      margin-top: 24px;
+      padding: 12px 16px;
+      background: #fff7ed;
+      border: 1px dashed #d97757;
+      color: #92400e;
+      border-radius: 10px;
+      font-size: 10px;
+      text-align: center;
+    }
+
     /* ──────── PRESCRIPTION (BUNDLE) ──────── */
     .rx-section {
       padding: 112px 0;
@@ -2230,6 +2303,72 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       </div>
     </div>
+  </div>
+</section>
+
+<!--
+  ════════════════════════════════════════════════════════════════════════════
+  ⚠ PLACEHOLDER CONTENT — DO NOT SHIP PUBLICLY UNTIL REPLACED
+  ════════════════════════════════════════════════════════════════════════════
+  The reviews below are fabricated for layout/CRO scaffolding purposes.
+  Replace with real verified patient reviews + consent records before launch.
+  Fabricated testimonials are illegal in most jurisdictions including PK
+  (PEMRA / consumer protection law) and brand-damaging if discovered.
+  Schema fields required when real: name, age, city, weeks_of_use, concern,
+  before_photo_url, after_photo_url, quote, consent_doc_ref, date_collected.
+  ════════════════════════════════════════════════════════════════════════════
+-->
+<section class="reviews-section" id="reviews" data-content-state="placeholder">
+  <div class="container">
+    <div class="folio">
+      <span class="folio-page">— 06 —</span>
+      <span class="folio-title">Patient voices</span>
+      <span class="mono">Reviews</span>
+    </div>
+    <h2>What patients said <em>after twelve weeks</em></h2>
+    <p class="lede">Verified buyers of the Clear Skin Protocol, three to six months post-purchase. Photos shown with written consent.</p>
+
+    <div class="review-grid">
+      <article class="review-card">
+        <div class="review-photo"><span class="photo-placeholder">[REAL PATIENT PHOTO]</span></div>
+        <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>"By week 5 my forehead was clear. The marks took longer — those needed the full twelve weeks — but my skin doesn't hurt anymore. I stopped covering it on calls."</blockquote>
+        <footer class="review-meta">
+          <strong>Ayesha K.</strong> · 24 · Lahore · 12 weeks on protocol
+        </footer>
+      </article>
+
+      <article class="review-card">
+        <div class="review-photo"><span class="photo-placeholder">[REAL PATIENT PHOTO]</span></div>
+        <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>"I'd tried everything from Daraz before this. The difference here is the doctor. Dr. Tauqir's WhatsApp number actually answers — by a person, not a bot."</blockquote>
+        <footer class="review-meta">
+          <strong>Sara M.</strong> · 29 · Karachi · 16 weeks on protocol
+        </footer>
+      </article>
+
+      <article class="review-card">
+        <div class="review-photo"><span class="photo-placeholder">[REAL PATIENT PHOTO]</span></div>
+        <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>"The COD thing made me try it. I opened the box at the door, saw it was sealed and labelled like the website, paid the courier. Eight weeks later my chin is clear for the first time in two years."</blockquote>
+        <footer class="review-meta">
+          <strong>Hira A.</strong> · 26 · Islamabad · 10 weeks on protocol
+        </footer>
+      </article>
+
+      <article class="review-card">
+        <div class="review-photo"><span class="photo-placeholder">[REAL PATIENT PHOTO]</span></div>
+        <div class="review-stars" aria-label="4 out of 5 stars">★★★★☆</div>
+        <blockquote>"Week 2 I had purging — I almost stopped. The WhatsApp consult told me to expect it and it passed. By week 8 the breakouts were down 80%. Marks still fading. Patience required."</blockquote>
+        <footer class="review-meta">
+          <strong>Maham R.</strong> · 22 · Lahore · 12 weeks on protocol
+        </footer>
+      </article>
+    </div>
+
+    <p class="review-disclaimer mono">
+      ⚠ Placeholder content. Verified reviews replacing this section before public launch.
+    </p>
   </div>
 </section>
 
