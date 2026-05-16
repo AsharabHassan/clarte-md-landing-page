@@ -745,3 +745,13 @@ Severity assignments for items 5 and 3 overlap deliberately: item 3 (trust strip
 - **Implementation:** Postal code (`#fPost`, name=postal) and delivery notes (`#fNotes`, name=notes) are wrapped in a collapsed `<details class="form-optional">` element. Both inputs retain their original `id` and `name` attributes — order POST payload shape unchanged. `FormData` captures inputs inside closed `<details>` natively, so the submit handler reads both keys without modification.
 - **Background context:** Form section uses `background: var(--canvas)` (#fafbfd — light). Default CSS tokens applied (no dark-background adaptation needed).
 - **Verdict:** Applied.
+
+#### Change #10 — WhatsApp quick-buy link mid-page
+
+- **File:** acne-protocol.html
+- **HTML insertion at lines:** 2585–2594 (between `</section>` closing the rx-section at line 2583 and `<!-- TIMELINE -->` at line 2596)
+- **CSS additions at lines:** 1448–1491 (`.wa-quickbuy`, `.wa-quickbuy .container`, `.wa-quickbuy .mono`, `.wa-link`, `.wa-link:hover`, `.wa-icon`, `.wa-text`, `.wa-text strong`, plus `@media (max-width: 640px)` overrides)
+- **Pattern citation:** §3.3 (WhatsApp-led pre-purchase consultation), §5.4 (Dermatologist authority — named team)
+- **Audit reference:** Addresses PK-specific buyer behavior gap — no PK competitor surfaces WhatsApp as a mid-page conversion CTA.
+- **Behavior:** Clicking opens WhatsApp web/native with the number `+92 324 9986822` and the pre-filled greeting "Assalam-o-alaikum, I'd like to order the Clear Skin Protocol." in a new tab.
+- **Verdict:** Applied.
