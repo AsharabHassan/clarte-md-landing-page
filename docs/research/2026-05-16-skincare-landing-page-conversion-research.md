@@ -485,7 +485,76 @@ URL not reachable on 2026-05-16 — HTTP 403 Forbidden returned on all attempted
 **How to apply at Clarté MD:** Add "Order before 2 PM: dispatched today" to the `acne-protocol.html` hero or sticky bar, tied to the actual logistics cutoff, plus "Compounded in batches of 150 units" in the product section.
 
 ## 6. Channel-Specific Learnings — Google Search Ads
-<!-- Filled in Task 9 -->
+
+### 6.1 Lighthouse thresholds that gate Quality Score
+
+Landing page experience is one third of Quality Score (see §2.2). Google evaluates it against Core Web Vitals thresholds that have been stable since INP replaced FID in March 2024 ([Google Search Central — Core Web Vitals](https://developers.google.com/search/docs/appearance/core-web-vitals)):
+
+- **LCP:** < 2.5 s Good / 2.5–4.0 s Needs Improvement / > 4.0 s Poor. On `acne-protocol.html`, LCP is the hero image — optimise it first.
+- **INP:** < 200 ms Good / 200–500 ms Needs Improvement / > 500 ms Poor. Shopify's third-party scripts are the primary INP risk.
+- **CLS:** < 0.1 Good / 0.1–0.25 Needs Improvement / > 0.25 Poor. Lazy-loaded images without explicit `width`/`height` are the most common cause.
+
+Google requires 75% of real-user sessions to score "Good" on all three before a URL earns a passing page experience rating ([web.dev — Core Web Vitals thresholds](https://web.dev/articles/defining-core-web-vitals-thresholds)). Two binary gates apply independently: **HTTPS** (missing = automatic "Below Average") and **mobile usability** (tap targets < 44 × 44 px or viewport overflow = same penalty). A failing rating reduces Quality Score regardless of ad relevance, raising CPC and lowering ad rank — every millisecond saved on load is a direct paid-media cost reduction.
+
+---
+
+### 6.2 Expected CTR/CVR ranges for PK acne keyword clusters
+
+No Pakistan-specific Google Ads benchmarks are publicly available for skincare. The table below combines WordStream's 2025 Beauty & Personal Care data ([WordStream — Google Ads Benchmarks 2025](https://www.wordstream.com/blog/2025-google-ads-benchmarks)) with PK CPC ranges from Pakistani practitioners ([ClickMasters PK — Google Shopping Ads](https://clickmasters.pk/google-shopping-ads-in-pakistan/)), discounted for the structural factors in §2.3 and §3.
+
+| Keyword cluster | Intent | Competition | Est. PK CPC (PKR) | Likely CVR — warmed-up LP | Notes |
+|---|---|---|---|---|---|
+| "acne treatment" | Transactional | High | 90–250 | 1.5–3.5% | Broad match; high volume, mixed quality |
+| "best serum for acne" | Research | Medium | 55–160 | 2–4% | Informational-to-transactional bridge; review content helps |
+| "acne marks treatment" | Specific concern | Medium | 60–175 | 2.5–5% | Higher intent; buyer has specific PIH complaint |
+| "dermatologist acne medicine" | Near-purchase | Low–Medium | 80–220 | 3–6% | Highest intent cluster; Rx vocabulary signals prior-derm buyer |
+
+**Hedge:** Exact PK numbers vary by quarter, ad account quality score, and day-part. These figures are directional — treat them as order-of-magnitude targets, not guaranteed outcomes. A Quality Score of 8–10 (achievable with strong message-match and CWV pass) can reduce effective CPC by 30–50% versus a score of 4–5, which at PKR 200 CPC is a material saving per click.
+
+---
+
+### 6.3 Ad headline ↔ landing hero parity rules
+
+Message match (see §5.1) has three concrete operational rules for `acne-protocol.html`. Each rule assumes an ad group targeting a specific acne keyword cluster routes to this page.
+
+**Rule 1 — Exact noun phrase in the hero.** The primary noun phrase of the ad headline — "acne treatment," "acne medicine," "acne serum" — must appear verbatim or as a clinically equivalent synonym in the H1 or hero subheadline. If the ad reads "Acne Treatment in Pakistan — Doctor Formulated," the H1 must open with "acne treatment" before any brand modifier. For multi-ad-group campaigns, use dedicated page variants (`/acne-treatment`, `/acne-marks`) rather than routing all traffic to a single page that cannot match multiple clusters ([Google Ads Help — Evaluate landing page performance](https://support.google.com/google-ads/answer/7543502?hl=en)).
+
+**Rule 2 — Trust-claim mirror.** Any credential or guarantee mentioned in the ad copy must appear in the hero trust strip before the first scroll. If the ad says "Dermatologist-Formulated | COD Available," both signals must be above the fold — the visitor's implicit checklist is set by the ad, and a missing item reads as false advertising. For Clarté MD: "Dr. Ahmad, FCPS" in the ad means "Dr. Ahmad, FCPS" in the trust strip, not only in the About section.
+
+**Rule 3 — Price and scarcity sync.** If the ad references a price ("From Rs. 6,499") or a guarantee ("2× refund if fake"), the landing page must display that figure within 600 px of scroll (roughly 1.5 mobile screens). Price surprises are a primary cause of Quality Score degradation and post-click bounce. Sync ad extensions and landing-page hero price on every campaign update.
+
+---
+
+### 6.4 Trust signals that move PK search-intent buyers
+
+Five signals ranked by conversion impact for a PK search-intent buyer (mid-funnel, problem-aware, counterfeit-skeptical — see §3.1 and §4.3 for the full baseline):
+
+- **Named, PMDC-registered dermatologist above the fold.** Full name, qualification (MBBS, FCPS Dermatology), and city converts the brand into a verifiable clinician — impossible for a counterfeit operation to replicate. AsraDerm buries its "Doctors" link behind a nav click; the competitive whitespace is owning the named-doctor position in the hero trust strip.
+
+- **COD as hero risk-reversal, not a checkout footnote.** "Pay only when your box arrives" as the first trust-strip element removes the single largest PK purchase barrier. No Pakistani brand in this audit does this above the fold (§4.3); The Derma Co. (§4.2) is the closest exemplar. Placement: trust strip line 1, badge + short phrase.
+
+- **DRAP badge or registration number.** Signals "locally regulated" versus grey-market import — the distinction that §3.1's counterfeit anxiety is built on. AsraDerm has DRAP certification but buries it below the fold. Surface the registration number or "DRAP Registered" text in the hero trust strip. Placement: trust strip line 2–3.
+
+- **WhatsApp click-to-chat with a named team member.** "Speak to Dr. Ahmad's team — reply within the hour" converts a support widget into a trust signal and a conversion step. A generic floating icon with no name or SLA reads as a bot; Pakistani acne buyers expect a human consultation before purchase (§3.3). Placement: mid-page, after protocol explanation, before buy CTA.
+
+- **Fake-product guarantee with quantified terms above the fold.** Clarté MD's "2× refund if fake" is already written — it is in the footer, which is the wrong location for a signal that directly neutralises 71.6% of PK buyers' primary anxiety (§3.1). Elevate to the hero trust strip: "Fake? We refund double." No current PK competitor has this above the fold. Placement: trust strip line 3–4, bold badge.
+
+---
+
+### 6.5 Mobile-first imperatives (Pakistani mobile share)
+
+Pakistan had 190 million mobile connections — 75.2% of the population — with 116 million internet users as of early 2025 ([DataReportal — Digital 2025: Pakistan](https://datareportal.com/reports/digital-2025-pakistan)). Google Ads traffic from PK acne keyword clusters will be mobile-dominant by an even wider margin; search-intent acne queries spike during evening hours when skin anxiety peaks. A page not fully optimised for mobile is not a landing page for this market.
+
+The following checklist applies to `acne-protocol.html` before any ad spend goes live:
+
+- **Sticky CTA bar** (§5.11): fixed bottom bar "Order Now — Cash on Delivery | Rs. X,XXX" activating after the hero scrolls out of view. Currently absent on `acne-protocol.html` — Task 14 fix.
+- **Single-column form below 768 px**: all inputs must stack vertically; multi-column layouts require horizontal eye-tracking that kills completion rates on portrait mobile.
+- **Tap targets ≥ 48 × 48 px**: Google's mobile usability report flags elements below this threshold as a binary Quality Score gate ([Google Ads Landing Page Best Practices 2026](https://foundrycro.com/blog/google-ads-landing-page-best-practices-2026/)).
+- **Correct input types**: `type="tel"`, `type="email"`, `inputmode="numeric"` — surfaces the right mobile keyboard and eliminates mid-form abandonment caused by wrong-keyboard friction.
+- **WhatsApp via `wa.me/` format**: `https://wa.me/923XXXXXXXXX` triggers native WhatsApp on mobile; bare phone numbers and `api.whatsapp.com` links do not.
+- **No hover-only interactions**: tooltips or ingredient details hidden behind hover states are invisible on touch screens — all content must be reachable via tap.
+
+`acne-protocol.html` currently has no sticky CTA on mobile — a visitor who scrolls past the hero has no persistent conversion path. This is the highest-priority mobile fix in Task 14 and directly affects CVR for all Pakistani Google Ads traffic.
 
 ## 7. Audit Scorecard — acne-protocol.html
 <!-- Filled in Task 11 -->
