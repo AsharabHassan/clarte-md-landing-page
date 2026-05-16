@@ -212,7 +212,40 @@ URL not reachable on 2026-05-16 — HTTP 403 Forbidden returned on all attempted
 - **Take-away for Clarté MD:** The new Clarté MD landing page (acne-protocol.html) is being built precisely to replace this. Priority one is replacing "Welcome to our store" with a claim that names the concern (acne), names the credential (dermatologist-formulated), and names the mechanism (Rx actives) — all in the first visible line. Every pattern this site is missing is the new page's checklist.
 
 ### 4.4 Pharma Legacy (Anti-Examples)
-<!-- Filled in Task 5 — Cetaphil PK, Eucerin PK -->
+
+> **Fetch note:** cetaphil.com.pk returned ECONNREFUSED; teardown based on cetaphil.com global homepage (US locale). eucerin.pk and eucerin.com both unreachable or redirected to country-selector only; teardown based on eucerin.co.uk (the most complete accessible Eucerin marketing homepage) plus documented global brand positioning. Both teardowns are clearly labelled with the fallback source.
+
+#### Cetaphil (cetaphil.com — global homepage; cetaphil.com.pk unreachable)
+
+- **Hero headline:** "Recommended Skincare Brand for Sensitive Skin" (pulled from page `<title>`; no distinct H1 hero headline visible above fold)
+- **Hero subheadline:** "Get the best care for your sensitive skin across all our product ranges."
+- **Primary CTA:** "Shop Am + PM Serums" / "All Products"
+- **Above-fold structure:** A promotional banner for a new serum SKU dominates the top half, followed immediately by a product carousel. There is no problem-statement copy, no claim headline, and no attempt to speak to a visitor's specific concern. The brand name and tagline ("Sensitive Skin Experts") do the work a headline should do, requiring the visitor to already know and trust the brand.
+- **Social proof type:** Institutional endorsements (National Eczema Association, Skin Cancer Foundation); dermatologist-recommendation badge; statistical claim ("70% of people worldwide report some skin sensitivity"). No star ratings or named customer reviews above the fold.
+- **Urgency mechanic:** None observed.
+- **Trust signals:** "Dermatologist Recommended Brand," "Science Based Skincare," "The Sensitive Skin Experts," two third-party association approvals (National Eczema Association, Skin Cancer Foundation).
+- **Ingredient transparency:** Named ingredients listed in marketing copy (glycerin, hyaluronic acid, niacinamide, ceramides, salicylic acid, mandelic acid) but no percentages anywhere on the homepage; clinical dose evidence is absent.
+- **Money-back guarantee:** Not visible.
+- **Doing well:** The dual third-party body approvals (Eczema Association + Skin Cancer Foundation) are genuine credibility anchors that cost a competitor nothing to note but carry real institutional weight. The ingredient vocabulary is correct for a clinical audience (niacinamide, ceramides, mandelic acid) — the brand has earned these words.
+- **Broken or weak:** (1) Zero problem-statement copy — the hero assumes the visitor is already brand-loyal; a new visitor arriving from a search for "acne treatment Pakistan" gets no acknowledgment of their concern. (2) Primary CTAs push serum SKUs, not a solution to a skin condition — the page is category-merchandising, not conversion. (3) No direct purchase path: the "All Products" CTA leads deeper into the catalogue rather than to a single best-recommendation with a buy button.
+- **Anti-pattern to avoid:** The hero functions as a brand-awareness billboard, not a conversion surface — there is no problem named, no outcome promised, and no urgency created. Clarté MD must open with the visitor's problem ("acne that hasn't cleared with OTC products") before any brand or product name appears.
+- **Take-away for Clarté MD:** Cetaphil's institutional trust signals are genuinely strong, but they are wasted on a homepage built for brand browsing, not for a buyer with a specific unsolved problem. Clarté MD's advantage is talking directly to that problem from the first line — something a pharma-distribution brand structurally cannot do.
+
+#### Eucerin (eucerin.co.uk — UK homepage; eucerin.pk unreachable, eucerin.com redirects to country selector only)
+
+- **Hero headline:** "EUCERIN — Life-changing power of Dermatological Skincare"
+- **Hero subheadline:** "Our lightest Oil Control UV-Protection" (secondary product-feature heading, not a visitor-benefit statement)
+- **Primary CTA:** "Buy now" (per-product card level only; no single primary page CTA)
+- **Above-fold structure:** A navigation-heavy header (country selector, search, full mega-menu) sits above a product-card grid showcasing bestsellers. The "Life-changing power" headline appears in the brand strip rather than as a conversion headline. A new product (UV Serum SPF 50+) is highlighted mid-page with feature copy, not benefit copy.
+- **Social proof type:** Star ratings with review counts on product cards (ranging 3.8–4.7 stars, 106–282 reviews). "Recommended by dermatologists" brand badge. No named testimonials, no before/after imagery, no doctor profiles.
+- **Urgency mechanic:** "New" product badge on two SKUs. No countdown timers, no limited stock signals.
+- **Trust signals:** "100 years of history and innovative science," "Recommended by dermatologists," Beiersdorf parent-company heritage implied by Careers link. No visible certifications or third-party body approvals on the homepage.
+- **Ingredient transparency:** Specific actives named at product-card level: Thiamidol (Anti-Pigment Dual Serum), Epicelline® (Hyaluron-Filler), 10% Urea (UreaRepair PLUS). Percentage disclosed for Urea only; other actives named without dose. No mechanism-of-action copy on the homepage.
+- **Money-back guarantee:** Not visible.
+- **Doing well:** (1) Star-rating + review-count on every product card is the single highest-trust signal on the page — real numbers, not vague endorsements. (2) Naming a proprietary active (Thiamidol) by compound name, not just a product-family trademark, signals scientific specificity that reinforces the "dermatological" positioning.
+- **Broken or weak:** (1) "Life-changing power" is the weakest kind of aspirational headline — it names no condition, no mechanism, and no proof; a visitor with melasma or acne gets nothing actionable from it. (2) There is no direct-purchase flow from the homepage: every "Buy now" routes to a retailer-finder or third-party shop, breaking the customer relationship at the most valuable moment. (3) The country-selector architecture means Eucerin has no unified digital storefront — Pakistani visitors who land on eucerin.com encounter only a flag-selection screen, making brand discovery functionally impossible without prior knowledge.
+- **Anti-pattern to avoid:** Every CTA routes to a third-party retailer, permanently handing off the customer relationship at the point of purchase. Clarté MD's core structural advantage is owning the transaction end-to-end — that direct relationship (COD confirmation, WhatsApp follow-up, repeat-purchase data) must be protected by never burying the primary CTA behind a "find a stockist" layer.
+- **Take-away for Clarté MD:** Eucerin's 100-year heritage and dermatologist positioning are its only real assets on the homepage — and they are deployed passively, not as conversion arguments. Clarté MD should treat its clinical credentials as active persuasion copy tied to specific claims ("Tretinoin + Niacinamide protocol, formulated by Dr. Ahmad"), not as a trust badge sitting in a brand strip.
 
 ## 5. The 12 Universal Patterns That Move Skincare Landing-Page CVR
 <!-- Filled in Task 8 -->
