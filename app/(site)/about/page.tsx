@@ -1,0 +1,156 @@
+import Link from 'next/link';
+import './about.css';
+
+export const metadata = {
+  title: 'About — Dermatologist-led skincare from Lahore',
+  description:
+    'How Clarté MD works — a GMC-registered doctor formulating clinical protocols at our Lahore lab. ISO 22716 GMP manufacturing. Honest expectations, fully sealed packaging, COD across Pakistan.',
+};
+
+export default function AboutPage() {
+  return (
+    <div className="about-page">
+      {/* HERO */}
+      <section className="about-hero">
+        <div className="about-hero-inner">
+          <span className="mono eyebrow">— How we work —</span>
+          <h1 className="display">
+            We don't sell single bottles.
+            <br />
+            <em>We dispatch protocols.</em>
+          </h1>
+          <p className="about-hero-lede">
+            Clarté MD ships 12-week clinical regimens formulated by our GMC-registered doctor —
+            never an active sold in isolation, never a routine the patient builds without
+            guidance. Manufactured in Lahore under ISO 22716 GMP.
+          </p>
+        </div>
+      </section>
+
+      {/* DOCTOR BLOCK */}
+      <section className="about-doctor">
+        <div className="about-doctor-inner">
+          <div className="about-doctor-portrait">
+            {/* Placeholder until operator supplies a portrait (spec §15) */}
+            <div className="about-photo-placeholder">
+              <span className="mono">[Doctor portrait pending]</span>
+            </div>
+          </div>
+          <div className="about-doctor-text">
+            <span className="mono eyebrow">The prescribing doctor</span>
+            <h2 className="display">Our GMC-registered doctor.</h2>
+            <p>
+              MBBS · GMC-Registered Dermatologist · London &amp; Lahore. Every Clarté MD protocol
+              is reviewed and signed off by the same clinician — not assembled by a marketing
+              team, not "formulated by experts" with no name behind it.
+            </p>
+            <p>
+              The doctor's clinical practice runs in both cities. Protocols are designed for
+              Pakistani skin types, climate, and the medications patients are already taking.
+            </p>
+            <div className="about-credentials">
+              <div>
+                <strong>MBBS</strong>
+                <span>Medical degree</span>
+              </div>
+              <div>
+                <strong>GMC-Registered</strong>
+                <span>General Medical Council, UK</span>
+              </div>
+              <div>
+                <strong>Dermatologist</strong>
+                <span>London &amp; Lahore</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PHILOSOPHY */}
+      <section className="about-philosophy">
+        <div className="about-philosophy-inner">
+          <span className="mono eyebrow">— What we believe —</span>
+          <h2 className="display">Honest dermatology means honest expectations.</h2>
+          <div className="about-philosophy-grid">
+            <div>
+              <h3>Clinically dosed actives</h3>
+              <p>
+                Niacinamide at 10%, not 2%. Vitamin C at 15%. Retinol at 0.3-0.5%. Doses that
+                actually do clinical work, not the homeopathic concentrations most local brands
+                ship.
+              </p>
+            </div>
+            <div>
+              <h3>One protocol, twelve weeks</h3>
+              <p>
+                Skin biology runs on weeks, not days. Every protocol is dosed for 12 weeks of
+                consistent use — no half-bottles, no top-up upsells, no Instagram quick-fixes.
+              </p>
+            </div>
+            <div>
+              <h3>Sealed packaging, COD payment</h3>
+              <p>
+                Open the box at your door. Then pay the courier. If anything looks wrong —
+                seal broken, label off, bottle short — refuse it. No charge, no questions.
+              </p>
+            </div>
+            <div>
+              <h3>WhatsApp consult, free</h3>
+              <p>
+                A real person — our team — answers within 2 hours during business hours. Ask
+                about your skin, your routine, side effects, anything. No bot.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MANUFACTURING */}
+      <section className="about-manufacturing">
+        <div className="about-manufacturing-inner">
+          <div className="about-manufacturing-text">
+            <span className="mono eyebrow">— Where we make it —</span>
+            <h2 className="display">Lahore. Under ISO 22716 GMP.</h2>
+            <p>
+              All Clarté MD products are manufactured at our Lahore facility under ISO 22716
+              Cosmetics GMP standards. Every batch is tested before release. Stability data on
+              file. Active concentrations verified by independent assay.
+            </p>
+            <p>
+              Ingredient sourcing prioritises pharma-grade actives from European and Korean
+              suppliers. We publish the actives and their concentrations on every product
+              label — no proprietary-complex obfuscation.
+            </p>
+            <ul className="about-cert-list">
+              <li>ISO 22716 Cosmetics GMP</li>
+              <li>Batch-tested, stability-validated</li>
+              <li>Active concentrations independently assayed</li>
+              <li>Full ingredient transparency on labels</li>
+            </ul>
+          </div>
+          <div className="about-manufacturing-photo">
+            <div className="about-photo-placeholder">
+              <span className="mono">[Lab / manufacturing photo pending]</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA TO PROTOCOLS */}
+      <section className="about-cta">
+        <div className="about-cta-inner">
+          <h2 className="display">Find your protocol.</h2>
+          <p>30 seconds. Upload a selfie, get a recommendation.</p>
+          <div className="about-cta-buttons">
+            <Link href="/quiz" className="btn btn-primary">
+              Take the skin quiz →
+            </Link>
+            <Link href="/products" className="btn btn-secondary">
+              Browse all 4 protocols
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
