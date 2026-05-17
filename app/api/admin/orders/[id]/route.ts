@@ -3,6 +3,12 @@ import { eq } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
 import { UpdateOrderStatusSchema } from '@/lib/validators/admin-orders';
 import { requireAdminSession, unauthorizedResponse, UnauthorizedError } from '@/lib/auth/admin';
+import { dispatchWebhook } from '@/lib/webhooks/dispatcher';
+import {
+  buildOrderEventPayload,
+  statusToOrderEvent,
+  statusToWebhookEnvVar,
+} from '@/lib/webhooks/payloads';
 
 export async function GET(_req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   try {
@@ -46,12 +52,49 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
     return NextResponse.json({ ok: false, error: 'Invalid body' }, { status: 400 });
   }
 
-  const updated = await db
-    .update(schema.orders)
-    .set({ status: parsed.data.status, updatedAt: new Date() })
+  // Read previous status so we can include it in the webhook payload.
+  // Also gives us a no-op short-circuit if admin clicks the current
+  // status button (no point firing webhooks for "confirmed → confirmed").
+  const [existing] = await db
+    .select()
+    .from(schema.orders)
     .where(eq(schema.orders.id, id))
-    .returning({ id: schema.orders.id, status: schema.orders.status });
+    .limit(1);
+  if (!existing) return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
 
-  if (!updated.length) return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
-  return NextResponse.json({ ok: true, order: updated[0] });
+  const previousStatus = existing.status;
+  const newStatus = parsed.data.status;
+
+  const [updated] = await db
+    .update(schema.orders)
+    .set({ status: newStatus, updatedAt: new Date() })
+    .where(eq(schema.orders.id, id))
+    .returning();
+
+  if (!updated) return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
+
+  // Fire status-change webhook (sub-project #3) only when status
+  // actually changed and the new status has a webhook event mapped.
+  if (newStatus !== previousStatus) {
+    const event = statusToOrderEvent(newStatus);
+    const envVar = statusToWebhookEnvVar(newStatus);
+    if (event && envVar) {
+      const items = await db
+        .select()
+        .from(schema.orderItems)
+        .where(eq(schema.orderItems.orderId, id));
+      await dispatchWebhook(
+        process.env[envVar],
+        buildOrderEventPayload({
+          event,
+          order: updated,
+          items,
+          previousStatus,
+        }) as unknown as Record<string, unknown>,
+        event,
+      );
+    }
+  }
+
+  return NextResponse.json({ ok: true, order: { id: updated.id, status: updated.status } });
 }
