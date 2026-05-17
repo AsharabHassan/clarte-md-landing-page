@@ -16,12 +16,12 @@
 
 1. **Create project.** Dashboard → New Project. Name: `clarte-md-{env}`. Region: closest to Pakistan (eu-west-1 / Frankfurt works well). Save the DB password.
 2. **Apply schema:** locally, with `.env.local` pointing at this project's `DATABASE_URL`, run `npm run db:push -- --force` against an empty DB. (For populated DBs use `npm run db:migrate`.) Confirms 6 tables created.
-3. **Run setup scripts** (RLS policies, sequence, storage buckets — these live in idempotent `scripts/setup-*.ts` not in migration SQL):
+3. **Run setup scripts** (RLS policies, sequences, storage buckets — these live in idempotent `scripts/setup-*.ts` not in migration SQL):
    ```powershell
-   tsx --env-file=.env.local scripts/setup-rls.ts
-   tsx --env-file=.env.local scripts/setup-storage.ts
-   tsx --env-file=.env.local scripts/setup-sequences.ts
+   npx tsx scripts/setup-db.ts       # RLS + public-read policies + order_seq sequence
+   npx tsx scripts/setup-storage.ts  # ai-inputs + ai-outputs private buckets
    ```
+   Both scripts read `.env.local` directly via `dotenv` and are safe to re-run.
 4. **Seed:** `npm run db:seed`. Confirms 8 products, 1 bundle, 4 bundle_items.
 5. **Create admin user:** Dashboard → Authentication → Users → Add user. Set email + password. This becomes the only admin login for v1.
 6. **Collect:**
