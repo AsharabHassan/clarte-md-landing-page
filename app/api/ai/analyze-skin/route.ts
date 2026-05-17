@@ -46,8 +46,9 @@ export async function POST(req: NextRequest) {
   let result;
   try {
     result = await analyzeSkin({ inputBase64: input.image_base64, inputMimeType: input.mime_type });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Gemini analyze-skin failed', err);
+    const errMsg = err instanceof Error ? err.message : String(err);
     await db.insert(schema.aiSessions).values({
       kind: 'skin_analysis',
       concern: input.concern,
@@ -57,7 +58,7 @@ export async function POST(req: NextRequest) {
       consentGiven: input.consent,
       clientIpHash: ipHash,
       clientUa: req.headers.get('user-agent') ?? null,
-      error: String(err?.message ?? err).slice(0, 1000),
+      error: errMsg.slice(0, 1000),
     });
     return NextResponse.json(
       { ok: false, error: 'Analysis failed. Please try a clearer photograph.' },
@@ -72,7 +73,7 @@ export async function POST(req: NextRequest) {
       concern: input.concern,
       inputImagePath: inputPath,
       inputImageSha256: sha,
-      analysisJson: result.analysis as any,
+      analysisJson: result.analysis,
       modelVersion: result.modelVersion,
       latencyMs: result.latencyMs,
       consentGiven: input.consent,

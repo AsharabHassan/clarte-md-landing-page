@@ -1,4 +1,6 @@
 import { ai, MODEL_ANALYSIS } from './gemini';
+// `ai` is referenced via the responseSchema cast below; explicit suppress
+// for the unused-import lint rule isn't needed since it IS used at runtime.
 import { ANALYSIS_PROMPT } from './prompts';
 import { AnalysisResultSchema, type AnalysisResult } from '@/lib/validators/analyze-skin';
 
@@ -46,7 +48,9 @@ export async function analyzeSkin(args: {
     ],
     config: {
       responseMimeType: 'application/json',
-      responseSchema: responseSchema as any,
+      // Gemini SDK types responseSchema more strictly than the plain JSON
+      // Schema object the runtime accepts. Cast through unknown to bypass.
+      responseSchema: responseSchema as unknown as Record<string, unknown>,
     },
   });
 

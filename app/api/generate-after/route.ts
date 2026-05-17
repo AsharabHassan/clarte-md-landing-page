@@ -65,8 +65,9 @@ export async function POST(req: NextRequest) {
       inputMimeType: input.mime_type,
       prompt: input.prompt || ACNE_BA_PROMPT,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Gemini generate-after failed', err);
+    const errMsg = err instanceof Error ? err.message : String(err);
 
     // Persist the failure for debugging
     await db.insert(schema.aiSessions).values({
@@ -78,7 +79,7 @@ export async function POST(req: NextRequest) {
       consentGiven: true, // implicit via consent flow on client
       clientIpHash: ipHash,
       clientUa: req.headers.get('user-agent') ?? null,
-      error: String(err?.message ?? err).slice(0, 1000),
+      error: errMsg.slice(0, 1000),
     });
 
     return NextResponse.json(

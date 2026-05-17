@@ -23,7 +23,9 @@ export async function generateAfter(args: {
     config: { responseModalities: ['IMAGE'] },
   });
 
-  const part = response.candidates?.[0]?.content?.parts?.find((p: any) => p.inlineData);
+  const part = response.candidates?.[0]?.content?.parts?.find(
+    (p: { inlineData?: { data?: string; mimeType?: string } }) => p.inlineData,
+  );
   if (!part?.inlineData?.data) {
     throw new Error('Gemini returned no image');
   }
