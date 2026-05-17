@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sql } from 'drizzle-orm';
+import { inArray, sql } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
 import { CreateOrderSchema } from '@/lib/validators/create-order';
 import { computeTotals } from '@/lib/orders/compute-totals';
@@ -32,25 +32,76 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Re-compute server totals (cart-tampering defense). Bundle SKUs end with `-protocol`.
-  const items = input.items.map((i) => ({
-    sku: i.sku,
-    name: i.name,
-    qty: i.qty,
-    unitPricePkr: i.price,
-    isBundle: i.sku.endsWith('-protocol'),
-  }));
-  const totals = computeTotals(items);
-  if (
-    totals.total !== input.totals.total ||
-    totals.subtotal !== input.totals.subtotal ||
-    totals.shipping !== input.totals.shipping
-  ) {
-    return NextResponse.json(
-      { ok: false, error: 'Order total mismatch — please refresh the page and try again.' },
-      { status: 400 },
-    );
+  // ─── Server-authoritative price resolution ─────────────────────────
+  // Trust ZERO client-sent prices. Look up every SKU/slug in the DB and
+  // use those prices. Sub-project #6 Phase D Task 25: this hardens the
+  // mixed-cart flow (where the universal /checkout may submit price: 0
+  // values) and any future hostile client that lies about prices.
+  //
+  // Bundle SKUs end with '-protocol' and match against bundles.slug.
+  // Individual product SKUs match against products.sku.
+  const bundleSlugs = input.items.filter((i) => i.sku.endsWith('-protocol')).map((i) => i.sku);
+  const productSkus = input.items.filter((i) => !i.sku.endsWith('-protocol')).map((i) => i.sku);
+
+  const dbBundles =
+    bundleSlugs.length > 0
+      ? await db
+          .select()
+          .from(schema.bundles)
+          .where(inArray(schema.bundles.slug, bundleSlugs))
+      : [];
+  const dbProducts =
+    productSkus.length > 0
+      ? await db
+          .select()
+          .from(schema.products)
+          .where(inArray(schema.products.sku, productSkus))
+      : [];
+
+  // Reconstruct items with REAL prices + names from DB. Any unknown SKU
+  // is rejected (the client sent something we don't sell).
+  const items: Array<{
+    sku: string;
+    name: string;
+    qty: number;
+    unitPricePkr: number;
+    isBundle: boolean;
+  }> = [];
+  for (const i of input.items) {
+    const isBundle = i.sku.endsWith('-protocol');
+    if (isBundle) {
+      const b = dbBundles.find((x) => x.slug === i.sku);
+      if (!b) {
+        return NextResponse.json(
+          { ok: false, error: `Unknown bundle: ${i.sku}` },
+          { status: 400 },
+        );
+      }
+      items.push({ sku: b.slug, name: b.name, qty: 1, unitPricePkr: b.pricePkr, isBundle: true });
+    } else {
+      const p = dbProducts.find((x) => x.sku === i.sku);
+      if (!p) {
+        return NextResponse.json(
+          { ok: false, error: `Unknown product: ${i.sku}` },
+          { status: 400 },
+        );
+      }
+      items.push({
+        sku: p.sku,
+        name: p.name,
+        qty: i.qty,
+        unitPricePkr: p.pricePkr,
+        isBundle: false,
+      });
+    }
   }
+
+  // Recompute totals from real prices. Server is authoritative; we do
+  // NOT compare to client-sent totals (the previous defense), because
+  // the cart-driven flow legitimately submits zeros and lets the server
+  // compute. Anyone bypassing this comparison loses no security because
+  // we already overrode prices above.
+  const totals = computeTotals(items);
 
   const orderNumber = await nextOrderNumber(db);
 
