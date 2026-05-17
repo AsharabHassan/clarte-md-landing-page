@@ -1,0 +1,255 @@
+/* ────────────────────────────────────────────────────────────────────
+   Checkout — universal layout used by /checkout and /cart pages
+   ──────────────────────────────────────────────────────────────────── */
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: #1a2438;
+}
+
+.checkout-form h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  margin: 0 0 24px;
+  color: #0e1f3a;
+}
+
+.checkout-form fieldset.form-group {
+  border: 0;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.checkout-form fieldset legend {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5a6584;
+  margin: 0 0 14px;
+}
+.checkout-form label {
+  display: block;
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: #5a6584;
+}
+.checkout-form label input,
+.checkout-form label select {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 11px 14px;
+  border: 1px solid #d8dde9;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  background: #fff;
+  color: #1a2438;
+}
+.checkout-form label input:focus,
+.checkout-form label select:focus {
+  outline: 0;
+  border-color: #0057ff;
+  box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.12);
+}
+
+.checkout-form .form-sub {
+  font-size: 13px;
+  color: #5a6584;
+  margin: 0 0 10px;
+}
+
+.checkout-form .pay-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #d8dde9;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+.checkout-form .pay-opt input {
+  margin-top: 2px;
+}
+.checkout-form .pay-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+.checkout-form .pay-sub {
+  display: block;
+  color: #5a6584;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.checkout-form .trust-cod {
+  margin-top: 12px;
+  padding: 14px;
+  background: #f5f7fb;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.checkout-form .trust-cod .eyebrow {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #0057ff;
+  margin-bottom: 4px;
+}
+.checkout-form .trust-cod p {
+  margin: 0;
+  line-height: 1.55;
+  color: #2a3553;
+}
+
+.checkout-form .form-error {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  background: #fdecea;
+  border: 1px solid #c0392b;
+  border-radius: 8px;
+  color: #922;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ──────────── Order summary ──────────── */
+.order-summary {
+  background: #0e1f3a;
+  color: #fff;
+  padding: 28px;
+  border-radius: 14px;
+  height: fit-content;
+  position: sticky;
+  top: 88px;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+.order-summary h3.display {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+.order-summary .os-empty,
+.order-summary .os-loading,
+.order-summary .os-error {
+  color: #b6bed4;
+  font-size: 14px;
+  text-align: center;
+  padding: 22px 0;
+  font-style: italic;
+}
+.order-summary .os-error {
+  color: #ffb4b4;
+  font-style: normal;
+}
+
+.os-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  border-bottom: 1px solid #2d3c5d;
+  padding-bottom: 14px;
+}
+.os-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 13px;
+}
+.os-item-name {
+  font-weight: 500;
+  line-height: 1.4;
+}
+.os-bundle-chip {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  background: rgba(0, 87, 255, 0.25);
+  color: #b3ccff;
+  border-radius: 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.os-item-qty {
+  color: #b6bed4;
+  font-family: 'JetBrains Mono', monospace;
+}
+.os-item-price {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.os-totals {
+  margin-bottom: 18px;
+}
+.os-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+}
+.os-row.os-grand {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 500;
+  border-top: 1px solid #2d3c5d;
+  padding-top: 12px;
+  margin-top: 6px;
+}
+.os-free-ship-hint {
+  font-size: 12px;
+  color: #b6bed4;
+  margin: 6px 0;
+  text-align: center;
+}
+
+.os-place-order {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 14px 20px;
+  background: #0057ff;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.os-place-order:hover:not(:disabled) {
+  background: #0046d4;
+}
+.os-place-order:disabled {
+  background: #2d3c5d;
+  cursor: wait;
+}
+
+.os-foot {
+  margin: 12px 0 0;
+  font-size: 11px;
+  color: #98a3c0;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+@media (max-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+  .order-summary {
+    position: static;
+  }
+}
