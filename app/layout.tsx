@@ -4,7 +4,7 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'The Clear Skin Protocol — Clarté MD · Case Study 001',
   description:
-    'A dermatologist-led 12-week clinical regimen for active acne and post-acne marks. Upload a selfie; see a photoreal projection of week 12. Formulated in Lahore by Dr. Tauqir Ahmad, GMC-registered.',
+    'A dermatologist-led 12-week clinical regimen for active acne and post-acne marks. Upload a selfie; see a photoreal projection of week 12. Formulated in Lahore by our GMC-registered doctor.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

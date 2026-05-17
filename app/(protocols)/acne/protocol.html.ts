@@ -41,7 +41,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           A clinical answer to <span class="h-em">acne</span>, dispensed in Lahore.
         </h1>
         <p class="lede">
-          The Clear Skin Protocol is a four-product regimen formulated by <strong>Dr. Muhammad Tauqir Ahmad</strong> — GMC-registered dermatologist, London — at our Lahore clinic. Built around <strong>niacinamide 10%, azelaic, and 2% salicylic.</strong> Clinically dosed actives. Honest expectations. Twelve weeks to clear.
+          The Clear Skin Protocol is a four-product regimen formulated by <strong>our GMC-registered doctor</strong> (London) at our Lahore clinic. Built around <strong>niacinamide 10%, azelaic, and 2% salicylic.</strong> Clinically dosed actives. Honest expectations. Twelve weeks to clear.
         </p>
         <p class="hero-sub">For active <em>acne</em>, post-acne <em>marks</em>, and the cycle that won't break.</p>
         <div class="hero-actions">
@@ -266,7 +266,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <article class="review-card">
         <div class="review-photo"><span class="photo-placeholder">[REAL PATIENT PHOTO]</span></div>
         <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <blockquote>"I'd tried everything from Daraz before this. The difference here is the doctor. Dr. Tauqir's WhatsApp number actually answers — by a person, not a bot."</blockquote>
+        <blockquote>"I'd tried everything from Daraz before this. The difference here is the doctor. Their WhatsApp actually answers — by a person, not a bot."</blockquote>
         <footer class="review-meta">
           <strong>Sara M.</strong> · 29 · Karachi · 16 weeks on protocol
         </footer>
@@ -367,7 +367,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="rx-foot">
           <div>
-            <div class="rx-signature">Dr. M. Tauqir Ahmad<small>MBBS · GMC-Registered Dermatologist · London &amp; Lahore</small></div>
+            <div class="rx-signature">Our GMC-registered doctor<small>MBBS · GMC-Registered Dermatologist · London &amp; Lahore</small></div>
           </div>
           <div class="rx-total">
             <span class="rx-total-label">Twelve-week supply</span>
@@ -412,7 +412,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="mono">Prefer to ask first?</p>
     <a href="https://wa.me/923249986822?text=Assalam-o-alaikum%2C%20I'd%20like%20to%20order%20the%20Clear%20Skin%20Protocol." class="wa-link" target="_blank" rel="noopener">
       <svg class="wa-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.8-1.5A11 11 0 0 0 20.5 3.5Zm-8.4 16.8a9 9 0 0 1-4.6-1.3l-.3-.2-2.9.9.9-2.8-.2-.3a9 9 0 1 1 7.1 3.7Zm5.2-6.7c-.3-.2-1.7-.8-2-.9-.3-.1-.4-.2-.6.1l-.9 1.1c-.2.2-.3.2-.6 0a7.4 7.4 0 0 1-2.2-1.4 8.2 8.2 0 0 1-1.5-1.9c-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7l1.6 2.3a8 8 0 0 0 4.7 3c.7.3 1.2.4 1.6.5a3.8 3.8 0 0 0 1.7-.1 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.6-.4Z"/></svg>
-      <span class="wa-text">Chat with Dr. Tauqir's team on <strong>WhatsApp</strong> — we'll take your order over chat</span>
+      <span class="wa-text">Chat with our team on <strong>WhatsApp</strong> — we'll take your order over chat</span>
     </a>
   </div>
 </aside>
@@ -499,7 +499,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="colo-item">
         <div class="k">Authority</div>
         <div class="num">i.</div>
-        <div class="v"><strong>Dr. Muhammad Tauqir Ahmad,</strong> GMC-registered dermatologist. London &amp; Lahore.</div>
+        <div class="v"><strong>Our GMC-registered doctor.</strong> London &amp; Lahore.</div>
       </div>
       <div class="colo-item">
         <div class="k">Provenance</div>
@@ -559,7 +559,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </details>
       <details class="qa">
         <summary>Is it safe for sensitive skin?</summary>
-        <p class="a">The protocol is built around niacinamide 10%, azelaic acid, and a low 2% BHA — three ingredients with strong tolerability profiles. If your barrier is compromised (red, stinging, peeling), start with the cleanser + SPF only for the first 5–7 days and message Dr. Tauqir's team on WhatsApp before adding the actives.</p>
+        <p class="a">The protocol is built around niacinamide 10%, azelaic acid, and a low 2% BHA — three ingredients with strong tolerability profiles. If your barrier is compromised (red, stinging, peeling), start with the cleanser + SPF only for the first 5–7 days and message our team on WhatsApp before adding the actives.</p>
       </details>
       <details class="qa">
         <summary>What if it doesn't work for me?</summary>
@@ -707,7 +707,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="foot-col">
         <h4>About</h4>
-        <a href="#">Dr. Tauqir Ahmad</a>
+        <a href="#">Our doctor</a>
         <a href="#">Manufacturing</a>
         <a href="#">Reviews</a>
         <a href="#">Press</a>

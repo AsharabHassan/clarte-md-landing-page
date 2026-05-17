@@ -44,7 +44,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           A clinical answer to <span class="h-em">pigmentation</span>, dispensed in Lahore.
         </h1>
         <p class="lede">
-          The Even Tone Protocol is a four-product regimen formulated by <strong>Dr. Muhammad Tauqir Ahmad</strong> — GMC-registered dermatologist, London — at our Lahore clinic. Built around <strong>L-Ascorbic 15%, Tranexamic, Alpha-Arbutin, and broad-spectrum SPF 50.</strong> Clinically dosed actives. Honest expectations. Twelve weeks to even tone.
+          The Even Tone Protocol is a four-product regimen formulated by <strong>our GMC-registered doctor</strong> (London) at our Lahore clinic. Built around <strong>L-Ascorbic 15%, Tranexamic, Alpha-Arbutin, and broad-spectrum SPF 50.</strong> Clinically dosed actives. Honest expectations. Twelve weeks to even tone.
         </p>
         <div class="hero-actions">
           <a href="#ai-generator" class="btn btn-light">
@@ -353,7 +353,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="rx-foot">
           <div>
-            <div class="rx-signature">Dr. M. Tauqir Ahmad<small>MBBS · GMC-Registered Dermatologist · London &amp; Lahore</small></div>
+            <div class="rx-signature">Our GMC-registered doctor<small>MBBS · GMC-Registered Dermatologist · London &amp; Lahore</small></div>
           </div>
           <div class="rx-total">
             <span class="rx-total-label">Twelve-week supply</span>
@@ -447,7 +447,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="colo-item">
         <div class="k">Authority</div>
         <div class="num">i.</div>
-        <div class="v"><strong>Dr. Muhammad Tauqir Ahmad,</strong> GMC-registered dermatologist. London &amp; Lahore.</div>
+        <div class="v"><strong>Our GMC-registered doctor.</strong> London &amp; Lahore.</div>
       </div>
       <div class="colo-item">
         <div class="k">Provenance</div>
