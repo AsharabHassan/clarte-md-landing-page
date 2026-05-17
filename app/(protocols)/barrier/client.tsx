@@ -350,6 +350,25 @@ export default function BarrierClient() {
     }).join('');
   }
 
+  (function initStickyCta() {
+    const el = document.getElementById('stickyCta');
+    const intake = document.getElementById('intake');
+    if (!el || !intake) return;
+    const hero = document.querySelector('.hero');
+    function update() {
+      const heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
+      const intakeTop = intake.getBoundingClientRect().top;
+      const past = heroBottom < 80;
+      const beforeIntake = intakeTop > window.innerHeight * 0.5;
+      if (past && beforeIntake) el.classList.add('show');
+      else el.classList.remove('show');
+      el.setAttribute('aria-hidden', el.classList.contains('show') ? 'false' : 'true');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
   renderRxStrip();
   renderCrossSell();
   renderCart();
