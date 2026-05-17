@@ -77,6 +77,14 @@ export default function AcneClient() {
     renderCrossSell(); renderCart();
   }
   function addBundleToCart() { bundleInCart = true; renderCart(); }
+  // Three inline onclick="..." handlers in the static HTML (`addBundleToCart()`
+  // x2 in the rx-strip and rescue-section, plus the dynamic `toggleCrossSell(...)`
+  // injected by renderCrossSell) execute in the global scope. In the original
+  // static page these functions were script-level, hence globally reachable;
+  // inside this useEffect they are closure-scoped, so we re-expose them on
+  // window for the inline handlers to resolve.
+  (window as any).addBundleToCart = addBundleToCart;
+  (window as any).toggleCrossSell = toggleCrossSell;
 
   function renderCart() {
     const items = [];
