@@ -17,7 +17,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:seed": "tsx lib/db/seed.ts"
+    "db:seed": "tsx --env-file=.env.local lib/db/seed.ts"
   },
   "dependencies": {
     "@google/genai": "^2.3.0",
