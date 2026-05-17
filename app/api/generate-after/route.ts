@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
       concern: input.concern,
       inputImagePath: inputPath,
       inputImageSha256: sha,
-      modelVersion: 'gemini-2.5-flash-image-preview',
+      modelVersion: 'gemini-2.5-flash-image',
       consentGiven: true, // implicit via consent flow on client
       clientIpHash: ipHash,
       clientUa: req.headers.get('user-agent') ?? null,
