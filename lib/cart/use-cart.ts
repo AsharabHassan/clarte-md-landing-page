@@ -1,13 +1,26 @@
 'use client';
 
-// Stub implementation — full cart context lands in Phase A Task 4.
-// Returning a static empty cart lets SiteHeader/CartIcon compile and
-// render correctly before the provider is wired.
+import { useContext } from 'react';
+import { CartContext, type CartContextValue } from './provider';
+import { emptyCart } from './operations';
+import { countItems } from './operations';
 
-export interface CartStub {
-  items: Array<{ qty: number }>;
-}
-
-export function useCart(): { cart: CartStub } {
-  return { cart: { items: [] } };
+/**
+ * Returns the cart context. Falls back to a read-only no-op shape when
+ * called outside a `<CartProvider>` (e.g. during SSR or in isolated
+ * Storybook stories) so components don't crash.
+ */
+export function useCart(): CartContextValue {
+  const ctx = useContext(CartContext);
+  if (ctx) return ctx;
+  const cart = emptyCart();
+  return {
+    cart,
+    itemCount: countItems(cart),
+    addBundle: () => {},
+    addProduct: () => {},
+    removeItem: () => {},
+    updateQty: () => {},
+    clearCart: () => {},
+  };
 }
