@@ -652,9 +652,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p class="step-sub">Pick what works. Nothing is charged until you confirm by WhatsApp.</p>
           <div class="pay-options">
             <label class="pay-opt"><input type="radio" name="pay" value="COD" checked /><div><div class="pay-name">Cash on Delivery</div><span class="pay-sub">Pay the courier on arrival</span></div></label>
-            <label class="pay-opt"><input type="radio" name="pay" value="JazzCash" /><div><div class="pay-name">JazzCash / Easypaisa</div><span class="pay-sub">Mobile wallet · 60-second confirm</span></div></label>
-            <label class="pay-opt"><input type="radio" name="pay" value="Card" /><div><div class="pay-name">Credit / Debit Card</div><span class="pay-sub">Visa · Mastercard · AmEx</span></div></label>
-            <label class="pay-opt"><input type="radio" name="pay" value="Bank" /><div><div class="pay-name">Bank transfer</div><span class="pay-sub">IBFT — details on confirmation</span></div></label>
           </div>
           <div class="trust-cod">
             <span class="mono eyebrow">Pay on Delivery</span>

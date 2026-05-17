@@ -14,11 +14,12 @@ export const CreateOrderSchema = z.object({
     postal: z.string().max(16).optional().or(z.literal('')),
     notes: z.string().max(256).optional().or(z.literal('')),
   }),
-  // The static page (sub-project #1) shipped with 4 payment radios:
-  // COD, JazzCash, Card, Bank. v1 only PROCESSES COD; the other three
-  // are accepted by the validator so the form roundtrips, then rejected
-  // downstream if/when the route grows a `payment !== 'COD'` branch.
-  payment: z.enum(['COD', 'JazzCash', 'Card', 'Bank']),
+  // COD-only until sub-project #4 (wallet payments) ships. The form
+  // on every protocol page now shows only the COD radio — the 3 other
+  // options (JazzCash, Card, Bank) were hidden from the UI when the
+  // merchant accounts came back as not-yet-approved. Re-enable each
+  // option as its merchant account approves (JazzCash usually first).
+  payment: z.enum(['COD']),
   items: z
     .array(
       z.object({
