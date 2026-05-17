@@ -1,5 +1,5 @@
     :root {
-      /* â”€â”€â”€â”€â”€ Brand: navy + cobalt + white â”€â”€â”€â”€â”€ */
+      /* ───── Brand: navy + cobalt + white ───── */
       --white: #ffffff;
       --canvas: #fafbfd;
       --sky: #eef3fb;
@@ -22,7 +22,7 @@
       --rule-soft: #ebf0f7;
       --rule-strong: #b8c4d7;
 
-      --accent: #d97757; /* warm rust â€” rare, for "save / urgent" badges only */
+      --accent: #d97757; /* warm rust — rare, for "save / urgent" badges only */
       --success: #1d8a6b;
 
       --max-w: 1320px;
@@ -71,7 +71,7 @@
     /* Hairline rules */
     .rule { height: 1px; background: var(--rule); border: 0; margin: 0; }
 
-    /* Folio header â€” used at the top of each section */
+    /* Folio header — used at the top of each section */
     .folio {
       display: flex; justify-content: space-between; align-items: baseline;
       gap: 18px;
@@ -99,7 +99,7 @@
       .folio .folio-title { display: none; }
     }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ BUTTONS â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── BUTTONS ──────── */
     .btn {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 16px 26px;
@@ -145,7 +145,7 @@
     }
     .btn-ghost-dark:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ TOP BAR + NAV â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── TOP BAR + NAV ──────── */
     .topbar {
       background: var(--navy-deep);
       color: var(--cobalt-glow);
@@ -224,7 +224,7 @@
     .wa-pill:hover { background: var(--cobalt); }
     .wa-pill svg { width: 15px; height: 15px; }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ HERO (deep navy) â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── HERO (deep navy) ──────── */
     .hero {
       position: relative;
       overflow: hidden;
@@ -367,7 +367,7 @@
       .hero-trust { gap: 10px 16px; font-size: 10px; }
     }
 
-    /* Hero AI card â€” glassy white on navy */
+    /* Hero AI card — glassy white on navy */
     .ai-card {
       position: relative;
       background: rgba(255,255,255,0.04);
@@ -439,7 +439,7 @@
     .ai-card .ai-cta svg { transition: transform .25s; color: var(--cobalt-glow); }
     .ai-card:hover .ai-cta svg { transform: translateX(5px); }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ SECTION HEAD â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── SECTION HEAD ──────── */
     .section-head { max-width: 60ch; margin: 0 auto 64px; text-align: center; }
     .section-head .specimen-label { color: var(--cobalt); display: inline-block; margin-bottom: 18px; }
     .section-head h2 {
@@ -460,7 +460,7 @@
       color: var(--ink-2);
     }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ AI SPECIMEN ANALYSIS â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── AI SPECIMEN ANALYSIS ──────── */
     .ai-section {
       padding: 112px 0;
       background: var(--white);
@@ -877,7 +877,7 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
     .compare .handle::before {
-      content: 'â—€ â–¶';
+      content: '◀ ▶';
       position: absolute;
       left: 50%; top: 50%;
       transform: translate(-50%, -50%);
@@ -943,7 +943,7 @@
     .ai-error h3 em { color: var(--accent); font-style: italic; }
     .ai-error p { color: var(--ink-mute); margin: 0 0 24px; max-width: 42ch; margin-left:auto; margin-right:auto; }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ REVIEWS SECTION â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── REVIEWS SECTION ──────── */
     .reviews-section {
       padding: 96px 0 64px;
       background: var(--white);
@@ -1016,7 +1016,7 @@
       text-align: center;
     }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ PRESCRIPTION (BUNDLE) â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── PRESCRIPTION (BUNDLE) ──────── */
     .rx-section {
       padding: 112px 0;
       background: var(--sky);
@@ -1442,7 +1442,7 @@
     .cs-card .cs-add:hover { background: var(--navy); color: var(--white); }
     .cs-card.added .cs-add { background: var(--cobalt); color: var(--white); border-color: var(--cobalt); }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ WHATSAPP QUICK-BUY â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── WHATSAPP QUICK-BUY ──────── */
     .wa-quickbuy {
       padding: 36px 0;
       background: var(--canvas);
@@ -1485,7 +1485,7 @@
       .wa-text { font-size: 13.5px; text-align: center; }
     }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ TIMELINE â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── TIMELINE ──────── */
     .tl-section {
       padding: 120px 0;
       background: var(--white);
@@ -1555,7 +1555,7 @@
       margin: 0;
     }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ B/A PATIENT GRID (timeline section) â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── B/A PATIENT GRID (timeline section) ──────── */
     .ba-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1589,7 +1589,7 @@
     }
     .ba-meta strong { color: var(--ink-2); }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ COLOPHON / TRUST (navy) â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── COLOPHON / TRUST (navy) ──────── */
     .colophon {
       padding: 96px 0;
       background: var(--navy);
@@ -1641,7 +1641,7 @@
     }
     .colo-item .v strong { color: var(--white); font-weight: 600; }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ COD TRUST BLOCK â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── COD TRUST BLOCK ──────── */
     .trust-cod {
       padding: 18px 20px;
       border: 1px solid var(--rule);
@@ -1668,7 +1668,7 @@
       .trust-cod p { font-size: 15.5px; }
     }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ NEXT-DISPATCH URGENCY â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── NEXT-DISPATCH URGENCY ──────── */
     /* Lives inside .summary (--navy background), so uses light tokens */
     .next-dispatch {
       margin: 10px 0 14px;
@@ -1679,7 +1679,7 @@
     }
     .next-dispatch strong { color: rgba(255,255,255,0.92); font-weight: 600; }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ FAQ â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── FAQ ──────── */
     .faq-section {
       padding: 112px 0;
       background: var(--white);
@@ -1714,7 +1714,7 @@
       font-weight: 400;
       transition: transform .2s;
     }
-    .qa[open] summary::after { content: 'âˆ’'; }
+    .qa[open] summary::after { content: '−'; }
     .qa .a {
       margin: 16px 0 0;
       color: var(--ink-mute);
@@ -1723,7 +1723,7 @@
       max-width: 64ch;
     }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ INTAKE / CHECKOUT â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── INTAKE / CHECKOUT ──────── */
     .intake {
       padding: 112px 0;
       background: var(--canvas);
@@ -1999,7 +1999,7 @@
     .success-block h3 em { color: var(--cobalt); font-style: italic; }
     .success-block p { color: var(--ink-mute); font-size: 16px; max-width: 52ch; margin: 0 auto; line-height: 1.6; }
 
-    /* â”€â”€â”€â”€â”€â”€â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ──────── FOOTER ──────── */
     footer {
       padding: 80px 0 40px;
       background: var(--navy-deep);
@@ -2080,7 +2080,7 @@
 
     .file-input { position: absolute; opacity: 0; pointer-events: none; }
 
-    /* â”€â”€ Sticky mobile CTA bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Sticky mobile CTA bar ─────────────────────────────────────────── */
     .sticky-cta {
       display: none;
       position: fixed;
@@ -2131,7 +2131,7 @@
 
     /* Fold-cover + narrow phone (<= 360px): the existing breakpoints jump
        straight from 640px to single-column without re-tuning typography,
-       button sizing, or sticky-CTA proportions â€” this layer fills that gap. */
+       button sizing, or sticky-CTA proportions — this layer fills that gap. */
     @media (max-width: 360px) {
       body { font-size: 15.5px; }
       .container { padding: 0 16px; }
