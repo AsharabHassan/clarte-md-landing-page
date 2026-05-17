@@ -77,7 +77,15 @@ export default function AcneClient() {
     else crossSellCart[sku] = true;
     renderCrossSell(); renderCart();
   }
-  function addBundleToCart() { bundleInCart = true; renderCart(); }
+  function addBundleToCart() {
+    bundleInCart = true;
+    renderCart();
+    // Sub-project #6 Phase A: also push into the persistent CartProvider via
+    // window event bridge ([[project_runtime_quirks]] §6 — closure scope can't
+    // call React hooks directly). Customer can keep using the inline intake
+    // form on this page OR navigate to /cart for the universal checkout.
+    window.dispatchEvent(new CustomEvent('clarte:add-bundle', { detail: { slug: BUNDLE.sku } }));
+  }
   // Three inline onclick="..." handlers in the static HTML (`addBundleToCart()`
   // x2 in the rx-strip and rescue-section, plus the dynamic `toggleCrossSell(...)`
   // injected by renderCrossSell) execute in the global scope. In the original

@@ -72,7 +72,11 @@ export default function EvenToneClient() {
     else crossSellCart[sku] = true;
     renderCrossSell(); renderCart();
   }
-  function addBundleToCart() { bundleInCart = true; renderCart(); }  (window as any).addBundleToCart = addBundleToCart;
+  function addBundleToCart() {
+    bundleInCart = true;
+    renderCart();
+    window.dispatchEvent(new CustomEvent('clarte:add-bundle', { detail: { slug: BUNDLE.sku } }));
+  }  (window as any).addBundleToCart = addBundleToCart;
   (window as any).toggleCrossSell = toggleCrossSell;
 
 
