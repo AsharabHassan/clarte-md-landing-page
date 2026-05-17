@@ -44,7 +44,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           A clinical answer to <span class="h-em">fine lines</span>, dispensed in Lahore.
         </h1>
         <p class="lede">
-          The Renewal Protocol is a five-product regimen formulated by <strong>our GMC-registered doctor</strong> (London) at our Lahore clinic. Built around <strong>Retinol 0.3%, L-Ascorbic 15%, Hyaluronic Acid, and ceramides.</strong> Clinically dosed actives. Honest expectations. Twelve weeks to firmer, brighter skin.
+          The Renewal Protocol is a five-product regimen formulated by <strong>Dr. Muhammad Tauqir Ahmad</strong> — GMC-registered dermatologist, London — at our Lahore clinic. Built around <strong>Retinol 0.3%, L-Ascorbic 15%, Hyaluronic Acid, and ceramides.</strong> Clinically dosed actives. Honest expectations. Twelve weeks to firmer, brighter skin.
         </p>
         <div class="hero-actions">
           <a href="#ai-generator" class="btn btn-light">
@@ -228,6 +228,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- PATIENT VOICES (placeholder until real testimonials with consent are signed) -->
+<section class="reviews-section" id="reviews" data-content-state="placeholder">
+  <div class="container">
+    <div class="folio">
+      <span class="folio-page">— 06 —</span>
+      <span class="folio-title">Patient voices</span>
+      <span class="mono">Reviews</span>
+    </div>
+    <h2>What patients said <em>after twelve weeks</em></h2>
+    <p class="lede">Real patient testimonials launching with our Q3 2026 photo shoot. We do not fabricate reviews.</p>
+
+    <div class="review-grid">
+      <article class="review-card">
+        <div class="review-photo"><span class="photo-placeholder">[PATIENT PHOTO — consent in progress]</span></div>
+        <div class="review-stars" aria-label="Pending">— — — — —</div>
+        <blockquote>Real patient story coming Q3 2026. We won't publish a testimonial without signed consent + dated photos.</blockquote>
+        <footer class="review-meta">
+          <strong>Patient #001</strong> · Renewal Protocol · pending consent
+        </footer>
+      </article>
+
+      <article class="review-card">
+        <div class="review-photo"><span class="photo-placeholder">[PATIENT PHOTO — consent in progress]</span></div>
+        <div class="review-stars" aria-label="Pending">— — — — —</div>
+        <blockquote>Real patient story coming Q3 2026. We won't publish a testimonial without signed consent + dated photos.</blockquote>
+        <footer class="review-meta">
+          <strong>Patient #002</strong> · Renewal Protocol · pending consent
+        </footer>
+      </article>
+
+      <article class="review-card">
+        <div class="review-photo"><span class="photo-placeholder">[PATIENT PHOTO — consent in progress]</span></div>
+        <div class="review-stars" aria-label="Pending">— — — — —</div>
+        <blockquote>Real patient story coming Q3 2026. We won't publish a testimonial without signed consent + dated photos.</blockquote>
+        <footer class="review-meta">
+          <strong>Patient #003</strong> · Renewal Protocol · pending consent
+        </footer>
+      </article>
+
+      <article class="review-card">
+        <div class="review-photo"><span class="photo-placeholder">[PATIENT PHOTO — consent in progress]</span></div>
+        <div class="review-stars" aria-label="Pending">— — — — —</div>
+        <blockquote>Real patient story coming Q3 2026. We won't publish a testimonial without signed consent + dated photos.</blockquote>
+        <footer class="review-meta">
+          <strong>Patient #004</strong> · Renewal Protocol · pending consent
+        </footer>
+      </article>
+    </div>
+
+    <p class="review-disclaimer mono">
+      ⚠ Placeholder content. Verified reviews with signed consent and dated photographs will replace this section before paid traffic begins.
+    </p>
+  </div>
+</section>
+
 <!-- THE PRESCRIPTION -->
 <section class="rx-section" id="rx">
   <div class="container">
@@ -400,7 +455,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="colo-item">
         <div class="k">Authority</div>
         <div class="num">i.</div>
-        <div class="v"><strong>Our GMC-registered doctor.</strong> London &amp; Lahore.</div>
+        <div class="v"><strong>Dr. Muhammad Tauqir Ahmad,</strong> GMC-registered dermatologist. London &amp; Lahore.</div>
       </div>
       <div class="colo-item">
         <div class="k">Provenance</div>
@@ -539,6 +594,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="pay-options">
             <label class="pay-opt"><input type="radio" name="pay" value="COD" checked /><div><div class="pay-name">Cash on Delivery</div><span class="pay-sub">Pay the courier on arrival</span></div></label>
           </div>
+          <div class="trust-cod">
+            <span class="mono eyebrow">Pay on Delivery</span>
+            <p>Open the parcel at your door. <em>Then</em> pay the courier. If the bottle looks wrong, refuse it — no charge, no questions.</p>
+          </div>
         </div>
       </form>
 
@@ -600,4 +659,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </footer>
+
+<aside class="sticky-cta" id="stickyCta" aria-hidden="true">
+  <div class="sticky-cta-inner">
+    <div class="sticky-cta-price">
+      <span class="sc-label">The Renewal Protocol</span>
+      <span class="sc-price">Rs. 7,999</span>
+    </div>
+    <a href="#intake" class="btn btn-primary sticky-cta-btn">Order the Protocol →</a>
+  </div>
+</aside>
 `;
