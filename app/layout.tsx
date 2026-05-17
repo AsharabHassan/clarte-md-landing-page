@@ -1,10 +1,14 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { CartProvider } from '@/lib/cart/provider';
 
 export const metadata: Metadata = {
-  title: 'The Clear Skin Protocol — Clarté MD · Case Study 001',
+  title: {
+    default: 'Clarté MD — Dermatologist-led skincare for Pakistan',
+    template: '%s · Clarté MD',
+  },
   description:
-    'A dermatologist-led 12-week clinical regimen for active acne and post-acne marks. Upload a selfie; see a photoreal projection of week 12. Formulated in Lahore by our GMC-registered doctor.',
+    'Dermatologist-led 12-week clinical regimens for acne, pigmentation, anti-ageing, and barrier repair. Formulated in Lahore by our GMC-registered doctor. COD across Pakistan.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -18,7 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <CartProvider>{children}</CartProvider>
+      </body>
     </html>
   );
 }
