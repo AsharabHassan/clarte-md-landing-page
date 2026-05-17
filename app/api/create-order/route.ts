@@ -5,6 +5,9 @@ import { CreateOrderSchema } from '@/lib/validators/create-order';
 import { computeTotals } from '@/lib/orders/compute-totals';
 import { nextOrderNumber } from '@/lib/orders/order-number';
 import { extractClientIp, hashIp, RATE_LIMIT_ORDERS_PER_HOUR } from '@/lib/ai/rate-limit';
+import { dispatchWebhook } from '@/lib/webhooks/dispatcher';
+import { buildOrderEventPayload } from '@/lib/webhooks/payloads';
+import type { OrderItem } from '@/lib/db/schema';
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
@@ -87,20 +90,36 @@ export async function POST(req: NextRequest) {
         aiSessionId: aiSessionUuid,
         clientIpHash: ipHash,
       })
-      .returning({ id: schema.orders.id });
+      .returning();
 
+    let insertedItems: OrderItem[] = [];
     if (items.length > 0) {
-      await db.insert(schema.orderItems).values(
-        items.map((i) => ({
-          orderId: order.id,
-          sku: i.sku,
-          name: i.name,
-          qty: i.qty,
-          unitPricePkr: i.unitPricePkr,
-          isBundle: i.isBundle,
-        })),
-      );
+      insertedItems = await db
+        .insert(schema.orderItems)
+        .values(
+          items.map((i) => ({
+            orderId: order.id,
+            sku: i.sku,
+            name: i.name,
+            qty: i.qty,
+            unitPricePkr: i.unitPricePkr,
+            isBundle: i.isBundle,
+          })),
+        )
+        .returning();
     }
+
+    // Fire-and-forget automation webhook (sub-project #3). The 3s
+    // timeout inside dispatchWebhook bounds customer-visible latency.
+    await dispatchWebhook(
+      process.env.WEBHOOK_ORDER_CREATED,
+      buildOrderEventPayload({
+        event: 'order.created',
+        order,
+        items: insertedItems,
+      }) as unknown as Record<string, unknown>,
+      'order.created',
+    );
 
     return NextResponse.json({ ok: true, order_number: orderNumber });
   } catch (err) {
