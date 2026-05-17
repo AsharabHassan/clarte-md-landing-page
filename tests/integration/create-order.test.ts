@@ -16,7 +16,7 @@ const validPayload = () => ({
   page: 'acne-protocol',
   contact: { name: 'Test Patient', phone: '03001234567', email: 'test@example.com' },
   shipping: { address: 'House 1, Street 1', city: 'Lahore', postal: '', notes: '' },
-  payment: 'cod' as const,
+  payment: 'COD' as const,
   items: [
     { sku: 'clear-skin-protocol', name: 'The Clear Skin Protocol · 4-product kit', qty: 1, price: 6499 },
   ],

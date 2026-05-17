@@ -14,7 +14,11 @@ export const CreateOrderSchema = z.object({
     postal: z.string().max(16).optional().or(z.literal('')),
     notes: z.string().max(256).optional().or(z.literal('')),
   }),
-  payment: z.enum(['cod']),
+  // The static page (sub-project #1) shipped with 4 payment radios:
+  // COD, JazzCash, Card, Bank. v1 only PROCESSES COD; the other three
+  // are accepted by the validator so the form roundtrips, then rejected
+  // downstream if/when the route grows a `payment !== 'COD'` branch.
+  payment: z.enum(['COD', 'JazzCash', 'Card', 'Bank']),
   items: z
     .array(
       z.object({
