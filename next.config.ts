@@ -7,10 +7,14 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['postgres', 'drizzle-orm'],
   async redirects() {
     return [
-      // Old static URL → migrated route (permanent so search engines update).
+      // Old static URLs → migrated routes (308 permanent so search engines update).
       { source: '/acne-protocol.html', destination: '/acne', permanent: true },
-      // Root → the only live protocol page during sub-project #2.
-      // Non-permanent because sub-project #6 will introduce a real storefront index.
+      { source: '/even-tone-protocol.html', destination: '/even-tone', permanent: true },
+      { source: '/renewal-protocol.html', destination: '/renewal', permanent: true },
+      { source: '/barrier-protocol.html', destination: '/barrier', permanent: true },
+      // Root → acne (highest-volume concern in PK per conversion research).
+      // 307 non-permanent because sub-project #6 will introduce a real storefront
+      // index that lists all 4 protocols.
       { source: '/', destination: '/acne', permanent: false },
     ];
   },
