@@ -28,6 +28,27 @@ const BUNDLES = [
     pricePkr: 6499,
     items: ['rescue', 'acne', 'ha', 'spf'],
   },
+  {
+    slug: 'even-tone-protocol',
+    name: 'The Even Tone Protocol',
+    concern: 'pigmentation',
+    pricePkr: 6999,
+    items: ['prep', 'vitc', 'light', 'spf'],
+  },
+  {
+    slug: 'renewal-protocol',
+    name: 'The Renewal Protocol',
+    concern: 'anti-ageing',
+    pricePkr: 7999,
+    items: ['prep', 'vitc', 'reti', 'ha', 'spf'],
+  },
+  {
+    slug: 'barrier-protocol',
+    name: 'The Barrier Protocol',
+    concern: 'hydration',
+    pricePkr: 4799,
+    items: ['prep', 'ha', 'spf'],
+  },
 ];
 
 async function main() {
