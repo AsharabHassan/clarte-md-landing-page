@@ -1,6 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from 'next/link';
 import { db, schema } from '@/lib/db/client';
-import { eq } from 'drizzle-orm';
 import './home.css';
 
 export const dynamic = 'force-dynamic';
@@ -164,5 +164,3 @@ export default async function HomePage() {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _eq = eq;

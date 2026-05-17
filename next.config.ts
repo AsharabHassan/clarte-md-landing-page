@@ -12,10 +12,8 @@ const nextConfig: NextConfig = {
       { source: '/even-tone-protocol.html', destination: '/even-tone', permanent: true },
       { source: '/renewal-protocol.html', destination: '/renewal', permanent: true },
       { source: '/barrier-protocol.html', destination: '/barrier', permanent: true },
-      // Root → acne (highest-volume concern in PK per conversion research).
-      // 307 non-permanent because sub-project #6 will introduce a real storefront
-      // index that lists all 4 protocols.
-      { source: '/', destination: '/acne', permanent: false },
+      // Root '/' now serves the real homepage (sub-project #6 Phase B Task 13
+      // removed the 307 to /acne). app/(site)/page.tsx is the new landing.
     ];
   },
 };
