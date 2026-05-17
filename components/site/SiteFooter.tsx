@@ -1,8 +1,6 @@
 import Link from 'next/link';
 
 export function SiteFooter() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="site-footer">
       <div className="site-footer-inner">
