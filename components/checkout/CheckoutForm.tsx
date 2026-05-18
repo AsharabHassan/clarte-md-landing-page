@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useCart } from '@/lib/cart/use-cart';
 import { OrderSummary } from './OrderSummary';
 
@@ -21,7 +20,6 @@ const PK_CITIES = [
 ];
 
 export function CheckoutForm() {
-  const router = useRouter();
   const { cart, clearCart } = useCart();
   const [submitting, setSubmitting] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -85,11 +83,16 @@ export function CheckoutForm() {
         setSubmitting(false);
         return;
       }
-      // Success: capture order_number, clear cart, route to tracking page.
+      // Success: clear cart + jump to the tracking page via a hard
+      // navigation. Soft routing (router.push) races against
+      // /checkout's empty-cart bounce useEffect — clearing the cart
+      // re-renders /checkout, which redirects back to /cart before
+      // the push completes. window.location.assign starts unloading
+      // immediately, beating React's reconciliation.
       const orderNumber = data.order_number as string;
       const last4 = phone.replace(/\D/g, '').slice(-4);
       clearCart();
-      router.push(`/order/${orderNumber}?phone=${last4}`);
+      window.location.assign(`/order/${orderNumber}?phone=${last4}`);
     } catch (e: unknown) {
       setErr(e instanceof Error ? e.message : 'Network issue. WhatsApp us.');
       setSubmitting(false);
