@@ -1,11 +1,23 @@
 /* eslint-disable react/no-unescaped-entities */
+import type { Metadata } from 'next';
 import Link from 'next/link';
+import { SITE_URL } from '@/lib/schema/json-ld';
 import './about.css';
 
-export const metadata = {
-  title: 'About — Dermatologist-led skincare from Lahore',
-  description:
-    'How Clarté MD works — a GMC-registered doctor formulating clinical protocols at our Lahore lab. ISO 22716 GMP manufacturing. Honest expectations, fully sealed packaging, COD across Pakistan.',
+const TITLE = 'About — Dermatologist-led skincare from Lahore';
+const DESCRIPTION =
+  'How Clarté MD works — a GMC-registered doctor formulating clinical protocols at our Lahore lab. ISO 22716 GMP manufacturing. Honest expectations, fully sealed packaging, COD across Pakistan.';
+
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: `${SITE_URL}/about` },
+  openGraph: {
+    title: `${TITLE} · Clarté MD`,
+    description: DESCRIPTION,
+    url: `${SITE_URL}/about`,
+    type: 'website',
+  },
 };
 
 export default function AboutPage() {

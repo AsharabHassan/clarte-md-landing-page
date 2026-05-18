@@ -1,7 +1,27 @@
 /* eslint-disable react/no-unescaped-entities */
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { db, schema } from '@/lib/db/client';
+import { SITE_URL } from '@/lib/schema/json-ld';
 import './home.css';
+
+const TITLE = 'Clarté MD — Dermatologist-led skincare for Pakistan';
+const DESCRIPTION =
+  'Four 12-week clinical regimens for acne, pigmentation, anti-ageing, and barrier repair. Take the 30-second AI skin quiz to find yours. Formulated in Lahore. COD across Pakistan.';
+
+export const metadata: Metadata = {
+  // Homepage title intentionally bypasses the layout %s template so the
+  // brand name isn't appended twice.
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
+  alternates: { canonical: SITE_URL },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SITE_URL,
+    type: 'website',
+  },
+};
 
 export const dynamic = 'force-dynamic';
 

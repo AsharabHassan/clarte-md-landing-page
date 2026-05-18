@@ -1,13 +1,25 @@
+import type { Metadata } from 'next';
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
 import { ProductCard } from '@/components/product/ProductCard';
 import { BundleCard } from '@/components/product/BundleCard';
+import { SITE_URL } from '@/lib/schema/json-ld';
 import '@/components/product/product.css';
 
-export const metadata = {
-  title: 'All protocols + individual products',
-  description:
-    'Browse all 4 Clarté MD protocol bundles and 8 individual products. Clinically dosed actives, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.',
+const TITLE = 'All protocols + individual products';
+const DESCRIPTION =
+  'Browse all 4 Clarté MD protocol bundles and 8 individual products. Clinically dosed actives, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.';
+
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: `${SITE_URL}/products` },
+  openGraph: {
+    title: `${TITLE} · Clarté MD`,
+    description: DESCRIPTION,
+    url: `${SITE_URL}/products`,
+    type: 'website',
+  },
 };
 
 export const dynamic = 'force-dynamic';
