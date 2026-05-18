@@ -1,0 +1,94 @@
+> **[PLACEHOLDER — pending PK lawyer review.]** Sections below are
+> operational scaffolding only. Final wording must be reviewed against
+> Pakistan's Personal Data Protection Bill, PMDC patient-data norms,
+> and Vercel's data-processor footprint.
+
+## 1. Who we are
+
+Clarté MD is a Lahore-based dermatology brand operated under
+[PLACEHOLDER — registered legal entity name + address]. We sell
+prescription-quality skincare protocols directly to consumers in
+Pakistan.
+
+For privacy questions or data-subject requests, write to
+**privacy@clartemd.com.pk**.
+
+## 2. What we collect
+
+When you place an order, complete the AI skin quiz, contact us, or
+subscribe to the newsletter, we collect:
+
+- **Identifiers:** name, email, phone, shipping address, order history.
+- **Photos:** if you upload a face photo to the AI before/after preview
+  or skin analysis. Photos are stored on Supabase Storage with consent
+  recorded. You can request deletion at any time.
+- **Order metadata:** what protocol you bought, when, and at which
+  price.
+- **Technical:** an IP-address hash (one-way, with a server-side
+  pepper) for rate-limiting; basic user-agent string; the page you
+  came from. We do not store raw IP addresses.
+
+We do **not** collect: full payment-card numbers (Cash-on-Delivery
+only at present), national-ID numbers, or social-media handles.
+
+## 3. Why we hold it
+
+| Purpose | Lawful basis |
+|---|---|
+| Fulfilling your order | Contract |
+| Personalising your protocol via the AI quiz | Consent (you opt in per session) |
+| Rate-limiting + abuse prevention | Legitimate interest |
+| Sending order updates by SMS / WhatsApp | Contract |
+| Sending the monthly newsletter | Consent (you tick the box) |
+
+## 4. Who we share it with
+
+- **Couriers** (TCS / Leopards / M&P) — name, phone, and address only,
+  for delivery.
+- **Supabase** (database + storage hosted in `eu-west-1`).
+- **Google Gemini** (AI model provider) — only the photo you upload to
+  the AI preview is sent, plus a brief prompt. Inputs and outputs are
+  retained on our side for 30 days, then deleted.
+- **Vercel** (web hosting).
+- **[PLACEHOLDER — CRM provider]** for support follow-up.
+
+We do not sell your data, and we do not run third-party advertising
+trackers.
+
+## 5. How long we keep it
+
+- **Order records** — 7 years for tax / regulatory compliance.
+- **AI preview photos** — 30 days, then deleted from Supabase Storage.
+- **Skin analysis results** — kept while your account is active;
+  deleted within 30 days of a deletion request.
+- **Newsletter subscriptions** — until you unsubscribe.
+- **IP-hash rate-limit rows** — automatically aged out after 30 days.
+
+## 6. Your rights
+
+You can ask us, at any time, to:
+
+- send you a copy of the data we hold about you,
+- correct anything that's wrong,
+- delete your account and associated photos,
+- stop sending you marketing emails (unsubscribe link in every newsletter
+  also works).
+
+Email **privacy@clartemd.com.pk** with the request. We aim to respond
+within 14 working days.
+
+## 7. Children
+
+Clarté MD's protocols are for adults (18+). We don't knowingly collect
+data from minors. If you believe a child has submitted information,
+contact us and we'll delete it.
+
+## 8. Cookies
+
+We use only first-party, strictly necessary cookies (session, cart
+state, CSRF). No analytics or advertising cookies at this time.
+
+## 9. Changes
+
+We update this policy as the business grows. Material changes will be
+flagged at the top of this page with the new effective date.
