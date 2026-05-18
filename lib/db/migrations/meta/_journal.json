@@ -15,6 +15,13 @@
       "when": 1779102361750,
       "tag": "0001_nebulous_whistler",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779102491937,
+      "tag": "0002_redundant_raza",
+      "breakpoints": true
     }
   ]
 }

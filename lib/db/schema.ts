@@ -112,6 +112,18 @@ export const orderItems = pgTable('order_items', {
   isBundle: boolean('is_bundle').notNull().default(false),
 });
 
+// ---------- subscribers ----------
+// Newsletter opt-ins captured from the contact form (and, later, the
+// site-wide footer subscribe stub). Unique on email so repeat submits
+// dedupe via onConflictDoNothing. No PII beyond email + IP hash.
+export const subscribers = pgTable('subscribers', {
+  id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+  email: text('email').notNull().unique(),
+  sourcePage: text('source_page').notNull(),
+  ipHash: text('ip_hash').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
 // ---------- order_lookups ----------
 // Every order-tracking attempt (regardless of outcome) so brute-force
 // on order_number + phone last-4 can be rate-limited per IP.
@@ -141,5 +153,7 @@ export type OrderItem = typeof orderItems.$inferSelect;
 export type NewOrderItem = typeof orderItems.$inferInsert;
 export type AiSession = typeof aiSessions.$inferSelect;
 export type NewAiSession = typeof aiSessions.$inferInsert;
+export type Subscriber = typeof subscribers.$inferSelect;
+export type NewSubscriber = typeof subscribers.$inferInsert;
 export type OrderLookup = typeof orderLookups.$inferSelect;
 export type NewOrderLookup = typeof orderLookups.$inferInsert;
