@@ -112,6 +112,23 @@ export const orderItems = pgTable('order_items', {
   isBundle: boolean('is_bundle').notNull().default(false),
 });
 
+// ---------- order_lookups ----------
+// Every order-tracking attempt (regardless of outcome) so brute-force
+// on order_number + phone last-4 can be rate-limited per IP.
+export const orderLookups = pgTable(
+  'order_lookups',
+  {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    clientIpHash: text('client_ip_hash').notNull(),
+    targetOrderNumber: text('target_order_number').notNull(),
+    found: boolean('found').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    rateLimitIdx: index('order_lookups_rate_limit_idx').on(t.clientIpHash, t.createdAt),
+  }),
+);
+
 // ---------- type exports ----------
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
@@ -124,3 +141,5 @@ export type OrderItem = typeof orderItems.$inferSelect;
 export type NewOrderItem = typeof orderItems.$inferInsert;
 export type AiSession = typeof aiSessions.$inferSelect;
 export type NewAiSession = typeof aiSessions.$inferInsert;
+export type OrderLookup = typeof orderLookups.$inferSelect;
+export type NewOrderLookup = typeof orderLookups.$inferInsert;

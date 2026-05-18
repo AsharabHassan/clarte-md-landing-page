@@ -8,6 +8,13 @@
       "when": 1778985018574,
       "tag": "0000_same_norrin_radd",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1779102361750,
+      "tag": "0001_nebulous_whistler",
+      "breakpoints": true
     }
   ]
 }
