@@ -25,7 +25,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="nav-case">CS-001 · Acne Vulgaris</span>
       <a class="wa-pill" href="https://wa.me/923249986822" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.2-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.8.8 2.5.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.4 5.3L2 22l4.8-1.3c1.5.8 3.3 1.3 5.2 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
-        WhatsApp Dr. Ahmad
+        WhatsApp our team
       </a>
     </div>
   </div>
@@ -133,7 +133,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <p class="deck">Identity, lighting, ethnicity, and pose preserved. Active breakouts cleared. Post-acne pigmentation faded. Texture smoothed. No filter sheen, no idealization.</p>
             <ol class="protocol-list">
               <li>One AI projection, presented side-by-side with your photograph.</li>
-              <li>An editorial note from Dr. Ahmad's team on the projection.</li>
+              <li>An editorial note from our team on the projection.</li>
               <li>Your image is processed once, then deleted — never stored, sold, or shared.</li>
               <li>Optional: order the protocol to receive a personal WhatsApp consultation.</li>
             </ol>
@@ -203,7 +203,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <aside class="editorial-note">
             <span class="note-label">Editorial<br>Note</span>
             <div class="note-body">
-              This image is a <strong>generative-AI projection</strong>, not a clinical guarantee. Real outcomes depend on adherence, sun protection, and individual physiology. Dr. Ahmad's team will adapt your routine on order — most patients see meaningful change between week six and twelve. Your photograph is deleted from our servers immediately after the projection is delivered.
+              This image is a <strong>generative-AI projection</strong>, not a clinical guarantee. Real outcomes depend on adherence, sun protection, and individual physiology. Our team will adapt your routine on order — most patients see meaningful change between week six and twelve. Your photograph is deleted from our servers immediately after the projection is delivered.
             </div>
           </aside>
 
@@ -222,7 +222,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p id="errorMsg">We couldn't generate your preview. Please submit a clearer, front-facing photograph in even light.</p>
           <div class="result-cta-row">
             <button class="btn btn-primary" id="btnRetry">↺ Submit again</button>
-            <a class="btn btn-ghost" href="https://wa.me/923249986822">WhatsApp Dr. Ahmad instead</a>
+            <a class="btn btn-ghost" href="https://wa.me/923249986822">WhatsApp our team instead</a>
           </div>
         </div>
 
@@ -328,7 +328,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <h3 class="rx-name display">The Clear Skin <em>Protocol.</em></h3>
-        <p class="rx-deck">Twice daily, mornings and evenings — under three minutes per cycle. Adjust frequency as instructed; consult Dr. Ahmad's team for any reaction beyond mild dryness.</p>
+        <p class="rx-deck">Twice daily, mornings and evenings — under three minutes per cycle. Adjust frequency as instructed; consult our team for any reaction beyond mild dryness.</p>
 
         <ol class="rx-list">
           <li>
@@ -383,8 +383,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h4 class="display">Four perks Clarté extends to <em>every patient.</em></h4>
         <ol class="rx-includes">
           <li>Nationwide shipping, complimentary.</li>
-          <li>One-to-one WhatsApp consultation with Dr. Ahmad's team — reply within two hours.</li>
-          <li>A printed twenty-eight-day protocol card, signed by Dr. Ahmad.</li>
+          <li>One-to-one WhatsApp consultation with our team — reply within two hours.</li>
+          <li>A printed twenty-eight-day protocol card, signed by our doctor.</li>
           <li>Authenticity guarantee. Twofold refund if any unit is found counterfeit.</li>
         </ol>
         <button class="rx-cta" onclick="addBundleToCart(); document.getElementById('intake').scrollIntoView({behavior:'smooth'});">
@@ -399,7 +399,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="cross-sell">
       <div class="cs-head">
         <h4 class="display">Adjunctive therapy — <em>optional add-ons.</em></h4>
-        <span class="cs-sub">Curated by Dr. Ahmad's team</span>
+        <span class="cs-sub">Curated by our team</span>
       </div>
       <div class="cs-grid" id="crossSellGrid"></div>
     </div>
@@ -428,7 +428,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="section-head">
       <span class="specimen-label">Week by week</span>
       <h2 class="display">What actually happens — <span class="h-em">no miracles, no theatrics.</span></h2>
-      <p class="deck">The clinical course Dr. Ahmad observes in practice. Adherence is the variable. Sun protection is non-negotiable.</p>
+      <p class="deck">The clinical course our doctor observes in practice. Adherence is the variable. Sun protection is non-negotiable.</p>
     </div>
     <!--
       ⚠ PLACEHOLDER B/A PHOTOS — replace with real consented patient photos before launch.
@@ -514,7 +514,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="colo-item">
         <div class="k">Counsel</div>
         <div class="num">iv.</div>
-        <div class="v">Complimentary WhatsApp consultation with Dr. Ahmad's team. <strong>Reply within two hours,</strong> Mon to Sat.</div>
+        <div class="v">Complimentary WhatsApp consultation with our team. <strong>Reply within two hours,</strong> Mon to Sat.</div>
       </div>
     </div>
   </div>
@@ -535,11 +535,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq">
       <details class="qa">
         <summary>Will the routine make my skin worse before it gets better?</summary>
-        <p class="a">Mild purging is real with active ingredients like salicylic acid and niacinamide — clogged microcomedones surface and clear faster than they otherwise would. It typically peaks around day ten to fourteen and resolves by week four. If breakouts worsen significantly after week four, WhatsApp Dr. Ahmad's team with a photograph; the adjustment is usually a frequency change, not the wrong product.</p>
+        <p class="a">Mild purging is real with active ingredients like salicylic acid and niacinamide — clogged microcomedones surface and clear faster than they otherwise would. It typically peaks around day ten to fourteen and resolves by week four. If breakouts worsen significantly after week four, WhatsApp our team with a photograph; the adjustment is usually a frequency change, not the wrong product.</p>
       </details>
       <details class="qa">
         <summary>I'm already on a prescription. Can I use this alongside?</summary>
-        <p class="a">If you're on isotretinoin, topical retinoids (tretinoin, adapalene), or oral antibiotics, please consult Dr. Ahmad's team before ordering. The protocol is designed as a standalone regimen; combining with prescription actives requires staggering to avoid irritation. The consultation is complimentary and included with the bundle.</p>
+        <p class="a">If you're on isotretinoin, topical retinoids (tretinoin, adapalene), or oral antibiotics, please consult our team before ordering. The protocol is designed as a standalone regimen; combining with prescription actives requires staggering to avoid irritation. The consultation is complimentary and included with the bundle.</p>
       </details>
       <details class="qa">
         <summary>Is this safe during pregnancy or breastfeeding?</summary>
@@ -551,7 +551,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </details>
       <details class="qa">
         <summary>What if my skin reacts badly to one of the products?</summary>
-        <p class="a">WhatsApp Dr. Ahmad's team within fourteen days with a photograph of the reaction. We will usually adjust the routine — most issues are caused by too-rapid introduction of an active, easily corrected. If you would prefer to return, we accept opened products for a full refund within thirty days, unlike most platforms that exclude opened cosmetics.</p>
+        <p class="a">WhatsApp our team within fourteen days with a photograph of the reaction. We will usually adjust the routine — most issues are caused by too-rapid introduction of an active, easily corrected. If you would prefer to return, we accept opened products for a full refund within thirty days, unlike most platforms that exclude opened cosmetics.</p>
       </details>
       <details class="qa">
         <summary>Is cash on delivery actually available?</summary>
@@ -583,7 +583,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="section-head">
       <span class="specimen-label">Complete your order</span>
-      <h2 class="display">A few details, and Dr. Ahmad's team <span class="h-em">takes it from here.</span></h2>
+      <h2 class="display">A few details, and our team <span class="h-em">takes it from here.</span></h2>
       <p class="deck">WhatsApp confirmation within two hours during business hours. Cash on delivery is available across Pakistan; no card details required.</p>
     </div>
 
@@ -592,7 +592,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </div>
       <h3 class="display">Prescription <em>received.</em></h3>
-      <p>Dr. Ahmad's team will WhatsApp you within two hours to confirm dispatch. Your order summary has also been emailed. Welcome to Clarté MD — and to the Clear Skin Protocol.</p>
+      <p>Our team will WhatsApp you within two hours to confirm dispatch. Your order summary has also been emailed. Welcome to Clarté MD — and to the Clear Skin Protocol.</p>
     </div>
 
     <div class="intake-grid" id="intakeGrid">
