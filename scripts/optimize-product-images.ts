@@ -10,6 +10,13 @@
  *
  * Run: npx tsx scripts/optimize-product-images.ts
  * Idempotent — overwrites prior output.
+ *
+ * NOTE: This pass picks the operator's *named* file in each folder
+ * (e.g. Retinol.png) as the hero — which turned out to be a 3-bottle
+ * composite shot. Operator subsequently asked for single-bottle front
+ * shots as heroes. If you re-run this optimizer from scratch, also
+ * run `scripts/remap-product-heroes.ts` afterward to apply the chosen
+ * hero/view swaps.
  */
 import { existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { copyFile } from 'node:fs/promises';
