@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { eq } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
+import { ProductCard } from '@/components/product/ProductCard';
 import { SITE_URL } from '@/lib/schema/json-ld';
 import './home.css';
+import '@/components/product/product.css';
 
 const TITLE = 'Clarté MD — Dermatologist-led skincare for Pakistan';
 const DESCRIPTION =
@@ -49,17 +52,30 @@ const PROTOCOL_TAGLINES: Record<string, string> = {
     'Triple HA · B5 · Ceramides · SPF 50 — no actives, calms compromised barriers.',
 };
 
-async function getBundles() {
+// Display order for the homepage individual-products strip. Mirrors
+// the routine sequence (cleanse → serum actives → moisturiser → SPF)
+// so customers reading top-to-bottom see the natural application
+// order, not the seed order.
+const PRODUCT_DISPLAY_ORDER = ['prep', 'rescue', 'vitc', 'acne', 'ha', 'reti', 'light', 'spf'];
+
+async function getCatalog() {
   const bundles = await db.select().from(schema.bundles);
-  return bundles;
+  const products = await db
+    .select()
+    .from(schema.products)
+    .where(eq(schema.products.active, true));
+  return { bundles, products };
 }
 
 export default async function HomePage() {
-  const bundles = await getBundles();
+  const { bundles, products } = await getCatalog();
   // Order in the canonical hero → ordered display: acne, even-tone, renewal, barrier
   const ordered = ['clear-skin-protocol', 'even-tone-protocol', 'renewal-protocol', 'barrier-protocol']
     .map((slug) => bundles.find((b) => b.slug === slug))
     .filter((b): b is NonNullable<typeof b> => !!b);
+  const orderedProducts = PRODUCT_DISPLAY_ORDER
+    .map((sku) => products.find((p) => p.sku === sku))
+    .filter((p): p is NonNullable<typeof p> => !!p);
 
   return (
     <div className="home-page">
@@ -123,11 +139,34 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* INDIVIDUAL PRODUCTS */}
+      <section className="home-products">
+        <div className="home-section-head">
+          <span className="mono eyebrow">— 02 — Or shop individual products</span>
+          <h2 className="display">Build your own routine, à la carte.</h2>
+          <p className="lede">
+            Each product in the catalogue is the same formulation sold in the protocols
+            — identical batch, identical dose. Buy individually when you already know
+            what your skin needs.
+          </p>
+        </div>
+        <div className="home-products-grid catalog-grid">
+          {orderedProducts.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+        <div className="home-products-foot">
+          <Link href="/products" className="home-products-link">
+            View the full catalogue →
+          </Link>
+        </div>
+      </section>
+
       {/* BRAND-STORY PREVIEW */}
       <section className="home-about">
         <div className="home-about-inner">
           <div className="home-about-text">
-            <span className="mono eyebrow">— 02 — How we work</span>
+            <span className="mono eyebrow">— 03 — How we work</span>
             <h2 className="display">No bottles before consultation.</h2>
             <p>
               Clarté MD only ships clinical protocols — never single actives sold as

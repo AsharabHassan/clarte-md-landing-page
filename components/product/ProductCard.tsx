@@ -3,19 +3,25 @@
 import Link from 'next/link';
 import { useCart } from '@/lib/cart/use-cart';
 import type { Product } from '@/lib/db/schema';
+import { PRODUCT_CONTENT, productImagePaths } from '@/lib/products/content';
 
 export function ProductCard({ product }: { product: Product }) {
   const { addProduct } = useCart();
   const hasDiscount =
     product.listPricePkr !== null && product.listPricePkr > product.pricePkr;
+  // Prefer the operator-supplied local gallery hero (post 2026-05-19)
+  // over the legacy Shopify imageUrl in the DB.
+  const cardImage = PRODUCT_CONTENT[product.sku]
+    ? productImagePaths(product.sku).hero
+    : product.imageUrl;
 
   return (
     <article className="product-card">
       <Link href={`/products/${product.sku}`} className="product-card-image-link">
         <div className="product-card-image">
-          {product.imageUrl ? (
+          {cardImage ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={product.imageUrl} alt={product.name} loading="lazy" />
+            <img src={cardImage} alt={product.name} loading="lazy" />
           ) : (
             <span className="product-card-placeholder mono">[Photo pending]</span>
           )}
