@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 
 export function SiteFooter() {
+  const [email, setEmail] = useState('');
   return (
     <footer className="site-footer">
       <div className="site-footer-inner">
@@ -30,7 +32,11 @@ export function SiteFooter() {
           <p className="site-footer-news-blurb">
             Honest dermatology, monthly. No spam.
           </p>
-          {/* Stub: full subscriber UX lands in sub-project #7 */}
+          {/* Stub: full subscriber UX lands in sub-project #7. The
+              input is controlled (value + onChange) so that browser
+              password-managers / autofill that inject a DOM value
+              don't trip React's "uncontrolled → controlled" warning
+              when the page re-renders. */}
           <form
             className="site-footer-news-form"
             onSubmit={(e) => {
@@ -39,6 +45,8 @@ export function SiteFooter() {
           >
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               aria-label="Email for newsletter"
             />

@@ -81,7 +81,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
       </head>
-      <body>
+      {/*
+        suppressHydrationWarning is React's documented escape hatch
+        for the case the Next.js error message itself calls out:
+        "a browser extension messes with the HTML before React loaded."
+        Some PK clients run extensions (Dashlane, Norton Safe Web,
+        Grammarly, etc.) that inject attributes like
+        `__processed_<uuid>__="true"` on <body> at first paint, which
+        React then flags as a hydration mismatch. The flag suppresses
+        attribute warnings on this element ONLY — children still
+        hydrate with full mismatch checking.
+      */}
+      <body suppressHydrationWarning>
         <CartProvider>{children}</CartProvider>
       </body>
     </html>

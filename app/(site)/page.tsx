@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { db, schema } from '@/lib/db/client';
@@ -138,7 +137,7 @@ export default async function HomePage() {
             </p>
             <p>
               You upload a selfie. The AI projects week 12. You choose the protocol. The
-              courier knocks. You open the sealed box, then pay.
+              courier knocks. You pay on delivery — and the 12-week clock starts.
             </p>
             <Link href="/about" className="home-about-cta">
               About the brand →
@@ -162,7 +161,7 @@ export default async function HomePage() {
           </div>
           <div className="home-trust-cell">
             <h3 className="display">COD</h3>
-            <p>Open the parcel at your door. Then pay the courier. Refuse if anything's off.</p>
+            <p>Pay the courier in cash when your parcel arrives. Damaged order? WhatsApp us within 24 hours.</p>
           </div>
           <div className="home-trust-cell">
             <h3 className="display">WhatsApp</h3>
