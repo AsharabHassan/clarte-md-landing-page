@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import { headers } from 'next/headers';
 import './order.css';
 
 interface PageParams {
@@ -52,7 +53,14 @@ const STATUS_COPY: Record<string, { label: string; sub: string }> = {
 };
 
 async function fetchOrder(number: string, phone: string): Promise<OrderPayload | null> {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  // Derive base URL from the incoming request so this works on any
+  // localhost port (dev, E2E) AND on prod (lp.clartemd.com.pk). The
+  // previous hardcoded :3000 fallback crashed the page if the dev
+  // server ran on a different port and NEXT_PUBLIC_SITE_URL was unset.
+  const h = await headers();
+  const host = h.get('host') ?? 'localhost:3000';
+  const proto = h.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https');
+  const base = `${proto}://${host}`;
   const res = await fetch(
     `${base}/api/order/${encodeURIComponent(number)}?phone=${encodeURIComponent(phone)}`,
     { cache: 'no-store' },

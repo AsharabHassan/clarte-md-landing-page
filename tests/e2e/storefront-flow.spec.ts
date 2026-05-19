@@ -55,28 +55,30 @@ test('storefront end-to-end via universal cart + checkout', async ({ page }) => 
   await page.fill('input[name="address"]', 'House 9, Street 9, DHA');
   await page.selectOption('select[name="city"]', 'Lahore');
 
-  // 7. Submit — capture the create-order response for diagnostics
+  // 7. Submit — capture the create-order response status. We don't
+  //    read its body: CheckoutForm calls window.location.assign() the
+  //    moment it resolves, which tears down the page context before
+  //    Playwright can buffer the body (status arrives, body is lost).
+  //    The order number is recoverable from the navigated URL below.
   const responsePromise = page.waitForResponse(
-    (r) => r.url().includes('/api/create-order'),
+    (r) =>
+      r.url().includes('/api/create-order') &&
+      r.request().method() === 'POST',
     { timeout: 15_000 },
   );
   await page.getByRole('button', { name: /place order/i }).click();
   const orderResp = await responsePromise;
-  const orderJson = (await orderResp.json().catch(() => ({}))) as {
-    ok?: boolean;
-    order_number?: string;
-    error?: string;
-  };
-  if (orderResp.status() !== 200) {
-    console.error('create-order failed:', orderResp.status(), JSON.stringify(orderJson));
-  }
   expect(orderResp.status()).toBe(200);
-  expect(orderJson.ok).toBe(true);
-  expect(orderJson.order_number).toMatch(/^CLM-\d{4}-\d{4,}$/);
-  const orderNumber = orderJson.order_number as string;
 
-  // 8. Checkout navigates to /order/[number]?phone=XXXX on success
-  await page.waitForURL(new RegExp(`/order/${orderNumber}\\?phone=`), { timeout: 10_000 });
+  // 8. Checkout navigates to /order/[number]?phone=XXXX on success.
+  //    Extract the order number from the URL itself — that's the
+  //    server-authoritative ID and the only reliable source post-nav.
+  await page.waitForURL(/\/order\/CLM-\d{4}-\d{4,}\?phone=\d{4}/, {
+    timeout: 10_000,
+  });
+  const urlMatch = page.url().match(/\/order\/(CLM-\d{4}-\d{4,})\?phone=/);
+  expect(urlMatch).not.toBeNull();
+  const orderNumber = urlMatch![1];
   await expect(page.locator('body')).toContainText(orderNumber);
   await expect(page.locator('body')).toContainText(/order received|preparing|on the way/i);
 
