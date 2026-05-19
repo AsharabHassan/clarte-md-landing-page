@@ -596,7 +596,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="trust-cod">
             <span class="mono eyebrow">Pay on Delivery</span>
-            <p>Open the parcel at your door. <em>Then</em> pay the courier. If the bottle looks wrong, refuse it — no charge, no questions.</p>
+            <p>Pay the courier in cash when your parcel arrives. If your order arrives damaged, WhatsApp us within 24 hours and we'll make it right.</p>
           </div>
         </div>
       </form>

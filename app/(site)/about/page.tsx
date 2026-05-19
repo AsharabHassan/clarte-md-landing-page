@@ -103,8 +103,9 @@ export default function AboutPage() {
             <div>
               <h3>Sealed packaging, COD payment</h3>
               <p>
-                Open the box at your door. Then pay the courier. If anything looks wrong —
-                seal broken, label off, bottle short — refuse it. No charge, no questions.
+                Every parcel ships sealed and labeled. Pay the courier in cash when it
+                arrives. If your order arrives damaged or incorrect, WhatsApp us within
+                24 hours and we'll arrange a refund or re-ship.
               </p>
             </div>
             <div>

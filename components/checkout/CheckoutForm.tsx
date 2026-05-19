@@ -173,8 +173,8 @@ export function CheckoutForm() {
           <div className="trust-cod">
             <span className="mono eyebrow">Pay on Delivery</span>
             <p>
-              Open the parcel at your door. <em>Then</em> pay the courier. If the bottle
-              looks wrong, refuse it — no charge, no questions.
+              Pay the courier in cash when your parcel arrives. If your order arrives
+              damaged, WhatsApp us within 24 hours and we&apos;ll make it right.
             </p>
           </div>
         </fieldset>
