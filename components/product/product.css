@@ -355,10 +355,207 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
+/* PDP gallery (hero image + thumbnail strip) */
+.pdp-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pdp-gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.pdp-gallery-thumb {
+  aspect-ratio: 1 / 1;
+  background: #f5f7fb;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.pdp-gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pdp-gallery-thumb:hover { border-color: #b3ccff; }
+.pdp-gallery-thumb.active { border-color: #0e1f3a; }
+
+/* PDP hero — tags, formulation, badges */
+.pdp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.pdp-tag {
+  display: inline-block;
+  padding: 5px 11px;
+  background: rgba(0, 87, 255, 0.08);
+  color: #0057ff;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+}
+.pdp-hero-formulation {
+  font-size: 13px;
+  color: #5a6584;
+  margin: 0 0 18px;
+  font-style: italic;
+}
+.pdp-badges {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pdp-badges li {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #2a3553;
+  background: #f5f7fb;
+  padding: 4px 9px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* PDP content sections */
+.pdp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pdp-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #2a3553;
+}
+.pdp-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #0057ff;
+  font-size: 13px;
+}
+
+.pdp-ingredients {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.pdp-ingredient {
+  background: #f9fafd;
+  border: 1px solid #eef0f6;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.pdp-ingredient-name {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  color: #0e1f3a;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.pdp-ingredient-role {
+  font-size: 13.5px;
+  color: #5a6584;
+  line-height: 1.5;
+}
+
+.pdp-steps {
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: pdp-step;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pdp-steps li {
+  counter-increment: pdp-step;
+  position: relative;
+  padding-left: 44px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #2a3553;
+  min-height: 32px;
+}
+.pdp-steps li::before {
+  content: counter(pdp-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: #0e1f3a;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+.pdp-protocol-note {
+  margin-top: 22px;
+  font-size: 14px;
+  color: #5a6584;
+  font-style: italic;
+}
+.pdp-protocol-note a {
+  color: #0057ff;
+  text-decoration: underline;
+}
+
+.pdp-important {
+  background: #fff7ed;
+  border: 1px dashed #d97757;
+  border-radius: 14px;
+  padding: 28px 32px;
+  border-top: 1px dashed #d97757;
+  margin-top: 24px;
+}
+.pdp-important h2 {
+  color: #92400e;
+}
+.pdp-important .pdp-list li {
+  color: #6b3410;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.pdp-important .pdp-list li::before {
+  content: '!';
+  color: #d97757;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
 @media (max-width: 720px) {
   .pdp-hero {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+  .pdp-ingredients {
+    grid-template-columns: 1fr;
+  }
+  .pdp-important {
+    padding: 20px 18px;
   }
   .catalog-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
