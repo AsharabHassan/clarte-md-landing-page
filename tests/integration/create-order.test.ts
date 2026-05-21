@@ -40,7 +40,7 @@ describe('POST /api/create-order', () => {
 
     const orders = await db.select().from(schema.orders).where(sql`order_number = ${data.order_number}`);
     expect(orders).toHaveLength(1);
-    expect(orders[0].totalPkr).toBe(6499);
+    expect(orders[0].totalPkr).toBe(6499 + 250);
   });
 
   it('rejects invalid payload', async () => {
@@ -64,9 +64,9 @@ describe('POST /api/create-order', () => {
     expect(res.status).toBe(200);
     expect(data.ok).toBe(true);
 
-    // Verify the order persisted at the REAL price (Rs 6499), not Rs 1.
+    // Verify the order persisted at the REAL price (Rs 6499 + Rs 250 flat shipping), not Rs 1.
     const orders = await db.select().from(schema.orders).where(sql`order_number = ${data.order_number}`);
-    expect(orders[0].totalPkr).toBe(6499);
+    expect(orders[0].totalPkr).toBe(6499 + 250);
   });
 
   it('rejects unknown SKU', async () => {
@@ -100,8 +100,8 @@ describe('POST /api/create-order', () => {
     expect(data.ok).toBe(true);
 
     const orders = await db.select().from(schema.orders).where(sql`order_number = ${data.order_number}`);
-    // 6499 bundle + 2 * 2250 vitc = 10999, over free-ship threshold → shipping 0
+    // 6499 bundle + 2 * 2250 vitc = 10999 subtotal; flat Rs. 250 shipping always.
     expect(orders[0].subtotalPkr).toBe(6499 + 2 * 2250);
-    expect(orders[0].totalPkr).toBe(6499 + 2 * 2250);
+    expect(orders[0].totalPkr).toBe(6499 + 2 * 2250 + 250);
   });
 });

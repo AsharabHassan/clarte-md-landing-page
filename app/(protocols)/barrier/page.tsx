@@ -15,7 +15,7 @@ const BUNDLE_SLUG = 'barrier-protocol';
 const ROUTE = '/barrier';
 const TITLE = 'Barrier Protocol — Sensitivity + hydration';
 const DESCRIPTION =
-  'A gentle clinical regimen for compromised, sensitive, or dehydrated skin. Ceramide-rich cleanser, panthenol serum, and barrier-repair moisturiser — clinically dosed, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.';
+  'A gentle clinical regimen for compromised, sensitive, or dehydrated skin. Ceramide-rich cleanser, panthenol serum, and barrier-repair moisturiser — clinically dosed, dermatologist-formulated, manufactured in Lahore.';
 
 export const dynamic = 'force-dynamic';
 

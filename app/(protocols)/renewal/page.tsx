@@ -15,7 +15,7 @@ const BUNDLE_SLUG = 'renewal-protocol';
 const ROUTE = '/renewal';
 const TITLE = 'Renewal Protocol — Anti-ageing + fine lines';
 const DESCRIPTION =
-  'A 12-week clinical regimen for fine lines, dullness, and loss of firmness. Encapsulated retinol, peptides, and vitamin C — clinically dosed, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.';
+  'A 12-week clinical regimen for fine lines, dullness, and loss of firmness. Encapsulated retinol, peptides, and vitamin C — clinically dosed, dermatologist-formulated, manufactured in Lahore.';
 
 export const dynamic = 'force-dynamic';
 

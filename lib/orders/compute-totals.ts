@@ -6,7 +6,6 @@
  * `{ total: 1 }` and place an order for one rupee.
  */
 
-export const FREE_SHIPPING_THRESHOLD_PKR = 4000;
 export const FLAT_SHIPPING_PKR = 250;
 
 export interface ComputeTotalsItem {
@@ -28,6 +27,5 @@ export function computeTotals(items: ComputeTotalsItem[]): Totals {
     return { subtotal: 0, shipping: 0, total: 0 };
   }
   const subtotal = items.reduce((s, i) => s + i.unitPricePkr * i.qty, 0);
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD_PKR ? 0 : FLAT_SHIPPING_PKR;
-  return { subtotal, shipping, total: subtotal + shipping };
+  return { subtotal, shipping: FLAT_SHIPPING_PKR, total: subtotal + FLAT_SHIPPING_PKR };
 }

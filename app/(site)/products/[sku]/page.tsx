@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     .limit(1);
   if (!p) return { title: 'Product not found' };
   const description = p.actives
-    ? `${p.name} — ${p.actives}. Clinically dosed, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.`
-    : `${p.name} — clinically dosed, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.`;
+    ? `${p.name} — ${p.actives}. Clinically dosed, dermatologist-formulated, manufactured in Lahore.`
+    : `${p.name} — clinically dosed, dermatologist-formulated, manufactured in Lahore.`;
   const canonical = `${SITE_URL}/products/${p.sku}`;
   return {
     title: p.name,

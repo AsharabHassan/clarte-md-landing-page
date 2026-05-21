@@ -15,7 +15,7 @@ const BUNDLE_SLUG = 'even-tone-protocol';
 const ROUTE = '/even-tone';
 const TITLE = 'Even Tone Protocol — Pigmentation + melasma';
 const DESCRIPTION =
-  'A 12-week clinical regimen for hyperpigmentation and melasma. Tranexamic acid, alpha arbutin, and broad-spectrum SPF — clinically dosed, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.';
+  'A 12-week clinical regimen for hyperpigmentation and melasma. Tranexamic acid, alpha arbutin, and broad-spectrum SPF — clinically dosed, dermatologist-formulated, manufactured in Lahore.';
 
 export const dynamic = 'force-dynamic';
 

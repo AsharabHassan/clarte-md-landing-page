@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { inArray } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
 import { CartPreviewSchema } from '@/lib/validators/cart-preview';
-import { FLAT_SHIPPING_PKR, FREE_SHIPPING_THRESHOLD_PKR } from '@/lib/orders/compute-totals';
+import { FLAT_SHIPPING_PKR } from '@/lib/orders/compute-totals';
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
@@ -17,8 +17,6 @@ export async function POST(req: NextRequest) {
       ok: true,
       items: [],
       totals: { subtotal_pkr: 0, shipping_pkr: 0, total_pkr: 0 },
-      free_shipping_threshold_pkr: FREE_SHIPPING_THRESHOLD_PKR,
-      free_shipping_remaining_pkr: FREE_SHIPPING_THRESHOLD_PKR,
     });
   }
 
@@ -82,14 +80,8 @@ export async function POST(req: NextRequest) {
   }
 
   const subtotal = items.reduce((s, i) => s + i.line_total_pkr, 0);
-  const shipping =
-    items.length === 0
-      ? 0
-      : subtotal >= FREE_SHIPPING_THRESHOLD_PKR
-        ? 0
-        : FLAT_SHIPPING_PKR;
+  const shipping = items.length === 0 ? 0 : FLAT_SHIPPING_PKR;
   const total = subtotal + shipping;
-  const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD_PKR - subtotal);
 
   return NextResponse.json({
     ok: true,
@@ -99,7 +91,5 @@ export async function POST(req: NextRequest) {
       shipping_pkr: shipping,
       total_pkr: total,
     },
-    free_shipping_threshold_pkr: FREE_SHIPPING_THRESHOLD_PKR,
-    free_shipping_remaining_pkr: remaining,
   });
 }

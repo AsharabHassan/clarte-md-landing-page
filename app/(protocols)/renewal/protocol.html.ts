@@ -303,7 +303,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="rx-symbol">Rx</div>
           <div class="rx-meta">
             <strong>Dermatology · Clarté MD</strong>
-            Lahore · ISO 22716<br>
+            Lahore<br>
             Issued for CS-003
           </div>
         </div>
@@ -460,7 +460,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="colo-item">
         <div class="k">Provenance</div>
         <div class="num">ii.</div>
-        <div class="v">Manufactured in <strong>Lahore</strong> at an <strong>ISO 22716</strong>-certified facility. Batch- and date-stamped on every unit.</div>
+        <div class="v">Manufactured in <strong>Lahore</strong>. Batch- and date-stamped on every unit.</div>
       </div>
       <div class="colo-item">
         <div class="k">Authenticity</div>
@@ -626,7 +626,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="foot-grid">
       <div class="foot-col">
         <a href="/" class="brand">Clarté<sup>MD</sup></a>
-        <p class="blurb">Dermatologist-formulated clinical skincare. Made in Pakistan at an ISO 22716-certified facility. Delivered to your door — no grey market, no guesswork.</p>
+        <p class="blurb">Dermatologist-formulated clinical skincare. Made in Pakistan. Delivered to your door — no grey market, no guesswork.</p>
         <div class="pay-icons">
           <span>COD</span>
         </div>
@@ -654,8 +654,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© MMXXVI · Clarté MD · Lahore, Pakistan</span>
-      <span>Free shipping over Rs. 4,000 &nbsp;·&nbsp; COD &nbsp;·&nbsp; 2× refund if fake</span>
+      <span>Clarté MD · Lahore, Pakistan</span>
+      <span>COD across Pakistan</span>
     </div>
   </div>
 </footer>

@@ -15,8 +15,6 @@ interface PreviewItem {
 interface Preview {
   items: PreviewItem[];
   totals: { subtotal_pkr: number; shipping_pkr: number; total_pkr: number };
-  free_shipping_threshold_pkr: number;
-  free_shipping_remaining_pkr: number;
 }
 
 interface OrderSummaryProps {
@@ -115,17 +113,8 @@ export function OrderSummary({
         </div>
         <div className="os-row">
           <span>Shipping</span>
-          <span>
-            {preview.totals.shipping_pkr === 0
-              ? 'FREE'
-              : `Rs. ${preview.totals.shipping_pkr.toLocaleString()}`}
-          </span>
+          <span>Rs. {preview.totals.shipping_pkr.toLocaleString()}</span>
         </div>
-        {preview.free_shipping_remaining_pkr > 0 && (
-          <p className="os-free-ship-hint">
-            Add Rs. {preview.free_shipping_remaining_pkr.toLocaleString()} more for free shipping.
-          </p>
-        )}
         <div className="os-row os-grand">
           <span>Total</span>
           <span>Rs. {preview.totals.total_pkr.toLocaleString()}</span>

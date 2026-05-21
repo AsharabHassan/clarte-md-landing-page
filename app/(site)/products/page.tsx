@@ -8,7 +8,7 @@ import '@/components/product/product.css';
 
 const TITLE = 'All protocols + individual products';
 const DESCRIPTION =
-  'Browse all 4 Clarté MD protocol bundles and 8 individual products. Clinically dosed actives, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.';
+  'Browse all 4 Clarté MD protocol bundles and 8 individual products. Clinically dosed actives, dermatologist-formulated, manufactured in Lahore.';
 
 export const metadata: Metadata = {
   title: TITLE,

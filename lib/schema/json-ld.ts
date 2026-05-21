@@ -90,8 +90,8 @@ export function productLd(p: DbProduct) {
     sku: p.sku,
     url,
     description: p.actives
-      ? `${p.name} — ${p.actives}. Clinically dosed, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.`
-      : `${p.name} — clinically dosed, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.`,
+      ? `${p.name} — ${p.actives}. Clinically dosed, dermatologist-formulated, manufactured in Lahore.`
+      : `${p.name} — clinically dosed, dermatologist-formulated, manufactured in Lahore.`,
     image: p.imageUrl ? [p.imageUrl] : [`${SITE_URL}/opengraph-image`],
     brand: {
       '@type': 'Brand',

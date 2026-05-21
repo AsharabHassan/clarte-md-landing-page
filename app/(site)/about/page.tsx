@@ -6,7 +6,7 @@ import './about.css';
 
 const TITLE = 'About — Dermatologist-led skincare from Lahore';
 const DESCRIPTION =
-  'How Clarté MD works — a GMC-registered doctor formulating clinical protocols at our Lahore lab. ISO 22716 GMP manufacturing. Honest expectations, fully sealed packaging, COD across Pakistan.';
+  'How Clarté MD works — a GMC-registered doctor formulating clinical protocols at our Lahore lab. Honest expectations, fully sealed packaging, COD across Pakistan.';
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -35,7 +35,7 @@ export default function AboutPage() {
           <p className="about-hero-lede">
             Clarté MD ships 12-week clinical regimens formulated by our GMC-registered doctor —
             never an active sold in isolation, never a routine the patient builds without
-            guidance. Manufactured in Lahore under ISO 22716 GMP.
+            guidance. Manufactured in Lahore.
           </p>
         </div>
       </section>
@@ -124,11 +124,11 @@ export default function AboutPage() {
         <div className="about-manufacturing-inner">
           <div className="about-manufacturing-text">
             <span className="mono eyebrow">— Where we make it —</span>
-            <h2 className="display">Lahore. Under ISO 22716 GMP.</h2>
+            <h2 className="display">Made in Lahore.</h2>
             <p>
-              All Clarté MD products are manufactured at our Lahore facility under ISO 22716
-              Cosmetics GMP standards. Every batch is tested before release. Stability data on
-              file. Active concentrations verified by independent assay.
+              All Clarté MD products are manufactured at our Lahore facility. Every batch
+              is tested before release. Stability data on file. Active concentrations
+              verified by independent assay.
             </p>
             <p>
               Ingredient sourcing prioritises pharma-grade actives from European and Korean
@@ -136,7 +136,6 @@ export default function AboutPage() {
               label — no proprietary-complex obfuscation.
             </p>
             <ul className="about-cert-list">
-              <li>ISO 22716 Cosmetics GMP</li>
               <li>Batch-tested, stability-validated</li>
               <li>Active concentrations independently assayed</li>
               <li>Full ingredient transparency on labels</li>

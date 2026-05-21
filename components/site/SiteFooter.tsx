@@ -55,9 +55,9 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="site-footer-bottom">
-        <span>© MMXXVI · Clarté MD · Lahore, Pakistan</span>
+        <span>Clarté MD · Lahore, Pakistan</span>
         <span>
-          Made in Lahore · ISO 22716 · GMP · Free shipping over Rs. 4,000 · COD
+          Made in Lahore · COD across Pakistan
         </span>
       </div>
     </footer>

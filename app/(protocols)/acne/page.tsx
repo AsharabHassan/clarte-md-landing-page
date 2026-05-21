@@ -15,7 +15,7 @@ const BUNDLE_SLUG = 'clear-skin-protocol';
 const ROUTE = '/acne';
 const TITLE = 'Clear Skin Protocol — Active acne + post-acne marks';
 const DESCRIPTION =
-  'A 12-week clinical regimen for active breakouts and PIH. Niacinamide 10%, azelaic acid, and 2% salicylic — clinically dosed, dermatologist-formulated, manufactured in Lahore under ISO 22716 GMP.';
+  'A 12-week clinical regimen for active breakouts and PIH. Niacinamide 10%, azelaic acid, and 2% salicylic — clinically dosed, dermatologist-formulated, manufactured in Lahore.';
 
 export const dynamic = 'force-dynamic';
 

@@ -121,7 +121,7 @@ export function ProductDetailPage({ product, related }: ProductDetailPageProps) 
             </ul>
           )}
           <div className="pdp-hero-foot">
-            Free shipping over Rs. 4,000 · COD across Pakistan · Pay courier on arrival
+            COD across Pakistan · Pay courier on arrival
           </div>
         </div>
       </div>
@@ -180,7 +180,7 @@ export function ProductDetailPage({ product, related }: ProductDetailPageProps) 
             <p>
               A single-product purchase from Clarté MD's clinical catalogue. Each product is
               dosed at clinically meaningful concentrations and manufactured at our Lahore
-              facility under ISO 22716 Cosmetics GMP standards.
+              facility.
             </p>
             {product.actives && (
               <p>

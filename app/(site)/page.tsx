@@ -90,8 +90,7 @@ export default async function HomePage() {
           </h1>
           <p className="home-hero-lede">
             Four 12-week clinical protocols, each formulated by our GMC-registered doctor.
-            Clinically dosed actives. Honest expectations. Manufactured in Lahore under
-            ISO 22716 GMP.
+            Clinically dosed actives. Honest expectations. Manufactured in Lahore.
           </p>
           <div className="home-hero-ctas">
             <Link href="/quiz" className="btn btn-primary home-cta-primary">
@@ -102,11 +101,9 @@ export default async function HomePage() {
             </Link>
           </div>
           <div className="home-hero-trust mono">
-            <span>ISO 22716 · GMP</span>
+            <span>Made in Lahore</span>
             <span>·</span>
             <span>COD across Pakistan</span>
-            <span>·</span>
-            <span>Free shipping over Rs. 4,000</span>
           </div>
         </div>
       </section>
@@ -171,8 +168,8 @@ export default async function HomePage() {
             <p>
               Clarté MD only ships clinical protocols — never single actives sold as
               cure-alls. Every regimen is formulated by our GMC-registered doctor at our
-              Lahore clinic, manufactured under ISO 22716 GMP, and dispatched with full
-              ingredient transparency and dosed expectations.
+              Lahore clinic and dispatched with full ingredient transparency and dosed
+              expectations.
             </p>
             <p>
               You upload a selfie. The AI projects week 12. You choose the protocol. The
