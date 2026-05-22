@@ -1,13 +1,145 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Clarté MD design system — Phase 0 tokens.
+ *
+ * Brand-color-isn't-CTA-color rule (per La Roche-Posay's Hydra design system):
+ *   --primary    = navy  → functional CTA, body ink, headlines
+ *   --secondary  = cobalt → brand identity, accents, ring, ~10% of surfaces
+ *
+ * Per-route CSS files (app/(site)/* and app/(protocols)/*) still define
+ * their own scoped variables and dominate where they apply. These root
+ * tokens take effect on shadcn primitives and any component using the
+ * Tailwind utility classes (bg-background, text-foreground, etc).
+ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand: dark scale (navy ink + hero darks) */
+  --clarte-navy: #0e1f3a;
+  --clarte-navy-2: #142a4f;
+  --clarte-navy-deep: #08152a;
+
+  /* Brand: mid scale (cobalt accent) */
+  --clarte-cobalt: #2e5ba8;
+  --clarte-cobalt-2: #4a78c7;
+  --clarte-cobalt-soft: #6e93cf;
+  --clarte-cobalt-glow: #8ab0e0;
+
+  /* Surfaces (cool off-white system — current brand) */
+  --clarte-canvas: #fafbfd;
+  --clarte-sky: #eef3fb;
+  --clarte-sky-2: #dee7f4;
+  --clarte-sky-3: #c8d6ea;
+
+  /* Ink scale (muted text) */
+  --clarte-ink: #0e1f3a;
+  --clarte-ink-2: #1f2f50;
+  --clarte-ink-mute: #4d5d7d;
+  --clarte-ink-faint: #8a98b3;
+
+  /* Borders */
+  --clarte-rule: #dbe2ee;
+  --clarte-rule-soft: #ebf0f7;
+  --clarte-rule-strong: #b8c4d7;
+
+  /* Semantic accents */
+  --clarte-rust: #d97757;
+  --clarte-success: #1d8a6b;
+  --clarte-destructive: #c0392b;
+
+  /* Protocol accents (research-driven; available but only used on migrated protocol pages) */
+  --clarte-acne-accent: #c89880;
+  --clarte-eventone-accent: #d4a5a0;
+  --clarte-renewal-accent: #b8a8c8;
+  --clarte-barrier-accent: #a8c0a8;
+
+  /* shadcn semantic tokens (Hydra rule: brand color ≠ CTA color) */
+  --background: var(--clarte-canvas);
+  --foreground: var(--clarte-ink);
+  --card: #ffffff;
+  --card-foreground: var(--clarte-ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--clarte-ink);
+  --primary: var(--clarte-navy);
+  --primary-foreground: #ffffff;
+  --secondary: var(--clarte-cobalt);
+  --secondary-foreground: #ffffff;
+  --muted: var(--clarte-rule-soft);
+  --muted-foreground: var(--clarte-ink-mute);
+  --accent: var(--clarte-cobalt);
+  --accent-foreground: #ffffff;
+  --destructive: var(--clarte-destructive);
+  --border: var(--clarte-rule);
+  --input: var(--clarte-rule);
+  --ring: var(--clarte-cobalt);
+  --radius: 0.375rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme inline {
+  /* shadcn token bridge */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Clarté brand utilities — usable as bg-navy / text-cobalt / border-rule, etc. */
+  --color-navy: var(--clarte-navy);
+  --color-navy-2: var(--clarte-navy-2);
+  --color-navy-deep: var(--clarte-navy-deep);
+  --color-cobalt: var(--clarte-cobalt);
+  --color-cobalt-2: var(--clarte-cobalt-2);
+  --color-cobalt-soft: var(--clarte-cobalt-soft);
+  --color-cobalt-glow: var(--clarte-cobalt-glow);
+  --color-canvas: var(--clarte-canvas);
+  --color-sky: var(--clarte-sky);
+  --color-sky-2: var(--clarte-sky-2);
+  --color-sky-3: var(--clarte-sky-3);
+  --color-ink: var(--clarte-ink);
+  --color-ink-2: var(--clarte-ink-2);
+  --color-ink-mute: var(--clarte-ink-mute);
+  --color-ink-faint: var(--clarte-ink-faint);
+  --color-rule: var(--clarte-rule);
+  --color-rule-soft: var(--clarte-rule-soft);
+  --color-rule-strong: var(--clarte-rule-strong);
+  --color-rust: var(--clarte-rust);
+  --color-success: var(--clarte-success);
+
+  /* Protocol accents */
+  --color-acne-accent: var(--clarte-acne-accent);
+  --color-eventone-accent: var(--clarte-eventone-accent);
+  --color-renewal-accent: var(--clarte-renewal-accent);
+  --color-barrier-accent: var(--clarte-barrier-accent);
+
+  /* Type — fonts already loaded via layout.tsx <link> to Google Fonts */
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Container — LRP Hydra spec: 1312px centered content max-width */
+  --container-content: 82rem;
+
+  /* Radius scale (Tailwind v4 derives sm/md/lg from --radius) */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 html,
@@ -19,7 +151,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -35,8 +167,12 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
+/*
+ * Type-scale rule (research-driven):
+ *   Fraunces (serif)        → brand H1/H2, italic descriptive lines, product names
+ *   Plus Jakarta (sans)     → body, nav utilities, prices
+ *   JetBrains Mono (mono)   → eyebrows only, ALL-CAPS, tracking-[0.18em], ≤5 words
+ *   No all-caps body copy anywhere — per the Hydra audit finding.
+ *
+ * Apply via Tailwind utilities: `font-display`, `font-body`, `font-mono`.
+ */
