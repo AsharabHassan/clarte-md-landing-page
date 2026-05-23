@@ -1,6 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import { headers } from 'next/headers';
-import './order.css';
+import { Eyebrow } from '@/components/ui/eyebrow';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 interface PageParams {
   params: Promise<{ number: string }>;
@@ -52,11 +55,23 @@ const STATUS_COPY: Record<string, { label: string; sub: string }> = {
   },
 };
 
+// Status callout uses a left-bar color keyed to outcome severity.
+// Neutral (cobalt) = in progress; green = delivered; destructive = cancelled/refunded.
+function statusCalloutClass(status: string): string {
+  switch (status) {
+    case 'delivered':
+      return 'bg-emerald-50 border-l-emerald-600';
+    case 'cancelled':
+    case 'refunded':
+      return 'bg-rose-50 border-l-destructive';
+    default:
+      return 'bg-sky border-l-cobalt';
+  }
+}
+
 async function fetchOrder(number: string, phone: string): Promise<OrderPayload | null> {
   // Derive base URL from the incoming request so this works on any
-  // localhost port (dev, E2E) AND on prod (lp.clartemd.com.pk). The
-  // previous hardcoded :3000 fallback crashed the page if the dev
-  // server ran on a different port and NEXT_PUBLIC_SITE_URL was unset.
+  // localhost port (dev, E2E) AND on prod (lp.clartemd.com.pk).
   const h = await headers();
   const host = h.get('host') ?? 'localhost:3000';
   const proto = h.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https');
@@ -70,6 +85,8 @@ async function fetchOrder(number: string, phone: string): Promise<OrderPayload |
   return data.order;
 }
 
+const containerClass = 'mx-auto max-w-[45rem] px-6 pt-12 pb-24';
+
 export default async function OrderPage({ params, searchParams }: PageParams) {
   const { number } = await params;
   const { phone } = await searchParams;
@@ -77,15 +94,19 @@ export default async function OrderPage({ params, searchParams }: PageParams) {
   if (!phone) {
     // Phone-input form to start the lookup
     return (
-      <div className="order-page-empty">
-        <h1>Track your order</h1>
-        <p className="order-lede">
+      <div className={containerClass}>
+        <h1 className="mb-3 mt-6 font-display text-3xl font-normal text-navy">
+          Track your order
+        </h1>
+        <p className="mb-7 text-base text-ink-mute">
           Enter the last 4 digits of the phone number you ordered with.
         </p>
-        <form method="get" className="order-lookup-form">
-          <label>
-            Last 4 digits of your phone
-            <input
+        <form method="get">
+          <label className="mb-3.5 block">
+            <span className="mb-1.5 block text-[13px] text-ink-mute">
+              Last 4 digits of your phone
+            </span>
+            <Input
               name="phone"
               type="text"
               inputMode="numeric"
@@ -94,14 +115,22 @@ export default async function OrderPage({ params, searchParams }: PageParams) {
               required
               placeholder="XXXX"
               autoFocus
+              className="h-14 text-center font-mono text-lg tracking-[0.5em]"
             />
           </label>
-          <button type="submit" className="btn btn-primary">
+          <Button type="submit" size="lg" className="mt-3.5 w-full">
             Look up {number} →
-          </button>
+          </Button>
         </form>
-        <p className="order-foot">
-          Can't find your order? <a href="https://wa.me/923249986822">WhatsApp our team</a>.
+        <p className="mt-8 text-center text-sm text-ink-mute">
+          Can't find your order?{' '}
+          <a
+            href="https://wa.me/923249986822"
+            className="font-semibold text-cobalt no-underline hover:underline"
+          >
+            WhatsApp our team
+          </a>
+          .
         </p>
       </div>
     );
@@ -111,16 +140,30 @@ export default async function OrderPage({ params, searchParams }: PageParams) {
 
   if (!order) {
     return (
-      <div className="order-page-empty">
-        <h1>Order not found.</h1>
-        <p className="order-lede">
-          We couldn't find an order matching <code>{number}</code> with phone ending{' '}
-          <code>{phone}</code>. Double-check the order number and the phone you used at
-          checkout.
+      <div className={containerClass}>
+        <h1 className="mb-3 mt-6 font-display text-3xl font-normal text-navy">
+          Order not found.
+        </h1>
+        <p className="mb-7 text-base text-ink-mute leading-relaxed">
+          We couldn't find an order matching{' '}
+          <code className="rounded bg-sky px-1.5 py-0.5 font-mono text-[13px] text-navy">
+            {number}
+          </code>{' '}
+          with phone ending{' '}
+          <code className="rounded bg-sky px-1.5 py-0.5 font-mono text-[13px] text-navy">
+            {phone}
+          </code>
+          . Double-check the order number and the phone you used at checkout.
         </p>
-        <p className="order-foot">
-          Still stuck? <a href="https://wa.me/923249986822">WhatsApp our team</a> and we will
-          look it up manually.
+        <p className="text-center text-sm text-ink-mute">
+          Still stuck?{' '}
+          <a
+            href="https://wa.me/923249986822"
+            className="font-semibold text-cobalt no-underline hover:underline"
+          >
+            WhatsApp our team
+          </a>{' '}
+          and we will look it up manually.
         </p>
       </div>
     );
@@ -132,43 +175,51 @@ export default async function OrderPage({ params, searchParams }: PageParams) {
   };
 
   return (
-    <div className="order-page">
-      <header className="order-header">
-        <div className="mono eyebrow">Order</div>
-        <h1>{order.order_number}</h1>
-        <p className="order-meta mono">
-          Placed {new Date(order.created_at).toLocaleString('en-PK')} ·{' '}
-          {order.shipping_city}
+    <div className={containerClass}>
+      <header className="mb-8 border-b border-rule pb-[22px]">
+        <Eyebrow className="mb-2 text-ink-mute">Order</Eyebrow>
+        <h1 className="mb-2 font-mono text-[28px] font-semibold tracking-[0.02em] text-navy">
+          {order.order_number}
+        </h1>
+        <p className="font-mono text-[13px] text-ink-mute">
+          Placed {new Date(order.created_at).toLocaleString('en-PK')} · {order.shipping_city}
         </p>
       </header>
 
-      <section className={`order-status order-status-${order.status}`}>
-        <h2>{copy.label}</h2>
-        <p>{copy.sub}</p>
+      <section className={cn('mb-9 rounded-2xl border-l-4 px-7 py-6', statusCalloutClass(order.status))}>
+        <h2 className="mb-2 font-display text-[22px] font-medium text-navy">{copy.label}</h2>
+        <p className="text-[15px] leading-relaxed text-ink-2">{copy.sub}</p>
       </section>
 
-      <section className="order-items-section">
-        <h3>Items</h3>
-        <ul className="order-items">
+      <section className="mb-7">
+        <Eyebrow className="mb-3.5">Items</Eyebrow>
+        <ul className="mb-[18px] list-none border-b border-rule p-0">
           {order.items.map((i, idx) => (
-            <li key={idx} className="order-item">
-              <span className="order-item-name">
+            <li
+              key={idx}
+              className="grid grid-cols-[1fr_auto_auto] gap-3 border-t border-rule-soft py-3 text-sm"
+            >
+              <span className="font-medium text-ink">
                 {i.name}
-                {i.is_bundle && <span className="order-item-tag">Bundle</span>}
+                {i.is_bundle && (
+                  <span className="ml-2 inline-block rounded bg-cobalt/10 px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.05em] text-cobalt">
+                    Bundle
+                  </span>
+                )}
               </span>
-              <span className="order-item-qty">×{i.qty}</span>
-              <span className="order-item-price">
+              <span className="font-mono text-ink-mute">×{i.qty}</span>
+              <span className="text-ink tabular-nums">
                 Rs. {i.line_total_pkr.toLocaleString()}
               </span>
             </li>
           ))}
         </ul>
-        <div className="order-totals">
-          <div className="row">
+        <div className="mt-[18px]">
+          <div className="flex justify-between py-1.5 text-sm text-ink-2">
             <span>Subtotal</span>
             <span>Rs. {order.totals.subtotal_pkr.toLocaleString()}</span>
           </div>
-          <div className="row">
+          <div className="flex justify-between py-1.5 text-sm text-ink-2">
             <span>Shipping</span>
             <span>
               {order.totals.shipping_pkr === 0
@@ -176,18 +227,25 @@ export default async function OrderPage({ params, searchParams }: PageParams) {
                 : `Rs. ${order.totals.shipping_pkr.toLocaleString()}`}
             </span>
           </div>
-          <div className="row grand">
+          <div className="mt-1.5 flex justify-between border-t border-rule pt-3 font-display text-xl font-medium text-navy">
             <span>Total</span>
             <span>Rs. {order.totals.total_pkr.toLocaleString()}</span>
           </div>
         </div>
-        <p className="order-payment mono">
+        <p className="mt-[18px] font-mono text-xs text-ink-mute">
           Payment: {order.payment_method} · {order.payment_status}
         </p>
       </section>
 
-      <p className="order-foot">
-        Questions? <a href="https://wa.me/923249986822">WhatsApp our team</a>.
+      <p className="mt-8 text-center text-sm text-ink-mute">
+        Questions?{' '}
+        <a
+          href="https://wa.me/923249986822"
+          className="font-semibold text-cobalt no-underline hover:underline"
+        >
+          WhatsApp our team
+        </a>
+        .
       </p>
     </div>
   );
