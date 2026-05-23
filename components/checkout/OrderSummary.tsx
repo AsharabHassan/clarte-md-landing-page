@@ -127,7 +127,9 @@ export function OrderSummary({
           disabled={submitting}
           onClick={onPlaceOrder}
         >
-          {submitting ? 'Placing order…' : 'Place order →'}
+          {submitting
+            ? 'Placing order…'
+            : `Place Order — Rs. ${preview.totals.total_pkr.toLocaleString('en-PK')}`}
         </button>
       )}
       <p className="os-foot">By placing your order you agree to our return policy.</p>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useCart } from '@/lib/cart/use-cart';
 import { OrderSummary } from './OrderSummary';
+import { CheckoutSteps } from './CheckoutSteps';
 
 const PK_CITIES = [
   'Lahore',
@@ -92,7 +93,10 @@ export function CheckoutForm() {
       const orderNumber = data.order_number as string;
       const last4 = phone.replace(/\D/g, '').slice(-4);
       clearCart();
-      window.location.assign(`/order/${orderNumber}?phone=${last4}`);
+      // placed=1 unlocks the celebration band on the order page (first
+      // visit only). Subsequent visits via WhatsApp / email links omit
+      // the flag, so the same route serves the tracker plain.
+      window.location.assign(`/order/${orderNumber}?phone=${last4}&placed=1`);
     } catch (e: unknown) {
       setErr(e instanceof Error ? e.message : 'Network issue. WhatsApp us.');
       setSubmitting(false);
@@ -110,6 +114,24 @@ export function CheckoutForm() {
         }}
       >
         <h2 className="display">Checkout</h2>
+
+        <CheckoutSteps activeStep={3} />
+
+        {/*
+          COD-as-express trust band — hoisted above the form per 05-checkout.md.
+          Six of eight reference checkouts put Apple Pay above the email field;
+          Clarté's express-checkout equivalent is the COD reassurance fact.
+          The detailed payment fieldset below still carries the radio + the
+          longer 24-hour-WhatsApp commitment.
+        */}
+        <div
+          className="trust-cod-hero"
+          role="region"
+          aria-label="Payment method summary"
+        >
+          <span className="mono eyebrow">Cash on delivery</span>
+          <p>Pay the courier when your parcel arrives. No advance payment, no card needed.</p>
+        </div>
 
         <fieldset className="form-group">
           <legend>Contact</legend>
