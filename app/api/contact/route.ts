@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
-import { ContactSchema } from '@/lib/validators/contact';
+import { ContactSchema, isNewsletterOnly } from '@/lib/validators/contact';
 import { extractClientIp, hashIp, RATE_LIMIT_AI_PER_HOUR } from '@/lib/ai/rate-limit';
 import { dispatchWebhook } from '@/lib/webhooks/dispatcher';
 
@@ -39,24 +39,29 @@ export async function POST(req: NextRequest) {
       .onConflictDoNothing();
   }
 
-  // Fire webhook for ops (sub-project #3 pattern). No persistent storage
-  // of contact submissions in DB by design — operator's CRM is the
-  // source of truth (spec §12 decision).
-  await dispatchWebhook(
-    process.env.WEBHOOK_CONTACT_SUBMITTED,
-    {
-      event: 'contact.submitted',
-      timestamp: new Date().toISOString(),
-      contact: {
-        name: input.name,
-        email: input.email,
-        phone: input.phone,
-        message: input.message,
-        subscribed_to_newsletter: !!input.subscribe,
+  // Newsletter-only submissions skip the contact webhook — there's no
+  // contact payload to send. The subscribers insert above is the entire
+  // operational write for this path.
+  if (!isNewsletterOnly(input)) {
+    // Fire webhook for ops (sub-project #3 pattern). No persistent storage
+    // of contact submissions in DB by design — operator's CRM is the
+    // source of truth (spec §12 decision).
+    await dispatchWebhook(
+      process.env.WEBHOOK_CONTACT_SUBMITTED,
+      {
+        event: 'contact.submitted',
+        timestamp: new Date().toISOString(),
+        contact: {
+          name: input.name,
+          email: input.email,
+          phone: input.phone,
+          message: input.message,
+          subscribed_to_newsletter: !!input.subscribe,
+        },
       },
-    },
-    'contact.submitted',
-  );
+      'contact.submitted',
+    );
+  }
 
   return NextResponse.json({ ok: true });
 }

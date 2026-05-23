@@ -13,9 +13,42 @@ const linkClass = cn(
   'transition-colors hover:text-white',
 );
 
+type SubscribeStatus = 'idle' | 'submitting' | 'success' | 'error';
+
 export function SiteFooter() {
-  // Newsletter form is intentionally a stub — see comment on onSubmit below.
   const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<SubscribeStatus>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  async function handleSubscribe(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (status === 'submitting' || status === 'success') return;
+    if (!email || !email.includes('@')) {
+      setStatus('error');
+      setErrorMessage('Please enter a valid email.');
+      return;
+    }
+    setStatus('submitting');
+    setErrorMessage(null);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email, subscribe: true }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) {
+        setStatus('error');
+        setErrorMessage(data.error || 'Could not subscribe. Try again later.');
+        return;
+      }
+      setStatus('success');
+      setEmail('');
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage(err instanceof Error ? err.message : 'Network issue.');
+    }
+  }
 
   return (
     <footer className="mt-16 bg-navy text-white">
@@ -93,33 +126,60 @@ export function SiteFooter() {
           <p className="mb-3 text-sm leading-relaxed text-white/70">
             Honest dermatology, monthly. No spam.
           </p>
-          {/*
-            Stub: full subscriber UX lands in a follow-up. The input is
-            controlled (value + onChange) so that browser password-managers /
-            autofill that inject a DOM value don't trip React's
-            "uncontrolled → controlled" warning when the page re-renders.
-          */}
           <form
-            className="flex gap-2"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
+            className="flex flex-col gap-2"
+            onSubmit={handleSubscribe}
+            noValidate
+            aria-describedby="newsletter-feedback"
           >
-            <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              aria-label="Email for newsletter"
+            <div className="flex gap-2">
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (status === 'error') {
+                    setStatus('idle');
+                    setErrorMessage(null);
+                  }
+                }}
+                placeholder="your@email.com"
+                aria-label="Email for newsletter"
+                aria-invalid={status === 'error' ? true : undefined}
+                disabled={status === 'submitting' || status === 'success'}
+                className={cn(
+                  'h-9 flex-1 border-white/15 bg-white/5 text-white',
+                  'placeholder:text-white/40',
+                  'focus-visible:border-cobalt-soft focus-visible:ring-cobalt/40',
+                  'disabled:cursor-not-allowed disabled:opacity-60',
+                )}
+              />
+              <Button
+                type="submit"
+                variant="secondary"
+                size="default"
+                disabled={status === 'submitting' || status === 'success'}
+              >
+                {status === 'submitting' ? '…' : status === 'success' ? 'Thanks' : 'Subscribe'}
+              </Button>
+            </div>
+            <p
+              id="newsletter-feedback"
+              role="status"
+              aria-live="polite"
               className={cn(
-                'h-9 flex-1 border-white/15 bg-white/5 text-white',
-                'placeholder:text-white/40',
-                'focus-visible:border-cobalt-soft focus-visible:ring-cobalt/40',
+                'min-h-[1.25rem] font-mono text-[11px] tracking-[0.05em]',
+                status === 'error' && 'text-rust',
+                status === 'success' && 'text-cobalt-glow',
+                status !== 'error' && status !== 'success' && 'text-transparent',
               )}
-            />
-            <Button type="submit" variant="secondary" size="default">
-              Subscribe
-            </Button>
+            >
+              {status === 'success'
+                ? 'You’re on the list.'
+                : status === 'error'
+                  ? errorMessage
+                  : 'placeholder'}
+            </p>
           </form>
         </div>
       </div>
