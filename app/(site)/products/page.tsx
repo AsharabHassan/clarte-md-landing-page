@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
-import { ProductCard } from '@/components/product/ProductCard';
-import { BundleCard } from '@/components/product/BundleCard';
-import { Eyebrow } from '@/components/ui/eyebrow';
+import {
+  CatalogFilterChips,
+  type EnrichedBundle,
+  type EnrichedProduct,
+} from '@/components/product/CatalogFilterChips';
 import { SITE_URL } from '@/lib/schema/json-ld';
 
 const TITLE = 'All protocols + individual products';
@@ -24,51 +26,67 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
-async function getCatalog() {
-  const products = await db
+/**
+ * Server-side enrichment: walk bundle_items to attach the list of
+ * concerns each product is part of. A product can ship in multiple
+ * protocols (e.g. niacinamide serum is in both Clear-Skin and
+ * Even-Tone), so concerns is a string[] not a single value.
+ */
+async function getCatalog(): Promise<{
+  products: EnrichedProduct[];
+  bundles: EnrichedBundle[];
+}> {
+  const rawProducts = await db
     .select()
     .from(schema.products)
     .where(eq(schema.products.active, true));
 
-  const bundles = await db.select().from(schema.bundles);
+  const rawBundles = await db.select().from(schema.bundles);
+  const allBundleItems = await db.select().from(schema.bundleItems);
 
-  // For each bundle, count items and sum list prices (for the "save Rs X" math)
-  const bundleEnriched = await Promise.all(
-    bundles.map(async (b) => {
-      const items = await db
-        .select()
-        .from(schema.bundleItems)
-        .where(eq(schema.bundleItems.bundleId, b.id));
-      const itemProducts = await Promise.all(
-        items.map(async (i) => {
-          const [p] = await db
-            .select()
-            .from(schema.products)
-            .where(eq(schema.products.id, i.productId))
-            .limit(1);
-          return p;
-        }),
+  // Map productId → concerns[] via bundle membership
+  const concernsBySku = new Map<string, Set<string>>();
+  for (const item of allBundleItems) {
+    const product = rawProducts.find((p) => p.id === item.productId);
+    const bundle = rawBundles.find((b) => b.id === item.bundleId);
+    if (!product || !bundle) continue;
+    if (!concernsBySku.has(product.sku)) concernsBySku.set(product.sku, new Set());
+    concernsBySku.get(product.sku)!.add(bundle.concern);
+  }
+
+  const products: EnrichedProduct[] = rawProducts.map((p) => ({
+    product: p,
+    concerns: Array.from(concernsBySku.get(p.sku) ?? []),
+  }));
+
+  // Enrich bundles with itemCount + listPriceSum (existing pattern)
+  const bundlesEnriched: EnrichedBundle[] = await Promise.all(
+    rawBundles.map(async (b) => {
+      const items = allBundleItems.filter((i) => i.bundleId === b.id);
+      const itemProducts = items.map((i) =>
+        rawProducts.find((p) => p.id === i.productId),
       );
-      const listSum = itemProducts.reduce(
+      const listPriceSum = itemProducts.reduce(
         (s, p) => s + (p?.listPricePkr ?? p?.pricePkr ?? 0),
         0,
       );
-      return { bundle: b, itemCount: items.length, listPriceSum: listSum };
+      return { bundle: b, itemCount: items.length, listPriceSum };
     }),
   );
 
   // Canonical protocol order: acne, even-tone, renewal, barrier
-  const order = [
+  const protocolOrder = [
     'clear-skin-protocol',
     'even-tone-protocol',
     'renewal-protocol',
     'barrier-protocol',
   ];
-  bundleEnriched.sort(
-    (a, b) => order.indexOf(a.bundle.slug) - order.indexOf(b.bundle.slug),
+  bundlesEnriched.sort(
+    (a, b) =>
+      protocolOrder.indexOf(a.bundle.slug) - protocolOrder.indexOf(b.bundle.slug),
   );
 
-  return { products, bundles: bundleEnriched };
+  return { products, bundles: bundlesEnriched };
 }
 
 export default async function CatalogPage() {
@@ -76,43 +94,16 @@ export default async function CatalogPage() {
 
   return (
     <div className="mx-auto max-w-[75rem] px-6 pt-12 pb-20">
-      <header className="mb-14 text-center">
-        <h1 className="mb-3 font-display font-normal text-navy text-[clamp(32px,4vw,42px)]">
+      <header className="mb-12 text-center">
+        <h1 className="mb-3 font-display font-light text-navy text-[clamp(32px,4.5vw,48px)] leading-[1.05] tracking-[-0.02em]">
           The Catalogue
         </h1>
-        <p className="text-base text-ink-mute">
-          4 protocol bundles · {products.length} individual products
+        <p className="font-display italic text-[clamp(15px,1.4vw,18px)] text-ink-mute">
+          {bundles.length} protocol bundles · {products.length} individual formulations
         </p>
       </header>
 
-      <div>
-        <div className="mt-12 mb-5 flex items-center justify-between border-b border-rule pb-3.5">
-          <h2 className="font-display text-[22px] font-medium text-navy">Protocols</h2>
-          <Eyebrow className="text-ink-mute">{bundles.length} bundles</Eyebrow>
-        </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(17.5rem,1fr))]">
-          {bundles.map(({ bundle, itemCount, listPriceSum }) => (
-            <BundleCard
-              key={bundle.id}
-              bundle={bundle}
-              itemCount={itemCount}
-              listPriceSum={listPriceSum}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <div className="mt-12 mb-5 flex items-center justify-between border-b border-rule pb-3.5">
-          <h2 className="font-display text-[22px] font-medium text-navy">Individual products</h2>
-          <Eyebrow className="text-ink-mute">{products.length} products</Eyebrow>
-        </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(15rem,1fr))]">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </div>
+      <CatalogFilterChips bundles={bundles} products={products} />
     </div>
   );
 }
