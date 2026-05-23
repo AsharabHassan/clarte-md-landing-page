@@ -8,7 +8,6 @@ import { BundleCard } from './BundleCard';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import type { Bundle, Product } from '@/lib/db/schema';
 import {
-  ACTIVE_INGREDIENT_OPTIONS,
   CONCERN_OPTIONS,
   PRODUCT_FILTER_AXES,
   TYPE_OPTIONS,
@@ -55,23 +54,19 @@ export function CatalogFilterChips({
   const [kind, setKind] = useState<KindFilter>('all');
   const [concerns, setConcerns] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
-  const [actives, setActives] = useState<string[]>([]);
 
-  const anyChipActive =
-    concerns.length > 0 || types.length > 0 || actives.length > 0 || kind !== 'all';
+  const anyChipActive = concerns.length > 0 || types.length > 0 || kind !== 'all';
 
   const filteredBundles = useMemo(() => {
     if (kind === 'individuals') return [];
     return bundles.filter((b) => {
       if (concerns.length > 0 && !concerns.includes(b.bundle.concern)) return false;
-      // Bundles don't carry type/active axes — if the user filters on
-      // those, treat them as individual-product-specific and hide bundles
-      // when type or active is selected.
+      // Bundles don't carry a type axis — if the user filters by type,
+      // they want individual products, so hide bundles when type is set.
       if (types.length > 0) return false;
-      if (actives.length > 0) return false;
       return true;
     });
-  }, [bundles, kind, concerns, types, actives]);
+  }, [bundles, kind, concerns, types]);
 
   const filteredProducts = useMemo(() => {
     if (kind === 'bundles') return [];
@@ -80,14 +75,9 @@ export function CatalogFilterChips({
       if (concerns.length > 0 && !concerns.some((c) => ep.concerns.includes(c)))
         return false;
       if (types.length > 0 && (!axes || !types.includes(axes.type))) return false;
-      if (
-        actives.length > 0 &&
-        (!axes || !actives.some((a) => axes.activeIngredients.includes(a)))
-      )
-        return false;
       return true;
     });
-  }, [products, kind, concerns, types, actives]);
+  }, [products, kind, concerns, types]);
 
   const isEmpty = filteredBundles.length === 0 && filteredProducts.length === 0;
 
@@ -106,7 +96,6 @@ export function CatalogFilterChips({
     setKind('all');
     setConcerns([]);
     setTypes([]);
-    setActives([]);
   }
 
   return (
@@ -152,13 +141,6 @@ export function CatalogFilterChips({
           options={TYPE_OPTIONS.map((t) => ({ slug: t.slug as string, label: t.label }))}
           value={types}
           onChange={setTypes}
-          disabled={kind === 'bundles'}
-        />
-        <ChipRow
-          label="Active"
-          options={ACTIVE_INGREDIENT_OPTIONS}
-          value={actives}
-          onChange={setActives}
           disabled={kind === 'bundles'}
         />
       </div>
