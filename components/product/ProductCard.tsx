@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useCart } from '@/lib/cart/use-cart';
 import type { Product } from '@/lib/db/schema';
 import { PRODUCT_CONTENT, productImagePaths } from '@/lib/products/content';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export function ProductCard({ product }: { product: Product }) {
   const { addProduct } = useCart();
@@ -16,43 +18,60 @@ export function ProductCard({ product }: { product: Product }) {
     : product.imageUrl;
 
   return (
-    <article className="product-card">
-      <Link href={`/products/${product.sku}`} className="product-card-image-link">
-        <div className="product-card-image">
+    <article
+      className={cn(
+        'flex flex-col overflow-hidden rounded-2xl border border-rule bg-card',
+        'transition-[border-color,transform] duration-200',
+        'hover:-translate-y-0.5 hover:border-navy',
+      )}
+    >
+      <Link href={`/products/${product.sku}`} className="block">
+        <div className="flex aspect-square items-center justify-center overflow-hidden bg-sky">
           {cardImage ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={cardImage} alt={product.name} loading="lazy" />
+            <img
+              src={cardImage}
+              alt={product.name}
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
           ) : (
-            <span className="product-card-placeholder mono">[Photo pending]</span>
+            <span className="font-mono text-[11px] tracking-[0.05em] text-ink-faint">
+              [Photo pending]
+            </span>
           )}
         </div>
       </Link>
-      <div className="product-card-body">
-        <Link href={`/products/${product.sku}`} className="product-card-name-link">
-          <h3 className="product-card-name">{product.name}</h3>
+      <div className="flex flex-1 flex-col p-5">
+        <Link href={`/products/${product.sku}`} className="text-inherit">
+          <h3 className="mb-2 font-display text-[17px] font-medium leading-tight text-navy">
+            {product.name}
+          </h3>
         </Link>
         {product.actives && (
-          <p className="product-card-actives mono">{product.actives}</p>
+          <p className="mb-[18px] flex-1 font-mono text-[11px] tracking-[0.03em] text-ink-mute">
+            {product.actives}
+          </p>
         )}
-        <div className="product-card-foot">
-          <div className="product-card-price">
-            <span className="product-card-current">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-col gap-0.5">
+            <span className="font-display text-lg text-navy">
               Rs. {product.pricePkr.toLocaleString()}
             </span>
             {hasDiscount && product.listPricePkr !== null && (
-              <span className="product-card-list">
+              <span className="font-mono text-[11px] text-ink-faint line-through">
                 Rs. {product.listPricePkr.toLocaleString()}
               </span>
             )}
           </div>
-          <button
+          <Button
             type="button"
-            className="product-card-add"
+            size="sm"
             onClick={() => addProduct(product.sku)}
             aria-label={`Add ${product.name} to cart`}
           >
             + Add
-          </button>
+          </Button>
         </div>
       </div>
     </article>

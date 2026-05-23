@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import type { Bundle } from '@/lib/db/schema';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const PROTOCOL_ROUTES: Record<string, string> = {
   'clear-skin-protocol': '/acne',
@@ -28,35 +30,42 @@ export function BundleCard({ bundle, itemCount, listPriceSum }: BundleCardProps)
     listPriceSum > 0 ? Math.round((savings / listPriceSum) * 100) : 0;
 
   return (
-    <article className="bundle-card">
-      <div className="bundle-card-tag mono">
+    <article
+      className={cn(
+        'flex flex-col gap-3 rounded-2xl border border-rule bg-card p-6',
+        'transition-[border-color,transform] duration-200',
+        'hover:-translate-y-0.5 hover:border-navy',
+      )}
+    >
+      <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-mute">
         Bundle · {itemCount} products
-      </div>
-      <div className="bundle-card-concern mono">{CONCERN_LABELS[bundle.concern]}</div>
-      <h3 className="bundle-card-name">{bundle.name}</h3>
-      <div className="bundle-card-savings">
-        {savings > 0 && (
+      </span>
+      <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-cobalt">
+        {CONCERN_LABELS[bundle.concern]}
+      </span>
+      <h3 className="font-display text-xl font-medium leading-tight text-navy">{bundle.name}</h3>
+      <div className="mt-1 flex flex-col gap-1">
+        {savings > 0 ? (
           <>
-            <span className="bundle-card-list">
+            <span className="font-mono text-[11px] text-ink-faint line-through">
               List Rs. {listPriceSum.toLocaleString()}
             </span>
-            <span className="bundle-card-current">
+            <span className="font-display text-2xl text-navy">
               Rs. {bundle.pricePkr.toLocaleString()}
             </span>
-            <span className="bundle-card-save mono">
+            <span className="font-mono text-[11px] text-cobalt">
               Save Rs. {savings.toLocaleString()} ({savingsPct}%)
             </span>
           </>
-        )}
-        {savings === 0 && (
-          <span className="bundle-card-current">
+        ) : (
+          <span className="font-display text-2xl text-navy">
             Rs. {bundle.pricePkr.toLocaleString()}
           </span>
         )}
       </div>
-      <Link href={route} className="bundle-card-cta">
-        Start the Protocol →
-      </Link>
+      <Button asChild className="mt-2 w-full">
+        <Link href={route}>Start the Protocol →</Link>
+      </Button>
     </article>
   );
 }

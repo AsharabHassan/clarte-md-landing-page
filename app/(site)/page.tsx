@@ -147,7 +147,7 @@ export default async function HomePage() {
             what your skin needs.
           </p>
         </div>
-        <div className="home-products-grid catalog-grid">
+        <div className="home-products-grid mt-9 grid grid-cols-[repeat(auto-fill,minmax(13.75rem,1fr))] gap-[18px]">
           {orderedProducts.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}

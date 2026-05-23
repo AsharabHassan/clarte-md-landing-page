@@ -4,7 +4,6 @@ import { eq } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
 import { ProductDetailPage } from '@/components/product/ProductDetailPage';
 import { productLd, SITE_URL } from '@/lib/schema/json-ld';
-import '@/components/product/product.css';
 
 export const dynamic = 'force-dynamic';
 

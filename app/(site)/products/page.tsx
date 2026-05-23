@@ -3,8 +3,8 @@ import { eq } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
 import { ProductCard } from '@/components/product/ProductCard';
 import { BundleCard } from '@/components/product/BundleCard';
+import { Eyebrow } from '@/components/ui/eyebrow';
 import { SITE_URL } from '@/lib/schema/json-ld';
-import '@/components/product/product.css';
 
 const TITLE = 'All protocols + individual products';
 const DESCRIPTION =
@@ -75,18 +75,22 @@ export default async function CatalogPage() {
   const { products, bundles } = await getCatalog();
 
   return (
-    <div className="catalog">
-      <header className="catalog-hero">
-        <h1>The Catalogue</h1>
-        <p>4 protocol bundles · {products.length} individual products</p>
+    <div className="mx-auto max-w-[75rem] px-6 pt-12 pb-20">
+      <header className="mb-14 text-center">
+        <h1 className="mb-3 font-display font-normal text-navy text-[clamp(32px,4vw,42px)]">
+          The Catalogue
+        </h1>
+        <p className="text-base text-ink-mute">
+          4 protocol bundles · {products.length} individual products
+        </p>
       </header>
 
       <div>
-        <div className="catalog-section-head">
-          <h2>Protocols</h2>
-          <span className="catalog-section-count">{bundles.length} bundles</span>
+        <div className="mt-12 mb-5 flex items-center justify-between border-b border-rule pb-3.5">
+          <h2 className="font-display text-[22px] font-medium text-navy">Protocols</h2>
+          <Eyebrow className="text-ink-mute">{bundles.length} bundles</Eyebrow>
         </div>
-        <div className="catalog-grid bundles">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(17.5rem,1fr))]">
           {bundles.map(({ bundle, itemCount, listPriceSum }) => (
             <BundleCard
               key={bundle.id}
@@ -99,11 +103,11 @@ export default async function CatalogPage() {
       </div>
 
       <div>
-        <div className="catalog-section-head">
-          <h2>Individual products</h2>
-          <span className="catalog-section-count">{products.length} products</span>
+        <div className="mt-12 mb-5 flex items-center justify-between border-b border-rule pb-3.5">
+          <h2 className="font-display text-[22px] font-medium text-navy">Individual products</h2>
+          <Eyebrow className="text-ink-mute">{products.length} products</Eyebrow>
         </div>
-        <div className="catalog-grid">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(15rem,1fr))]">
           {products.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}

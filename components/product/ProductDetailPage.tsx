@@ -6,6 +6,18 @@ import Link from 'next/link';
 import { useCart } from '@/lib/cart/use-cart';
 import type { Product } from '@/lib/db/schema';
 import { PRODUCT_CONTENT, productImagePaths } from '@/lib/products/content';
+import { Button } from '@/components/ui/button';
+import { Eyebrow } from '@/components/ui/eyebrow';
+import { ProductTitle } from '@/components/ui/product-title';
+import { TrustPills } from '@/components/ui/trust-pills';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { ProductCard } from './ProductCard';
+import { cn } from '@/lib/utils';
 
 interface ProductDetailPageProps {
   product: Product;
@@ -17,15 +29,11 @@ export function ProductDetailPage({ product, related }: ProductDetailPageProps) 
   const hasDiscount =
     product.listPricePkr !== null && product.listPricePkr > product.pricePkr;
 
-  // Editorial content keyed by SKU. Falls back gracefully for any SKU
-  // without a content entry (we still render the commerce hero).
   const content = PRODUCT_CONTENT[product.sku];
   const images = productImagePaths(product.sku);
   const gallery = content ? [images.hero, ...images.views] : [];
   const [activeImage, setActiveImage] = useState(0);
 
-  // Hero image: prefer the optimized local gallery hero; fall back to
-  // the DB's imageUrl (Shopify CDN) when no local gallery exists yet.
   const heroSrc = content ? gallery[activeImage] : product.imageUrl;
 
   const jsonLd = {
@@ -48,222 +56,249 @@ export function ProductDetailPage({ product, related }: ProductDetailPageProps) 
   };
 
   return (
-    <div className="pdp">
+    <div className="mx-auto max-w-[67.5rem] px-6 pt-10 pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="pdp-hero">
-        <div className="pdp-gallery">
-          <div className="pdp-hero-image">
+      {/* HERO — gallery + buy box */}
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="flex flex-col gap-4">
+          <div className="flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-sky">
             {heroSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={heroSrc} alt={product.name} />
+              <img src={heroSrc} alt={product.name} className="h-full w-full object-cover" />
             ) : (
-              <span className="pdp-placeholder">[Photo pending]</span>
+              <span className="font-mono text-xs text-ink-faint">[Photo pending]</span>
             )}
           </div>
           {content && gallery.length > 1 && (
-            <div className="pdp-gallery-thumbs" role="tablist" aria-label="Product views">
+            <div className="grid grid-cols-5 gap-2" role="tablist" aria-label="Product views">
               {gallery.map((src, i) => (
                 <button
                   key={src}
                   type="button"
                   role="tab"
                   aria-selected={i === activeImage}
-                  className={`pdp-gallery-thumb ${i === activeImage ? 'active' : ''}`}
                   onClick={() => setActiveImage(i)}
+                  className={cn(
+                    'flex aspect-square items-center justify-center overflow-hidden rounded-md',
+                    'border-2 transition-colors bg-sky',
+                    i === activeImage ? 'border-cobalt' : 'border-transparent hover:border-rule',
+                  )}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt={`${product.name} view ${i + 1}`} loading="lazy" />
+                  <img
+                    src={src}
+                    alt={`${product.name} view ${i + 1}`}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
                 </button>
               ))}
             </div>
           )}
         </div>
 
-        <div className="pdp-hero-body">
+        <div className="flex flex-col gap-5">
           {content && content.tags.length > 0 && (
-            <div className="pdp-tags">
+            <div className="flex flex-wrap gap-2">
               {content.tags.map((t) => (
-                <span key={t} className="pdp-tag">{t}</span>
+                <span
+                  key={t}
+                  className="rounded-full bg-sky px-3 py-1 font-mono text-[11px] uppercase tracking-[0.08em] text-cobalt"
+                >
+                  {t}
+                </span>
               ))}
             </div>
           )}
-          <h1>{product.name}</h1>
-          {content?.formulation && (
-            <p className="pdp-hero-formulation">{content.formulation}</p>
+
+          <ProductTitle
+            name={product.name}
+            descriptor={content?.formulation}
+          />
+
+          {product.actives && (
+            <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-mute">
+              {product.actives}
+            </p>
           )}
-          {product.actives && <p className="pdp-hero-actives">{product.actives}</p>}
-          <div className="pdp-hero-price">
-            <span className="pdp-hero-current">
+
+          <div className="mt-2 flex items-baseline gap-3">
+            <span className="font-display text-3xl text-navy">
               Rs. {product.pricePkr.toLocaleString()}
             </span>
             {hasDiscount && product.listPricePkr !== null && (
-              <span className="pdp-hero-list">
+              <span className="font-mono text-sm text-ink-faint line-through">
                 Rs. {product.listPricePkr.toLocaleString()}
               </span>
             )}
           </div>
-          <button
+
+          <Button
             type="button"
-            className="pdp-hero-add"
+            size="lg"
             onClick={() => addProduct(product.sku)}
+            className="mt-1 w-full sm:w-auto sm:min-w-[16rem]"
           >
             Add to cart →
-          </button>
+          </Button>
+
           {content && content.badges.length > 0 && (
-            <ul className="pdp-badges">
-              {content.badges.map((b) => (
-                <li key={b}>{b}</li>
-              ))}
-            </ul>
+            <TrustPills pills={content.badges} className="mt-2" />
           )}
-          <div className="pdp-hero-foot">
+
+          <div className="mt-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-mute">
             COD across Pakistan · Pay courier on arrival
           </div>
         </div>
       </div>
 
+      {/* CONTENT BODY */}
       {content ? (
         <>
-          <section className="pdp-section">
-            <h2>Benefits</h2>
-            <ul className="pdp-list">
+          <Section title="Benefits">
+            <ul className="space-y-2.5">
               {content.benefits.map((b, i) => (
-                <li key={i}>{b}</li>
+                <li key={i} className="flex gap-3 text-base text-ink-2 leading-relaxed">
+                  <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cobalt" />
+                  <span>{b}</span>
+                </li>
               ))}
             </ul>
-          </section>
+          </Section>
 
-          <section className="pdp-section">
-            <h2>Ingredients</h2>
-            <div className="pdp-ingredients">
+          <Section title="Ingredients">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {content.ingredients.map((ing) => (
-                <div key={ing.name} className="pdp-ingredient">
-                  <div className="pdp-ingredient-name">{ing.name}</div>
-                  <div className="pdp-ingredient-role">{ing.role}</div>
+                <div
+                  key={ing.name}
+                  className="rounded-xl border border-rule bg-card p-4"
+                >
+                  <div className="mb-1 font-display italic text-lg text-navy">{ing.name}</div>
+                  <div className="font-body text-sm text-ink-mute leading-snug">{ing.role}</div>
                 </div>
               ))}
             </div>
-          </section>
+          </Section>
 
-          <section className="pdp-section">
-            <h2>How to use</h2>
-            <ol className="pdp-steps">
+          <Section title="How to use">
+            <ol className="space-y-3">
               {content.directions.map((d, i) => (
-                <li key={i}>{d}</li>
+                <li key={i} className="flex gap-4 text-base text-ink-2 leading-relaxed">
+                  <span
+                    aria-hidden="true"
+                    className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-navy font-mono text-xs text-white"
+                  >
+                    {i + 1}
+                  </span>
+                  <span>{d}</span>
+                </li>
               ))}
             </ol>
-            <p className="pdp-protocol-note">
+            <p className="mt-6 rounded-lg border border-rule-soft bg-sky px-4 py-3 text-sm text-ink-mute leading-relaxed">
               For best results, follow the full{' '}
-              <Link href="/products">Clarté MD protocol</Link> for your concern rather
-              than buying products à la carte — protocols are designed to work in
-              combination.
+              <Link href="/products" className="text-cobalt underline underline-offset-2 hover:text-cobalt-2">
+                Clarté MD protocol
+              </Link>{' '}
+              for your concern rather than buying products à la carte — protocols are designed
+              to work in combination.
             </p>
-          </section>
+          </Section>
 
-          <section className="pdp-section pdp-important">
-            <h2>Important</h2>
-            <ul className="pdp-list">
+          <Section title="Important">
+            <ul className="space-y-2.5 rounded-xl border-l-[3px] border-rust bg-amber-50/40 px-5 py-4">
               {content.important.map((w, i) => (
-                <li key={i}>{w}</li>
+                <li key={i} className="flex gap-3 text-sm text-ink-2 leading-relaxed">
+                  <span aria-hidden="true" className="text-rust">⚠</span>
+                  <span>{w}</span>
+                </li>
               ))}
             </ul>
-          </section>
+          </Section>
         </>
       ) : (
         <>
-          <section className="pdp-section">
-            <h2>What is it</h2>
-            <p>
+          <Section title="What is it">
+            <p className="text-base text-ink-2 leading-relaxed">
               A single-product purchase from Clarté MD's clinical catalogue. Each product is
               dosed at clinically meaningful concentrations and manufactured at our Lahore
               facility.
             </p>
             {product.actives && (
-              <p>
-                <strong>Key actives:</strong> {product.actives}.
+              <p className="mt-3 text-base text-ink-2 leading-relaxed">
+                <strong className="font-semibold text-navy">Key actives:</strong>{' '}
+                {product.actives}.
               </p>
             )}
-          </section>
+          </Section>
 
-          <section className="pdp-section">
-            <h2>How to use</h2>
-            <p>
+          <Section title="How to use">
+            <p className="text-base text-ink-2 leading-relaxed">
               Apply after cleansing, before moisturiser. Patch-test for 48 hours before full-face
               use if you have a sensitive barrier or are layering actives for the first time.
               Always finish your AM routine with SPF.
             </p>
-          </section>
+          </Section>
         </>
       )}
 
-      <section className="pdp-section pdp-faqs">
-        <h2>Common questions</h2>
-        <details>
-          <summary>Is this the same product sold in the protocol bundle?</summary>
-          <p>
-            Yes — identical formulation, identical batch process. The bundle just pairs
-            this with 2-4 other products dosed for a complete 12-week regimen and prices
-            the set lower than buying each individually.
-          </p>
-        </details>
-        <details>
-          <summary>Can I order this with cash on delivery?</summary>
-          <p>
-            Yes. We ship across Pakistan with COD as the default. Pay the courier in
-            cash when your parcel arrives. If anything's wrong with your order, WhatsApp
-            our team within 24 hours and we'll arrange a refund or re-ship.
-          </p>
-        </details>
-        <details>
-          <summary>What if the active concentration causes irritation?</summary>
-          <p>
-            Start with patch-testing and introduce slowly (every other day for 1 week,
-            then daily). If irritation persists, message our team on WhatsApp — a real
-            person will respond within ~2 hours and can recommend an alternate or paired
-            barrier product.
-          </p>
-        </details>
-      </section>
+      {/* FAQ */}
+      <Section title="Common questions">
+        <Accordion type="single" collapsible className="border-t border-rule">
+          <AccordionItem value="bundle">
+            <AccordionTrigger className="font-display text-base text-navy">
+              Is this the same product sold in the protocol bundle?
+            </AccordionTrigger>
+            <AccordionContent className="text-base text-ink-2 leading-relaxed">
+              Yes — identical formulation, identical batch process. The bundle just pairs this
+              with 2-4 other products dosed for a complete 12-week regimen and prices the set
+              lower than buying each individually.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="cod">
+            <AccordionTrigger className="font-display text-base text-navy">
+              Can I order this with cash on delivery?
+            </AccordionTrigger>
+            <AccordionContent className="text-base text-ink-2 leading-relaxed">
+              Yes. We ship across Pakistan with COD as the default. Pay the courier in cash when
+              your parcel arrives. If anything's wrong with your order, WhatsApp our team within
+              24 hours and we'll arrange a refund or re-ship.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="irritation">
+            <AccordionTrigger className="font-display text-base text-navy">
+              What if the active concentration causes irritation?
+            </AccordionTrigger>
+            <AccordionContent className="text-base text-ink-2 leading-relaxed">
+              Start with patch-testing and introduce slowly (every other day for 1 week, then
+              daily). If irritation persists, message our team on WhatsApp — a real person will
+              respond within ~2 hours and can recommend an alternate or paired barrier product.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </Section>
 
       {related.length > 0 && (
-        <section className="pdp-section">
-          <h2>You might also need</h2>
-          <div className="catalog-grid" style={{ marginTop: 18 }}>
-            {related.map((p) => {
-              const rContent = PRODUCT_CONTENT[p.sku];
-              const rImg = rContent ? productImagePaths(p.sku).hero : p.imageUrl;
-              return (
-                <article key={p.id} className="product-card">
-                  <Link href={`/products/${p.sku}`} className="product-card-image-link">
-                    <div className="product-card-image">
-                      {rImg ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={rImg} alt={p.name} loading="lazy" />
-                      ) : (
-                        <span className="product-card-placeholder mono">[Photo]</span>
-                      )}
-                    </div>
-                  </Link>
-                  <div className="product-card-body">
-                    <Link href={`/products/${p.sku}`} className="product-card-name-link">
-                      <h3 className="product-card-name">{p.name}</h3>
-                    </Link>
-                    <div className="product-card-foot">
-                      <span className="product-card-current">
-                        Rs. {p.pricePkr.toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+        <Section title="You might also need">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
           </div>
-        </section>
+        </Section>
       )}
     </div>
+  );
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="mt-14">
+      <Eyebrow className="mb-4 text-cobalt">{title}</Eyebrow>
+      {children}
+    </section>
   );
 }
