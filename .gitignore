@@ -57,3 +57,7 @@ next-env.d.ts
 # project-specific
 docs/research/competitor-screenshots/*.png
 !docs/research/competitor-screenshots/.gitkeep
+
+# Claude Code local config + smoke-test output
+.claude/
+scripts/smoke-out/

@@ -28,11 +28,17 @@
   --clarte-cobalt-soft: #6e93cf;
   --clarte-cobalt-glow: #8ab0e0;
 
-  /* Surfaces (cool off-white system — current brand) */
-  --clarte-canvas: #fafbfd;
-  --clarte-sky: #eef3fb;
+  /* Surfaces — warm-cream system (Augustinus Bader / Tatcha / Sulwhasoo direction)
+     Migrated 2026-05-23 from the cool off-white system. */
+  --clarte-canvas: #f6f1eb;        /* primary surface — warm cream */
+  --clarte-canvas-soft: #faf6f0;   /* slightly lighter cream — section accents */
+  --clarte-canvas-warm: #ede5d8;   /* deeper warm tone — heritage / hero moments */
+  --clarte-canvas-cool: #fafbfd;   /* preserved cool off-white — used selectively for clinical surfaces (e.g. PDP card) */
+  --clarte-sky: #eef3fb;           /* cool sky accent — preserved for clinical sub-surfaces */
   --clarte-sky-2: #dee7f4;
   --clarte-sky-3: #c8d6ea;
+  --clarte-sand: #d9c9b4;          /* warm sand — quiet borders / dividers on cream */
+  --clarte-stone: #b8a890;         /* deeper stone — heritage borders */
 
   /* Ink scale (muted text) */
   --clarte-ink: #0e1f3a;
@@ -108,9 +114,14 @@
   --color-cobalt-soft: var(--clarte-cobalt-soft);
   --color-cobalt-glow: var(--clarte-cobalt-glow);
   --color-canvas: var(--clarte-canvas);
+  --color-canvas-soft: var(--clarte-canvas-soft);
+  --color-canvas-warm: var(--clarte-canvas-warm);
+  --color-canvas-cool: var(--clarte-canvas-cool);
   --color-sky: var(--clarte-sky);
   --color-sky-2: var(--clarte-sky-2);
   --color-sky-3: var(--clarte-sky-3);
+  --color-sand: var(--clarte-sand);
+  --color-stone: var(--clarte-stone);
   --color-ink: var(--clarte-ink);
   --color-ink-2: var(--clarte-ink-2);
   --color-ink-mute: var(--clarte-ink-mute);
@@ -142,29 +153,38 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+/*
+ * Author base styles. MUST live inside `@layer base` so Tailwind v4
+ * utilities (which live in `@layer utilities`, a later layer) can win.
+ *
+ * Why this matters: unlayered author CSS trumps ANY layered CSS regardless
+ * of selector specificity. A stray `* { margin: 0; padding: 0 }` outside a
+ * layer will defeat every `mx-auto`, `px-6`, `mb-12`, etc. in the project
+ * — which is exactly the homepage-flush-left bug we just fixed.
+ *
+ * Note: Tailwind v4 preflight already resets `* { margin:0; padding:0;
+ * box-sizing:border-box }` inside `@layer base`, so we don't repeat that
+ * here. We only keep the rules that go beyond preflight.
+ */
+@layer base {
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 /*
