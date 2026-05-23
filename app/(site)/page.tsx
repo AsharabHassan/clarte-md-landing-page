@@ -159,16 +159,28 @@ export default async function HomePage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          RECEIPT BAND — honest placeholder until panel data exists.
-          Per feedback_unverified_claims: never invent. State the gap.
+          RECEIPT BAND — Bader/SkinCeuticals composite stat skeleton.
+          Per feedback_unverified_claims: never invent. The values stay
+          as "—" placeholders until our 30-customer panel completes
+          (target 2026-Q3); the labels + methodology are honest declarations
+          of what we *will* measure, not claims of what we have measured.
           ───────────────────────────────────────────────────────────── */}
-      <section className="border-y border-sand/40 bg-canvas-soft">
-        <div className="mx-auto flex max-w-[75rem] flex-col items-start justify-between gap-6 px-6 py-10 md:flex-row md:items-center md:py-12">
-          <p className="font-display italic text-[clamp(18px,1.6vw,22px)] leading-snug text-navy">
-            Honest dermatology. Honest expectations.
-          </p>
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-mute">
-            Outcome data publishing after our first 30-customer panel
+      <section className="border-y border-sand/40 bg-canvas-soft py-16 md:py-20">
+        <div className="mx-auto max-w-[75rem] px-6">
+          <header className="mb-10 flex flex-col items-start justify-between gap-3 md:flex-row md:items-end">
+            <Eyebrow className="text-cobalt">— The evidence</Eyebrow>
+            <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-ink-faint">
+              12-week clinic panel · n=30 · publishing 2026 Q3
+            </span>
+          </header>
+          <dl className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-12">
+            <PendingStat label="Visible improvement reported at week 8" />
+            <PendingStat label="Would recommend the protocol to a friend" />
+            <PendingStat label="Routine still active at week 12" />
+          </dl>
+          <p className="mt-10 max-w-[40rem] font-display italic text-[clamp(16px,1.5vw,19px)] leading-relaxed text-ink-2">
+            Honest dermatology. Honest expectations. The first numbers will publish after our
+            30-customer panel completes — no borrowed percentages, no invented claims.
           </p>
         </div>
       </section>
@@ -329,13 +341,34 @@ export default async function HomePage() {
                 you know what you need.
               </p>
             </div>
-            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-mute">
-              01 / 0{orderedProducts.length}
-            </span>
+            <div className="flex flex-col items-start gap-1.5 md:items-end">
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-ink-faint">
+                {orderedProducts.length.toString().padStart(2, '0')} formulations · 1 protocol family
+              </span>
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-cobalt sm:hidden">
+                Swipe to explore →
+              </span>
+            </div>
           </header>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] sm:gap-5">
+          {/* Mobile: horizontal scroll-snap strip. Desktop (sm+): grid.
+              Scroll-snap on mobile reads as the Tatcha editorial "rail",
+              gives a real visible-count vs hidden-count tension, and
+              doesn't require JS state for the counter. */}
+          <div
+            className={cn(
+              '-mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-4',
+              'sm:mx-0 sm:grid sm:grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] sm:gap-5',
+              'sm:overflow-visible sm:px-0 sm:pb-0 sm:snap-none',
+              '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+            )}
+          >
             {orderedProducts.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <div
+                key={p.id}
+                className="w-[72%] flex-shrink-0 snap-start sm:w-auto sm:flex-shrink"
+              >
+                <ProductCard product={p} />
+              </div>
             ))}
           </div>
           <div className="mt-12 text-center">
@@ -456,6 +489,20 @@ export default async function HomePage() {
           </Button>
         </div>
       </section>
+    </div>
+  );
+}
+
+function PendingStat({ label }: { label: string }) {
+  return (
+    <div className="border-l border-sand/60 pl-5">
+      <span
+        aria-hidden="true"
+        className="block font-display font-light italic text-[clamp(40px,5.5vw,64px)] leading-none text-navy/25"
+      >
+        —
+      </span>
+      <p className="mt-3 font-body text-[14px] leading-snug text-ink-mute">{label}</p>
     </div>
   );
 }
