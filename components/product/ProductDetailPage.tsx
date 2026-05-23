@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useCart } from '@/lib/cart/use-cart';
 import type { Product } from '@/lib/db/schema';
 import { PRODUCT_CONTENT, productImagePaths } from '@/lib/products/content';
+import { ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { ProductTitle } from '@/components/ui/product-title';
@@ -19,12 +20,27 @@ import {
 import { ProductCard } from './ProductCard';
 import { cn } from '@/lib/utils';
 
-interface ProductDetailPageProps {
-  product: Product;
-  related: Product[];
+interface PrimaryBundle {
+  slug: string;
+  name: string;
+  pricePkr: number;
+  /** Route to the protocol landing page (e.g. /acne); null if not yet mapped. */
+  route: string | null;
 }
 
-export function ProductDetailPage({ product, related }: ProductDetailPageProps) {
+interface ProductDetailPageProps {
+  product: Product;
+  /** Other SKUs in the same protocol bundle — the cross-sell rail (03-pdp.md). */
+  protocolSiblings: Product[];
+  /** The primary bundle this product belongs to (used for "complete the protocol" CTA). */
+  primaryBundle: PrimaryBundle | null;
+}
+
+export function ProductDetailPage({
+  product,
+  protocolSiblings,
+  primaryBundle,
+}: ProductDetailPageProps) {
   const { addProduct } = useCart();
   const hasDiscount =
     product.listPricePkr !== null && product.listPricePkr > product.pricePkr;
@@ -141,10 +157,16 @@ export function ProductDetailPage({ product, related }: ProductDetailPageProps) 
             type="button"
             size="lg"
             onClick={() => addProduct(product.sku)}
-            className="mt-1 w-full sm:w-auto sm:min-w-[16rem]"
+            className="mt-1 w-full sm:w-auto sm:min-w-[18rem]"
           >
-            Add to cart →
+            Add to cart — Rs. {product.pricePkr.toLocaleString('en-PK')}
           </Button>
+
+          {content?.bestFor && (
+            <p className="font-display italic text-[15px] leading-relaxed text-ink-2">
+              {content.bestFor}
+            </p>
+          )}
 
           {content && content.badges.length > 0 && (
             <TrustPills pills={content.badges} className="mt-2" />
@@ -186,17 +208,27 @@ export function ProductDetailPage({ product, related }: ProductDetailPageProps) 
 
           <Section title="How to use">
             <ol className="space-y-3">
-              {content.directions.map((d, i) => (
-                <li key={i} className="flex gap-4 text-base text-ink-2 leading-relaxed">
-                  <span
-                    aria-hidden="true"
-                    className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-navy font-mono text-xs text-white"
-                  >
-                    {i + 1}
-                  </span>
-                  <span>{d}</span>
-                </li>
-              ))}
+              {content.directions.map((d, i) => {
+                const duration = content.directionDurations?.[i];
+                return (
+                  <li key={i} className="flex gap-4 text-base text-ink-2 leading-relaxed">
+                    <span
+                      aria-hidden="true"
+                      className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-navy font-mono text-xs text-white"
+                    >
+                      {i + 1}
+                    </span>
+                    <span className="flex-1">
+                      {d}
+                      {duration && (
+                        <span className="ml-2 inline-flex items-center rounded border border-cobalt/30 bg-cobalt/5 px-1.5 py-0.5 align-middle font-mono text-[10.5px] uppercase tracking-[0.08em] text-cobalt">
+                          {duration}
+                        </span>
+                      )}
+                    </span>
+                  </li>
+                );
+              })}
             </ol>
             <p className="mt-6 rounded-lg border border-rule-soft bg-sky px-4 py-3 text-sm text-ink-mute leading-relaxed">
               For best results, follow the full{' '}
@@ -281,10 +313,36 @@ export function ProductDetailPage({ product, related }: ProductDetailPageProps) 
         </Accordion>
       </Section>
 
-      {related.length > 0 && (
-        <Section title="You might also need">
+      {primaryBundle && protocolSiblings.length > 0 && (
+        <Section
+          title={`Complete the ${primaryBundle.name.replace(/^The\s+/, '')}`}
+        >
+          {/* "Complete the protocol" CTA card — Drunk Elephant Smoothie-Kit pattern (03-pdp.md).
+              Bundle as peer SKU: single combined price + "View the protocol" anchor that
+              takes the customer to the bundle's landing page where they can add the full
+              regimen in one click. */}
+          {primaryBundle.route && (
+            <Link
+              href={primaryBundle.route}
+              className={cn(
+                'mb-6 flex items-center justify-between gap-4 rounded-xl border border-cobalt/30 bg-canvas-soft px-5 py-4',
+                'no-underline text-inherit transition-colors hover:border-cobalt hover:bg-canvas-warm/40',
+              )}
+            >
+              <div>
+                <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-cobalt">
+                  Tatcha suggested-ritual pattern
+                </div>
+                <div className="mt-1 font-display italic text-[clamp(18px,2vw,22px)] text-navy">
+                  Add the full {primaryBundle.name} for Rs.{' '}
+                  {primaryBundle.pricePkr.toLocaleString('en-PK')}
+                </div>
+              </div>
+              <ArrowUpRight className="h-5 w-5 flex-shrink-0 text-cobalt" aria-hidden="true" />
+            </Link>
+          )}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((p) => (
+            {protocolSiblings.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>

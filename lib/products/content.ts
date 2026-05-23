@@ -22,12 +22,25 @@ export interface ProductContent {
   badges: string[];
   /** Single-line spec, e.g. '30ml / 1.0 fl oz · Suitable for All Skin Types'. */
   formulation: string;
+  /**
+   * Italic Fraunces microcopy shown under the PDP CTA — EltaMD pattern
+   * (03-pdp.md). Descriptive only ("Best for X type prone to Y") — never
+   * a clinical claim. Optional: omitted when no honest line exists.
+   */
+  bestFor?: string;
   /** Bulleted benefit copy — each item already begins with the bolded lead phrase. */
   benefits: string[];
   /** Two-column ingredient table. */
   ingredients: ProductIngredient[];
   /** Numbered usage steps. */
   directions: string[];
+  /**
+   * Optional per-step duration string, runs parallel to `directions` by
+   * index — e.g. ['', '45s', '1 min', 'until absorbed']. Bader pattern
+   * (03-pdp.md): customers process routines faster when each step has a
+   * concrete time cost. Empty string = no duration shown for that step.
+   */
+  directionDurations?: string[];
   /** Bulleted safety / storage notes. */
   important: string[];
 }
@@ -43,6 +56,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Dermatologist Tested',
     ],
     formulation: 'For all skin types · 30ml / 1.0 fl oz',
+    bestFor: 'Best for fine lines, texture, and skin renewal — evening use only.',
     benefits: [
       'Visibly firms and tightens skin with clinically-proven Retinol at the cellular level',
       'Accelerates cellular renewal for a smoother, more refined skin texture over time',
@@ -86,6 +100,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Dermatologist Tested',
     ],
     formulation: 'For all skin types · 100ml / 3.4 fl oz',
+    bestFor: 'Best for daily UV defense after any AM active routine.',
     benefits: [
       'Delivers broad-spectrum SPF 50+ protection against both UVA and UVB damage daily',
       'Actively repairs and rebuilds a compromised skin barrier from the ground up with every application',
@@ -132,6 +147,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Dermatologist Tested',
     ],
     formulation: 'For all skin types · 30ml / 1.0 fl oz',
+    bestFor: 'Best for dullness and uneven tone — apply in the morning.',
     benefits: [
       'Visibly brightens and evens skin tone with every use for a luminous, radiant complexion',
       'Shields against free radical damage and premature ageing with doubled antioxidant potency',
@@ -174,6 +190,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Dermatologist Tested',
     ],
     formulation: 'For all skin types · 30ml / 1.0 fl oz',
+    bestFor: 'Best for dehydrated or barrier-compromised skin.',
     benefits: [
       'Delivers intense, multi-layer hydration that visibly plumps fine lines and restores skin suppleness',
       "Restores skin's natural bounce and reinforces barrier resilience against environmental stressors",
@@ -200,6 +217,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Use daily, morning and/or evening, as part of your Clarté MD routine.',
       'For best results, apply to slightly damp skin to maximise Hyaluronic Acid absorption.',
     ],
+    directionDurations: ['60s', '', '20s', '30–60s', '', '', ''],
     important: [
       'For external use only. Avoid direct contact with eyes. If contact occurs, rinse immediately with water.',
       'Patch test recommended before first use, especially for sensitive or reactive skin.',
@@ -221,6 +239,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Dermatologist Tested',
     ],
     formulation: 'For all skin types · 100ml / 3.4 fl oz',
+    bestFor: 'Best for a gentle daily cleanse before any active routine.',
     benefits: [
       "Gently cleanses without disrupting the skin's natural moisture barrier",
       'Initiates brightening and pigmentation control from the very first step of your routine',
@@ -242,6 +261,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Proceed immediately with your Clarté MD serum or treatment for maximum absorption.',
       'Use daily, morning and/or evening, as the first step of your Clarté MD routine.',
     ],
+    directionDurations: ['10s', '', '30–60s', '20s', '', ''],
     important: [
       'For external use only. Avoid direct contact with eyes. If contact occurs, rinse immediately with water.',
       'Patch test recommended before first use, especially for sensitive or reactive skin.',
@@ -262,6 +282,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Dermatologist Tested',
     ],
     formulation: 'For all skin types · 30ml / 1.0 fl oz',
+    bestFor: 'Best for melasma and hyperpigmentation across all skin tones.',
     benefits: [
       'Visibly lifts dark spots, melasma, and uneven pigmentation over time without harmful ingredients',
       'Deeply hydrates and smooths skin texture with every application for a healthier complexion',
@@ -312,6 +333,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Dermatologist Tested',
     ],
     formulation: 'For acne-prone skin · 100ml / 3.4 fl oz',
+    bestFor: 'Best for combination + oily skin types prone to congestion.',
     benefits: [
       'Deeply unclogs pores and controls excess oil production to prevent future breakouts',
       'Eliminates acne-causing bacteria with the combined power of Tea Tree Oil and Salicylic Acid',
@@ -352,6 +374,7 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
       'Dermatologist Tested',
     ],
     formulation: 'For all skin types · 30ml / 1.0 fl oz',
+    bestFor: 'Best for active breakouts and post-acne marks.',
     benefits: [
       'Targets and eliminates active breakouts at the source before they escalate',
       'Visibly minimises pores and refines skin texture for a smoother, more even complexion',
