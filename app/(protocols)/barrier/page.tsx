@@ -1,15 +1,9 @@
 import type { Metadata } from 'next';
-import { eq } from 'drizzle-orm';
-import { db, schema } from '@/lib/db/client';
-import {
-  bundleLd,
-  faqPageLd,
-  parseProtocolFaqs,
-  SITE_URL,
-} from '@/lib/schema/json-ld';
+import { SITE_URL } from '@/lib/schema/json-ld';
 import './protocol.css';
 import { BARRIER_PROTOCOL_BODY } from './protocol.html';
 import BarrierClient from './client';
+import { ProtocolPageShell } from '@/components/protocol/ProtocolPageShell';
 
 const BUNDLE_SLUG = 'barrier-protocol';
 const ROUTE = '/barrier';
@@ -31,37 +25,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function BarrierProtocolPage() {
-  const [bundle] = await db
-    .select()
-    .from(schema.bundles)
-    .where(eq(schema.bundles.slug, BUNDLE_SLUG))
-    .limit(1);
-  const faqs = parseProtocolFaqs(BARRIER_PROTOCOL_BODY);
-
+export default function BarrierProtocolPage() {
   return (
-    <>
-      {bundle && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(
-              bundleLd(bundle, {
-                url: `${SITE_URL}${ROUTE}`,
-                description: DESCRIPTION,
-              }),
-            ),
-          }}
-        />
-      )}
-      {faqs.length > 0 && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageLd(faqs)) }}
-        />
-      )}
-      <div dangerouslySetInnerHTML={{ __html: BARRIER_PROTOCOL_BODY }} />
-      <BarrierClient />
-    </>
+    <ProtocolPageShell
+      bundleSlug={BUNDLE_SLUG}
+      route={ROUTE}
+      description={DESCRIPTION}
+      legacyBody={BARRIER_PROTOCOL_BODY}
+      legacyClient={<BarrierClient />}
+    />
   );
 }

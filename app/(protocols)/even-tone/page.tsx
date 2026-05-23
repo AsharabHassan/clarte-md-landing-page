@@ -1,15 +1,9 @@
 import type { Metadata } from 'next';
-import { eq } from 'drizzle-orm';
-import { db, schema } from '@/lib/db/client';
-import {
-  bundleLd,
-  faqPageLd,
-  parseProtocolFaqs,
-  SITE_URL,
-} from '@/lib/schema/json-ld';
+import { SITE_URL } from '@/lib/schema/json-ld';
 import './protocol.css';
 import { EVEN_TONE_PROTOCOL_BODY } from './protocol.html';
 import EvenToneClient from './client';
+import { ProtocolPageShell } from '@/components/protocol/ProtocolPageShell';
 
 const BUNDLE_SLUG = 'even-tone-protocol';
 const ROUTE = '/even-tone';
@@ -31,37 +25,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function EvenToneProtocolPage() {
-  const [bundle] = await db
-    .select()
-    .from(schema.bundles)
-    .where(eq(schema.bundles.slug, BUNDLE_SLUG))
-    .limit(1);
-  const faqs = parseProtocolFaqs(EVEN_TONE_PROTOCOL_BODY);
-
+export default function EvenToneProtocolPage() {
   return (
-    <>
-      {bundle && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(
-              bundleLd(bundle, {
-                url: `${SITE_URL}${ROUTE}`,
-                description: DESCRIPTION,
-              }),
-            ),
-          }}
-        />
-      )}
-      {faqs.length > 0 && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageLd(faqs)) }}
-        />
-      )}
-      <div dangerouslySetInnerHTML={{ __html: EVEN_TONE_PROTOCOL_BODY }} />
-      <EvenToneClient />
-    </>
+    <ProtocolPageShell
+      bundleSlug={BUNDLE_SLUG}
+      route={ROUTE}
+      description={DESCRIPTION}
+      legacyBody={EVEN_TONE_PROTOCOL_BODY}
+      legacyClient={<EvenToneClient />}
+    />
   );
 }

@@ -1,15 +1,9 @@
 import type { Metadata } from 'next';
-import { eq } from 'drizzle-orm';
-import { db, schema } from '@/lib/db/client';
-import {
-  bundleLd,
-  faqPageLd,
-  parseProtocolFaqs,
-  SITE_URL,
-} from '@/lib/schema/json-ld';
+import { SITE_URL } from '@/lib/schema/json-ld';
 import './protocol.css';
 import { RENEWAL_PROTOCOL_BODY } from './protocol.html';
 import RenewalClient from './client';
+import { ProtocolPageShell } from '@/components/protocol/ProtocolPageShell';
 
 const BUNDLE_SLUG = 'renewal-protocol';
 const ROUTE = '/renewal';
@@ -31,37 +25,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RenewalProtocolPage() {
-  const [bundle] = await db
-    .select()
-    .from(schema.bundles)
-    .where(eq(schema.bundles.slug, BUNDLE_SLUG))
-    .limit(1);
-  const faqs = parseProtocolFaqs(RENEWAL_PROTOCOL_BODY);
-
+export default function RenewalProtocolPage() {
   return (
-    <>
-      {bundle && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(
-              bundleLd(bundle, {
-                url: `${SITE_URL}${ROUTE}`,
-                description: DESCRIPTION,
-              }),
-            ),
-          }}
-        />
-      )}
-      {faqs.length > 0 && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageLd(faqs)) }}
-        />
-      )}
-      <div dangerouslySetInnerHTML={{ __html: RENEWAL_PROTOCOL_BODY }} />
-      <RenewalClient />
-    </>
+    <ProtocolPageShell
+      bundleSlug={BUNDLE_SLUG}
+      route={ROUTE}
+      description={DESCRIPTION}
+      legacyBody={RENEWAL_PROTOCOL_BODY}
+      legacyClient={<RenewalClient />}
+    />
   );
 }
