@@ -18,6 +18,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { CartIcon } from './CartIcon';
+import { PromoBar } from './PromoBar';
 import { cn } from '@/lib/utils';
 
 const PROTOCOLS = [
@@ -50,10 +51,11 @@ export function SiteHeader() {
     <header
       className={cn(
         'sticky top-0 z-50',
-        'border-b border-rule bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/85',
+        'bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/85',
       )}
     >
-      <div className="mx-auto flex h-16 max-w-[82rem] items-center justify-between px-5">
+      <PromoBar />
+      <div className="mx-auto flex h-16 max-w-[82rem] items-center justify-between border-b border-rule px-5">
         <Link
           href="/"
           aria-label="Clarté MD home"
