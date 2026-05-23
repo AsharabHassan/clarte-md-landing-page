@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { headers } from 'next/headers';
+import { ArrowUpRight, MessageCircle } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 interface PageParams {
   params: Promise<{ number: string }>;
-  searchParams: Promise<{ phone?: string }>;
+  searchParams: Promise<{ phone?: string; placed?: string }>;
 }
 
 interface OrderPayload {
@@ -89,7 +90,8 @@ const containerClass = 'mx-auto max-w-[45rem] px-6 pt-12 pb-24';
 
 export default async function OrderPage({ params, searchParams }: PageParams) {
   const { number } = await params;
-  const { phone } = await searchParams;
+  const { phone, placed } = await searchParams;
+  const isFirstVisit = placed === '1';
 
   if (!phone) {
     // Phone-input form to start the lookup
@@ -176,11 +178,75 @@ export default async function OrderPage({ params, searchParams }: PageParams) {
 
   return (
     <div className={containerClass}>
+      {/*
+        Mode-aware thank-you band — renders only when the user just placed
+        the order (the checkout redirect appends ?placed=1). Subsequent
+        visits via WhatsApp / email links omit the flag and the band stays
+        hidden, so the same route doubles as the tracker.
+        Per 06-thank-you.md: highest-conversion confirmation pattern in
+        the Baymard data; no separate /thank-you route needed.
+      */}
+      {isFirstVisit && (
+        <section className="mb-10 rounded-2xl border border-cobalt/25 bg-canvas-soft px-7 py-8 md:px-9 md:py-10">
+          <Eyebrow className="mb-3 text-cobalt">— Order confirmed</Eyebrow>
+          <h1 className="mb-3 font-display font-light text-navy text-[clamp(28px,4vw,40px)] leading-[1.1] tracking-[-0.02em]">
+            <em className="italic">Thank you, {order.customer_first_name}.</em>
+          </h1>
+          <p className="mb-7 max-w-[34rem] font-body text-[15px] leading-relaxed text-ink-2">
+            We&apos;ve received order{' '}
+            <span className="font-mono text-[13px] tracking-[0.02em] text-navy">
+              {order.order_number}
+            </span>{' '}
+            and will dispatch within 24 hours. A WhatsApp confirmation is on its way.
+          </p>
+
+          <ol className="mb-7 grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-6">
+            <NextStep
+              num="01"
+              title="We confirm"
+              body="A WhatsApp message lands within 2 hours."
+            />
+            <NextStep
+              num="02"
+              title="Courier collects"
+              body="Sealed protocol leaves Lahore within 24 hours."
+            />
+            <NextStep
+              num="03"
+              title="Pay on delivery"
+              body={`Rs. ${order.totals.total_pkr.toLocaleString('en-PK')} in cash to the courier.`}
+            />
+          </ol>
+
+          <a
+            href="https://wa.me/923249986822"
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.22em] text-cobalt hover:underline"
+          >
+            <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" strokeWidth={1.5} />
+            Need to change something? WhatsApp us
+            <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
+          </a>
+        </section>
+      )}
+
       <header className="mb-8 border-b border-rule pb-[22px]">
         <Eyebrow className="mb-2 text-ink-mute">Order</Eyebrow>
-        <h1 className="mb-2 font-mono text-[28px] font-semibold tracking-[0.02em] text-navy">
-          {order.order_number}
-        </h1>
+        {/*
+          Heading level: on the first visit the celebration band's H1 is the
+          page subject, so this becomes H2. On return-tracker visits there's
+          no celebration band and this IS the page subject — H1.
+        */}
+        {isFirstVisit ? (
+          <h2 className="mb-2 font-mono text-[28px] font-semibold tracking-[0.02em] text-navy">
+            {order.order_number}
+          </h2>
+        ) : (
+          <h1 className="mb-2 font-mono text-[28px] font-semibold tracking-[0.02em] text-navy">
+            {order.order_number}
+          </h1>
+        )}
         <p className="font-mono text-[13px] text-ink-mute">
           Placed {new Date(order.created_at).toLocaleString('en-PK')} · {order.shipping_city}
         </p>
@@ -248,5 +314,20 @@ export default async function OrderPage({ params, searchParams }: PageParams) {
         .
       </p>
     </div>
+  );
+}
+
+function NextStep({ num, title, body }: { num: string; title: string; body: string }) {
+  return (
+    <li className="flex flex-col gap-2">
+      <span
+        aria-hidden="true"
+        className="font-display italic text-cobalt text-[clamp(24px,3vw,32px)] leading-none"
+      >
+        {num}
+      </span>
+      <h3 className="font-display text-base font-medium text-navy">{title}</h3>
+      <p className="font-body text-[13.5px] leading-snug text-ink-mute">{body}</p>
+    </li>
   );
 }
