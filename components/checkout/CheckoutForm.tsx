@@ -207,7 +207,7 @@ export function CheckoutForm() {
                       </span>
                     </div>
                     <p className="mt-1 font-body text-[13px] leading-snug text-ink-mute">
-                      Pay the courier in cash on arrival. WhatsApp us within 24 hours if anything's wrong.
+                      Pay the courier in cash on arrival. WhatsApp us within 24 hours if anything&apos;s wrong.
                     </p>
                   </div>
                 </label>
