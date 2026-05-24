@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { CartProvider } from '@/lib/cart/provider';
+import { SmoothScrollProvider } from '@/lib/anim/provider';
+import { OrderTickerLoader } from '@/components/marketing/OrderTickerLoader';
 import { organizationGraphLd, SITE_URL } from '@/lib/schema/json-ld';
 
 export const metadata: Metadata = {
@@ -70,10 +72,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/*
+          Font loading strategy:
+          - Preconnect to both Google hosts first so the DNS/TLS handshake
+            overlaps with HTML parse.
+          - Drop the SOFT and WONK Fraunces variable axes (we don't read
+            them anywhere) — cuts the descriptor file ~40%.
+          - Narrow Plus Jakarta to the weights we actually use (300/400/500/600/700 → 400/500/600/700).
+          - `display=swap` keeps text visible during fallback (avoids FOIT).
+          - Preload the resolved CSS so the parser doesn't have to wait
+            on the <link rel=stylesheet> request before painting.
+        */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
         <script
@@ -93,7 +111,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         hydrate with full mismatch checking.
       */}
       <body suppressHydrationWarning>
-        <CartProvider>{children}</CartProvider>
+        <SmoothScrollProvider>
+          <CartProvider>{children}</CartProvider>
+          <OrderTickerLoader />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

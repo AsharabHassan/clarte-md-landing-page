@@ -120,7 +120,24 @@ export default function EvenToneClient() {
   // Labels with `for=` fire the input natively (preserves `capture` on mobile).
   // We only stop propagation so the dropzone's own click handler doesn't re-fire fileInput.
   document.getElementById('btnUpload').addEventListener('click', e => e.stopPropagation());
-  document.getElementById('btnCamera').addEventListener('click', e => e.stopPropagation());
+  const btnCameraEl = document.getElementById('btnCamera');
+  btnCameraEl.removeAttribute('for');
+  btnCameraEl.setAttribute('role', 'button');
+  btnCameraEl.style.cursor = 'pointer';
+  btnCameraEl.addEventListener('click', async e => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      const { openLiveCamera } = await import('@/lib/camera/live-camera');
+      const blob = await openLiveCamera();
+      const file = new File([blob], `selfie-${Date.now()}.jpg`, { type: 'image/jpeg' });
+      handleFile(file);
+    } catch (err) {
+      if (err && err.message !== 'cancelled') {
+        cameraInput.click();
+      }
+    }
+  });
   document.getElementById('btnReplace').addEventListener('click', () => { resetUpload(); fileInput.click(); });
   document.getElementById('btnTryAgain').addEventListener('click', () => { resetUpload(); showStage('stageEmpty'); });
   document.getElementById('btnRetry').addEventListener('click', () => showStage('stageUploaded'));
@@ -164,15 +181,19 @@ export default function EvenToneClient() {
   const AI_ENDPOINT = '/api/generate-after';
   const ORDER_ENDPOINT = '/api/create-order';
 
+  // Paced for gpt-image-2 quality:medium — ~45–75s total.
   const PROGRESS_STEPS = [
-    { pct: 12, msg: 'Reading texture, tone, and inflammation markers…' },
-    { pct: 28, msg: 'Mapping breakout topography…' },
-    { pct: 46, msg: 'Modelling niacinamide and azelaic response…' },
-    { pct: 64, msg: 'Projecting twelve-week dermal renewal…' },
-    { pct: 80, msg: 'Reconstructing faded pigmentation and even tone…' },
+    { pct: 8,  msg: 'Reading texture, tone, and pigment markers…' },
+    { pct: 20, msg: 'Mapping pigmentation topography…' },
+    { pct: 34, msg: 'Modelling tranexamic and L-ascorbic response…' },
+    { pct: 48, msg: 'Projecting twelve-week tone evening…' },
+    { pct: 62, msg: 'Reconstructing faded pigmentation…' },
+    { pct: 76, msg: 'Compositing the high-fidelity render…' },
+    { pct: 88, msg: 'Refining identity preservation…' },
     { pct: 94, msg: 'Finalising the projection…' },
-    { pct: 100, msg: 'Almost there…' },
+    { pct: 96, msg: 'Almost there — clinical-grade renders take a moment…' },
   ];
+  const PROGRESS_TICK_MS = 7000;
 
   async function startGeneration() {
     if (!uploadedImageBlob) return;
@@ -186,7 +207,7 @@ export default function EvenToneClient() {
       fill.style.width = step.pct + '%';
       msg.style.opacity = 0;
       setTimeout(() => { msg.textContent = step.msg; msg.style.opacity = 1; }, 200);
-    }, 2400);
+    }, PROGRESS_TICK_MS);
     try {
       const afterUrl = USE_MOCK ? await mockGenerate(uploadedImageBlob) : await realGenerate(uploadedImageBlob);
       clearInterval(tick);
@@ -233,13 +254,49 @@ export default function EvenToneClient() {
     const res = await fetch(AI_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image_base64: base64, mime_type: blob.type, concern: CONCERN, prompt: AI_PROMPT }),
+      body: JSON.stringify({ image_base64: base64, mime_type: blob.type, concern: CONCERN, prompt: AI_PROMPT, bundle_slug: BUNDLE.sku }),
     });
     if (!res.ok) { const t = await res.text().catch(()=>'' ); throw new Error(`Generation failed (${res.status}). ${t}`); }
     const data = await res.json();
     if (!data.image) throw new Error('No image returned by the AI.');
     if (data.ai_session_id) lastAiSessionId = data.ai_session_id;
+    if (data.skin_map) renderSkinMap(data.skin_map);
     return data.image.startsWith('data:') ? data.image : `data:image/jpeg;base64,${data.image}`;
+  }
+
+  function renderSkinMap(map) {
+    if (!map) return;
+    const resultEl = document.getElementById('stageResult');
+    if (!resultEl) return;
+    let panel = document.getElementById('skinMap');
+    if (!panel) {
+      panel = document.createElement('div');
+      panel.id = 'skinMap';
+      panel.className = 'skin-map-panel';
+      const actions = resultEl.querySelector('.result-actions, .stage-cta, [data-after-comparison]');
+      if (actions) resultEl.insertBefore(panel, actions);
+      else resultEl.appendChild(panel);
+    }
+    const sev = (map.severity || '').toLowerCase();
+    const conf = typeof map.confidence === 'number' ? Math.round(map.confidence * 100) : null;
+    const pillsHTML = (arr) => (arr || []).map(s => `<li>${escapeHTML(s)}</li>`).join('');
+    panel.innerHTML = `
+      <header class="skin-map-head">
+        <span class="skin-map-eyebrow mono">— Skin map · GPT-4o vision</span>
+        <span class="skin-map-meta mono">${conf !== null ? `${conf}% confidence` : ''}${sev ? ` · severity: ${escapeHTML(sev)}` : ''}</span>
+      </header>
+      ${map.observation ? `<p class="skin-map-observation">${escapeHTML(map.observation)}</p>` : ''}
+      <div class="skin-map-grid">
+        ${map.primary_concerns?.length ? `<div class="skin-map-col"><div class="skin-map-label mono">Primary concerns</div><ul class="skin-map-list">${pillsHTML(map.primary_concerns)}</ul></div>` : ''}
+        ${map.secondary_concerns?.length ? `<div class="skin-map-col"><div class="skin-map-label mono">Secondary</div><ul class="skin-map-list muted">${pillsHTML(map.secondary_concerns)}</ul></div>` : ''}
+        ${map.recommended_actives?.length ? `<div class="skin-map-col"><div class="skin-map-label mono">Recommended actives</div><ul class="skin-map-list cobalt">${pillsHTML(map.recommended_actives)}</ul></div>` : ''}
+      </div>
+      ${map.warnings?.length ? `<p class="skin-map-warning">⚠ ${map.warnings.map(escapeHTML).join(' · ')}</p>` : ''}
+    `;
+  }
+
+  function escapeHTML(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
   function blobToBase64(blob) {
     return new Promise((resolve, reject) => {

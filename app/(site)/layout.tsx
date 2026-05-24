@@ -1,6 +1,5 @@
 import { SiteHeader } from '@/components/site/SiteHeader';
 import { SiteFooter } from '@/components/site/SiteFooter';
-import '@/components/checkout/checkout.css';
 
 /**
  * Route-group layout for the new platform surfaces (homepage, /about,

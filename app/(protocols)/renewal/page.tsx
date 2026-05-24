@@ -7,6 +7,7 @@ import { ProtocolPageShell } from '@/components/protocol/ProtocolPageShell';
 
 const BUNDLE_SLUG = 'renewal-protocol';
 const ROUTE = '/renewal';
+const HERO_IMAGE = '/protocols/renewal-protocol/hero-gpt.webp';
 const TITLE = 'Renewal Protocol — Anti-ageing + fine lines';
 const DESCRIPTION =
   'A 12-week clinical regimen for fine lines, dullness, and loss of firmness. Encapsulated retinol, peptides, and vitamin C — clinically dosed, dermatologist-formulated, manufactured in Lahore.';
@@ -31,6 +32,7 @@ export default function RenewalProtocolPage() {
       bundleSlug={BUNDLE_SLUG}
       route={ROUTE}
       description={DESCRIPTION}
+      heroImageSrc={HERO_IMAGE}
       legacyBody={RENEWAL_PROTOCOL_BODY}
       legacyClient={<RenewalClient />}
     />

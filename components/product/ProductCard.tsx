@@ -1,35 +1,29 @@
 'use client';
 
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import { useCart } from '@/lib/cart/use-cart';
 import type { Product } from '@/lib/db/schema';
 import { PRODUCT_CONTENT, productImagePaths } from '@/lib/products/content';
+import { useReducedMotion } from '@/lib/anim/hooks';
 import { cn } from '@/lib/utils';
 
-/**
- * Card composition (post Phase 3a research-driven polish):
- *   - Hover image-swap (hero → view-1) — pure CSS opacity crossfade.
- *     Pattern present on 5 of 8 reference PLPs (02-shop.md).
- *   - Price baked into the Add button — Glossier pattern (02-shop.md).
- *     Reduces order-cancellation calls on COD by confirming price at
- *     the moment of click.
- *   - Add button uses cobalt outline (not navy filled) so it reads as a
- *     soft quick-add — the primary protocol-purchase CTA stays on the
- *     PDP / protocol page.
- */
 export function ProductCard({ product }: { product: Product }) {
   const { addProduct } = useCart();
+  const reduced = useReducedMotion();
   const content = PRODUCT_CONTENT[product.sku];
   const images = content ? productImagePaths(product.sku) : null;
   const heroImage = images ? images.hero : product.imageUrl;
   const swapImage = images ? images.views[0] : null;
 
   return (
-    <article
+    <motion.article
+      whileHover={reduced ? undefined : { y: -4 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 22 }}
       className={cn(
         'group flex h-full flex-col overflow-hidden rounded-2xl border border-rule bg-card',
-        'transition-[border-color,transform] duration-200',
-        'hover:-translate-y-0.5 hover:border-navy',
+        'transition-[border-color,box-shadow] duration-300',
+        'hover:border-navy hover:shadow-[0_24px_48px_-20px_rgba(14,31,58,0.2)]',
       )}
     >
       <Link href={`/products/${product.sku}`} className="block">
@@ -61,6 +55,7 @@ export function ProductCard({ product }: { product: Product }) {
                   )}
                 />
               )}
+              <div className="lightsweep-overlay" aria-hidden="true" />
             </>
           ) : (
             <span className="font-mono text-[11px] tracking-[0.05em] text-ink-faint">
@@ -99,6 +94,6 @@ export function ProductCard({ product }: { product: Product }) {
           </span>
         </button>
       </div>
-    </article>
+    </motion.article>
   );
 }

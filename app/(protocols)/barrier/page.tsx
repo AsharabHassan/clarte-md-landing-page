@@ -7,6 +7,7 @@ import { ProtocolPageShell } from '@/components/protocol/ProtocolPageShell';
 
 const BUNDLE_SLUG = 'barrier-protocol';
 const ROUTE = '/barrier';
+const HERO_IMAGE = '/protocols/barrier-protocol/hero-gpt.webp';
 const TITLE = 'Barrier Protocol — Sensitivity + hydration';
 const DESCRIPTION =
   'A gentle clinical regimen for compromised, sensitive, or dehydrated skin. Ceramide-rich cleanser, panthenol serum, and barrier-repair moisturiser — clinically dosed, dermatologist-formulated, manufactured in Lahore.';
@@ -31,6 +32,7 @@ export default function BarrierProtocolPage() {
       bundleSlug={BUNDLE_SLUG}
       route={ROUTE}
       description={DESCRIPTION}
+      heroImageSrc={HERO_IMAGE}
       legacyBody={BARRIER_PROTOCOL_BODY}
       legacyClient={<BarrierClient />}
     />

@@ -3,10 +3,22 @@ import { createHash } from 'node:crypto';
 /**
  * Per-hour ceilings. Both checked against the ai_sessions table (the
  * AI rate) and a notional orders rate-check inside /api/create-order
- * (the orders rate). Tunable via env later if the page traffic justifies.
+ * (the orders rate).
+ *
+ * Overridable via env so local dev / staging can raise the cap
+ * (`AI_RATE_LIMIT_PER_HOUR=100` in .env.local) without changing prod
+ * defaults. Production keeps the conservative number unless explicitly
+ * raised in the deploy env.
  */
-export const RATE_LIMIT_AI_PER_HOUR = 5;
-export const RATE_LIMIT_ORDERS_PER_HOUR = 10;
+function envInt(name: string, fallback: number): number {
+  const raw = process.env[name];
+  if (!raw) return fallback;
+  const n = parseInt(raw, 10);
+  return Number.isFinite(n) && n > 0 ? n : fallback;
+}
+
+export const RATE_LIMIT_AI_PER_HOUR = envInt('AI_RATE_LIMIT_PER_HOUR', 5);
+export const RATE_LIMIT_ORDERS_PER_HOUR = envInt('ORDERS_RATE_LIMIT_PER_HOUR', 10);
 
 /**
  * One-way hash of a raw IP using a server-side pepper. We store the

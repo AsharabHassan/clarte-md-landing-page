@@ -1,20 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'motion/react';
 import { useCart } from '@/lib/cart/use-cart';
 import { CartDrawer } from '@/components/cart/CartDrawer';
+import { useReducedMotion } from '@/lib/anim/hooks';
 import { cn } from '@/lib/utils';
 
-/**
- * Cart trigger in the site header. Previously a direct link to /cart;
- * now opens the right-side cart drawer (composed via CartDrawer). The
- * deep /cart page is still reachable from inside the drawer for the
- * full editing UX.
- */
 export function CartIcon() {
   const { cart } = useCart();
   const [open, setOpen] = useState(false);
   const count = cart.items.reduce((n, i) => n + i.qty, 0);
+  const reduced = useReducedMotion();
+  const prevCount = useRef(count);
+  const [bumpKey, setBumpKey] = useState(0);
+
+  useEffect(() => {
+    if (count > prevCount.current) setBumpKey((k) => k + 1);
+    prevCount.current = count;
+  }, [count]);
 
   return (
     <CartDrawer
@@ -32,20 +36,32 @@ export function CartIcon() {
             'focus-visible:outline-none focus-visible:text-cobalt',
           )}
         >
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-            <path
-              d="M3 4h2l2 12h12l2-8H6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <circle cx="9" cy="20" r="1.5" fill="currentColor" />
-            <circle cx="17" cy="20" r="1.5" fill="currentColor" />
-          </svg>
+          <motion.span
+            key={`bump-${bumpKey}`}
+            initial={reduced ? false : { scale: 1 }}
+            animate={reduced ? undefined : { scale: [1, 1.25, 0.95, 1] }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path
+                d="M3 4h2l2 12h12l2-8H6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="9" cy="20" r="1.5" fill="currentColor" />
+              <circle cx="17" cy="20" r="1.5" fill="currentColor" />
+            </svg>
+          </motion.span>
           {count > 0 && (
-            <span
+            <motion.span
+              key={`count-${count}`}
+              initial={reduced ? false : { y: -6, opacity: 0, scale: 0.7 }}
+              animate={reduced ? undefined : { y: 0, opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden="true"
               className={cn(
                 'absolute right-0.5 top-0.5 flex h-[18px] min-w-[18px] items-center justify-center',
@@ -54,7 +70,7 @@ export function CartIcon() {
               )}
             >
               {count}
-            </span>
+            </motion.span>
           )}
         </button>
       }

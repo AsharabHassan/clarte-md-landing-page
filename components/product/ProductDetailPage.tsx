@@ -18,7 +18,19 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { ProductCard } from './ProductCard';
+import { CinematicHero } from './CinematicHero';
+import { StickyAddBar } from './StickyAddBar';
+import { Reveal, RevealGroup } from '@/lib/anim/reveal';
+import { Magnetic } from '@/lib/anim/magnetic';
+import { LowStockTag } from '@/components/marketing/LowStockTag';
+import { CountdownTimer } from '@/components/marketing/CountdownTimer';
+import { DoctorVideos } from '@/components/marketing/DoctorVideos';
 import { cn } from '@/lib/utils';
+
+// SKUs that have a dedicated doctor video. PDPs for these get a single
+// focused video; PDPs for any other product get all four as "From the
+// doctor" cross-sell context.
+const HAS_DEDICATED_VIDEO = new Set(['rescue', 'acne', 'vitc', 'reti']);
 
 interface PrimaryBundle {
   slug: string;
@@ -72,22 +84,36 @@ export function ProductDetailPage({
   };
 
   return (
-    <div className="mx-auto max-w-[67.5rem] px-6 pt-10 pb-24">
+    <div className="bg-canvas">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* HERO — gallery + buy box */}
+      {/* Full-bleed cinematic hero band — dark gradient over hero shot */}
+      <CinematicHero
+        cinematicSrc={images.cinematic}
+        productName={product.name}
+        eyebrow={product.actives ?? undefined}
+      />
+
+      <div className="mx-auto max-w-[67.5rem] px-6 pt-16 pb-24">
+      {/* GALLERY + buy box */}
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
+        <Reveal>
         <div className="flex flex-col gap-4">
-          <div className="flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-sky">
+          <div className="group relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-sky">
             {heroSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={heroSrc} alt={product.name} className="h-full w-full object-cover" />
+              <img
+                src={heroSrc}
+                alt={product.name}
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
             ) : (
               <span className="font-mono text-xs text-ink-faint">[Photo pending]</span>
             )}
+            <div className="lightsweep-overlay" aria-hidden="true" />
           </div>
           {content && gallery.length > 1 && (
             <div className="grid grid-cols-5 gap-2" role="tablist" aria-label="Product views">
@@ -100,8 +126,10 @@ export function ProductDetailPage({
                   onClick={() => setActiveImage(i)}
                   className={cn(
                     'flex aspect-square items-center justify-center overflow-hidden rounded-md',
-                    'border-2 transition-colors bg-sky',
-                    i === activeImage ? 'border-cobalt' : 'border-transparent hover:border-rule',
+                    'border-2 transition-all duration-300 bg-sky',
+                    i === activeImage
+                      ? 'border-cobalt scale-100'
+                      : 'border-transparent hover:border-rule hover:scale-[1.03]',
                   )}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -116,7 +144,9 @@ export function ProductDetailPage({
             </div>
           )}
         </div>
+        </Reveal>
 
+        <Reveal delay={0.1}>
         <div className="flex flex-col gap-5">
           {content && content.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
@@ -153,14 +183,22 @@ export function ProductDetailPage({
             )}
           </div>
 
-          <Button
-            type="button"
-            size="lg"
-            onClick={() => addProduct(product.sku)}
-            className="mt-1 w-full sm:w-auto sm:min-w-[18rem]"
-          >
-            Add to cart — Rs. {product.pricePkr.toLocaleString('en-PK')}
-          </Button>
+          <div className="mt-1 flex flex-wrap items-center gap-3">
+            <LowStockTag sku={product.sku} />
+            <CountdownTimer variant="pill" label="Offer ends in" windowHours={6} />
+          </div>
+
+          <Magnetic strength={5}>
+            <Button
+              type="button"
+              id="pdp-primary-cta"
+              size="lg"
+              onClick={() => addProduct(product.sku)}
+              className="mt-1 w-full sm:w-auto sm:min-w-[18rem]"
+            >
+              Add to cart — Rs. {product.pricePkr.toLocaleString('en-PK')}
+            </Button>
+          </Magnetic>
 
           {content?.bestFor && (
             <p className="font-display italic text-[15px] leading-relaxed text-ink-2">
@@ -176,11 +214,13 @@ export function ProductDetailPage({
             COD across Pakistan · Pay courier on arrival
           </div>
         </div>
+        </Reveal>
       </div>
 
       {/* CONTENT BODY */}
       {content ? (
-        <>
+        <RevealGroup stagger={0.06}>
+          <Reveal>
           <Section title="Benefits">
             <ul className="space-y-2.5">
               {content.benefits.map((b, i) => (
@@ -191,7 +231,9 @@ export function ProductDetailPage({
               ))}
             </ul>
           </Section>
+          </Reveal>
 
+          <Reveal>
           <Section title="Ingredients">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {content.ingredients.map((ing) => (
@@ -205,7 +247,9 @@ export function ProductDetailPage({
               ))}
             </div>
           </Section>
+          </Reveal>
 
+          <Reveal>
           <Section title="How to use">
             <ol className="space-y-3">
               {content.directions.map((d, i) => {
@@ -239,7 +283,9 @@ export function ProductDetailPage({
               to work in combination.
             </p>
           </Section>
+          </Reveal>
 
+          <Reveal>
           <Section title="Important">
             <ul className="space-y-2.5 rounded-xl border-l-[3px] border-rust bg-amber-50/40 px-5 py-4">
               {content.important.map((w, i) => (
@@ -250,9 +296,11 @@ export function ProductDetailPage({
               ))}
             </ul>
           </Section>
-        </>
+          </Reveal>
+        </RevealGroup>
       ) : (
-        <>
+        <RevealGroup stagger={0.08}>
+          <Reveal>
           <Section title="What is it">
             <p className="text-base text-ink-2 leading-relaxed">
               A single-product purchase from Clarté MD's clinical catalogue. Each product is
@@ -266,7 +314,9 @@ export function ProductDetailPage({
               </p>
             )}
           </Section>
+          </Reveal>
 
+          <Reveal>
           <Section title="How to use">
             <p className="text-base text-ink-2 leading-relaxed">
               Apply after cleansing, before moisturiser. Patch-test for 48 hours before full-face
@@ -274,9 +324,11 @@ export function ProductDetailPage({
               Always finish your AM routine with SPF.
             </p>
           </Section>
-        </>
+          </Reveal>
+        </RevealGroup>
       )}
 
+      <Reveal>
       {/* FAQ */}
       <Section title="Common questions">
         <Accordion type="single" collapsible className="border-t border-rule">
@@ -312,8 +364,31 @@ export function ProductDetailPage({
           </AccordionItem>
         </Accordion>
       </Section>
+      </Reveal>
+
+      </div>
+
+      {/* ─── Doctor video section ─── */}
+      {HAS_DEDICATED_VIDEO.has(product.sku) ? (
+        <DoctorVideos
+          featuredSku={product.sku}
+          singleVideoOnly={true}
+          variant="compact"
+          title={`A note from our doctor.`}
+          sub={`Short, plain-English explanation of why this product matters and how to use it.`}
+        />
+      ) : (
+        <DoctorVideos
+          variant="compact"
+          title={`From the doctor.`}
+          sub={`Short, plain-English notes on the actives in our protocols.`}
+        />
+      )}
+
+      <div className="mx-auto max-w-[67.5rem] px-6 pt-12 pb-24">
 
       {primaryBundle && protocolSiblings.length > 0 && (
+        <Reveal>
         <Section
           title={`Complete the ${primaryBundle.name.replace(/^The\s+/, '')}`}
         >
@@ -347,7 +422,10 @@ export function ProductDetailPage({
             ))}
           </div>
         </Section>
+        </Reveal>
       )}
+      </div>
+      <StickyAddBar product={product} triggerSelector="#pdp-primary-cta" />
     </div>
   );
 }

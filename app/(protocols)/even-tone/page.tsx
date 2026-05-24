@@ -7,6 +7,7 @@ import { ProtocolPageShell } from '@/components/protocol/ProtocolPageShell';
 
 const BUNDLE_SLUG = 'even-tone-protocol';
 const ROUTE = '/even-tone';
+const HERO_IMAGE = '/protocols/even-tone-protocol/hero-gpt.webp';
 const TITLE = 'Even Tone Protocol — Pigmentation + melasma';
 const DESCRIPTION =
   'A 12-week clinical regimen for hyperpigmentation and melasma. Tranexamic acid, alpha arbutin, and broad-spectrum SPF — clinically dosed, dermatologist-formulated, manufactured in Lahore.';
@@ -31,6 +32,7 @@ export default function EvenToneProtocolPage() {
       bundleSlug={BUNDLE_SLUG}
       route={ROUTE}
       description={DESCRIPTION}
+      heroImageSrc={HERO_IMAGE}
       legacyBody={EVEN_TONE_PROTOCOL_BODY}
       legacyClient={<EvenToneClient />}
     />

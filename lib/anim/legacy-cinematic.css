@@ -1,0 +1,770 @@
+/*
+ * Cinematic overlay for the legacy protocol-body HTML.
+ *
+ * The protocol pages have ~700 lines of dangerouslySetInnerHTML each
+ * (AI generator, prescription, timeline, reviews, FAQ, intake form).
+ * Rewriting them as React would take days. This file restyles them in
+ * place with the tech-luxe register: warm-cream canvas, glass surfaces,
+ * Fraunces emphasis, soft shadows, smooth motion, scroll reveals.
+ *
+ * Specificity: everything is scoped under
+ *   .protocol-page-redesigned .legacy-body
+ * so it only affects the legacy body and never bleeds into the new
+ * Tailwind layers (Hero / Evidence / Steps / Savings / Divider) above
+ * or other parts of the site.
+ *
+ * Reveal animation: the LegacyEnhancer client component adds
+ * data-reveal-in="true" to each section when it enters the viewport.
+ * Sections start at opacity 0 / translateY(24px) and ease in.
+ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. CANVAS — warm-cream backdrop everywhere in the legacy body
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body {
+  background: #f6f1eb;
+  --legacy-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.protocol-page-redesigned .legacy-body .ai-section,
+.protocol-page-redesigned .legacy-body .reviews-section,
+.protocol-page-redesigned .legacy-body .rx-section,
+.protocol-page-redesigned .legacy-body .tl-section,
+.protocol-page-redesigned .legacy-body .colophon,
+.protocol-page-redesigned .legacy-body .faq-section,
+.protocol-page-redesigned .legacy-body .intake {
+  background: #f6f1eb;
+  position: relative;
+}
+
+/* Soft alternating tone for rhythm */
+.protocol-page-redesigned .legacy-body .reviews-section,
+.protocol-page-redesigned .legacy-body .tl-section,
+.protocol-page-redesigned .legacy-body .faq-section {
+  background: #faf6f0;
+}
+
+.protocol-page-redesigned .legacy-body .colophon {
+  background: #ede5d8;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. SCROLL-REVEAL — subtle nudge-up when intersected.
+       Sections render fully visible by default. JS optionally adds
+       data-reveal-in="false" while off-screen to apply a small y-offset
+       that resolves when the observer fires data-reveal-in="true".
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body section[data-reveal-in="false"] {
+  opacity: 0.35;
+  transform: translateY(20px);
+  transition:
+    opacity 700ms var(--legacy-ease),
+    transform 700ms var(--legacy-ease);
+  will-change: opacity, transform;
+}
+.protocol-page-redesigned .legacy-body section[data-reveal-in="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 700ms var(--legacy-ease),
+    transform 700ms var(--legacy-ease);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3. TYPOGRAPHY — Fraunces emphasis already used by .display/.h-em,
+      we just sharpen color contrast and italic warmth.
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .display em,
+.protocol-page-redesigned .legacy-body .h-em {
+  color: #2e5ba8;
+}
+
+.protocol-page-redesigned .legacy-body .folio {
+  border-color: rgba(184, 168, 144, 0.4) !important;
+}
+.protocol-page-redesigned .legacy-body .folio .folio-page {
+  color: #2e5ba8 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   4. CARDS / SURFACES — glass-morphism + soft drop shadows
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .rx-paper,
+.protocol-page-redesigned .legacy-body .rx-aside,
+.protocol-page-redesigned .legacy-body .ai-stage,
+.protocol-page-redesigned .legacy-body .stage,
+.protocol-page-redesigned .legacy-body .intake-form,
+.protocol-page-redesigned .legacy-body .review-card,
+.protocol-page-redesigned .legacy-body .faq-item,
+.protocol-page-redesigned .legacy-body .tl-card,
+.protocol-page-redesigned .legacy-body .cross-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(184, 168, 144, 0.4) !important;
+  box-shadow:
+    0 1px 2px rgba(14, 31, 58, 0.04),
+    0 20px 40px -24px rgba(14, 31, 58, 0.14);
+  transition:
+    transform 400ms var(--legacy-ease),
+    box-shadow 400ms var(--legacy-ease),
+    border-color 400ms var(--legacy-ease);
+}
+
+.protocol-page-redesigned .legacy-body .rx-paper:hover,
+.protocol-page-redesigned .legacy-body .review-card:hover,
+.protocol-page-redesigned .legacy-body .tl-card:hover,
+.protocol-page-redesigned .legacy-body .faq-item:hover,
+.protocol-page-redesigned .legacy-body .cross-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 2px rgba(14, 31, 58, 0.05),
+    0 30px 60px -24px rgba(14, 31, 58, 0.24);
+  border-color: rgba(46, 91, 168, 0.3) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5. BUTTONS — premium pill + smooth motion
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .btn {
+  transition:
+    transform 250ms var(--legacy-ease),
+    background 250ms var(--legacy-ease),
+    color 250ms var(--legacy-ease),
+    box-shadow 350ms var(--legacy-ease) !important;
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+
+.protocol-page-redesigned .legacy-body .btn-primary,
+.protocol-page-redesigned .legacy-body .rx-cta,
+.protocol-page-redesigned .legacy-body .btn-light {
+  background: #0e1f3a !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 28px -12px rgba(14, 31, 58, 0.4);
+}
+.protocol-page-redesigned .legacy-body .btn-primary:hover,
+.protocol-page-redesigned .legacy-body .rx-cta:hover,
+.protocol-page-redesigned .legacy-body .btn-light:hover {
+  background: #142a4f !important;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 36px -14px rgba(14, 31, 58, 0.5);
+}
+
+.protocol-page-redesigned .legacy-body .btn-ghost-dark {
+  border: 1px solid rgba(46, 91, 168, 0.5) !important;
+  color: #2e5ba8 !important;
+}
+.protocol-page-redesigned .legacy-body .btn-ghost-dark:hover {
+  background: #2e5ba8 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+}
+
+/* Light-sweep on primary buttons */
+.protocol-page-redesigned .legacy-body .btn-primary::after,
+.protocol-page-redesigned .legacy-body .rx-cta::after,
+.protocol-page-redesigned .legacy-body .btn-light::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 100%
+  );
+  transform: translateX(-150%) skewX(-12deg);
+  pointer-events: none;
+}
+.protocol-page-redesigned .legacy-body .btn-primary:hover::after,
+.protocol-page-redesigned .legacy-body .rx-cta:hover::after,
+.protocol-page-redesigned .legacy-body .btn-light:hover::after {
+  animation: legacy-sweep 1.1s ease-out;
+}
+@keyframes legacy-sweep {
+  to { transform: translateX(280%) skewX(-12deg); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6. AI SECTION — dramatic stage chrome
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .ai-stage {
+  border-radius: 18px;
+  overflow: hidden;
+}
+.protocol-page-redesigned .legacy-body .ai-stage .stage-header {
+  background: linear-gradient(180deg, #08152a 0%, #0e1f3a 100%);
+  color: #8ab0e0;
+}
+.protocol-page-redesigned .legacy-body .ai-card {
+  background: linear-gradient(135deg, #0e1f3a 0%, #142a4f 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(138, 176, 224, 0.18) !important;
+  box-shadow:
+    0 30px 80px -30px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 500ms var(--legacy-ease), box-shadow 500ms var(--legacy-ease);
+}
+.protocol-page-redesigned .legacy-body .ai-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 40px 100px -30px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.protocol-page-redesigned .legacy-body .ai-card .ai-cta {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(138, 176, 224, 0.3);
+  border-radius: 999px;
+  padding: 14px 22px;
+  transition: background 250ms var(--legacy-ease), border-color 250ms var(--legacy-ease);
+}
+.protocol-page-redesigned .legacy-body .ai-card:hover .ai-cta {
+  background: rgba(138, 176, 224, 0.18);
+  border-color: rgba(138, 176, 224, 0.6);
+}
+
+.protocol-page-redesigned .legacy-body .dropzone {
+  border: 1.5px dashed rgba(46, 91, 168, 0.45) !important;
+  border-radius: 18px;
+  background: rgba(238, 243, 251, 0.5);
+  transition: border-color 300ms var(--legacy-ease), background 300ms var(--legacy-ease);
+}
+.protocol-page-redesigned .legacy-body .dropzone:hover,
+.protocol-page-redesigned .legacy-body .dropzone.dz-active {
+  border-color: #2e5ba8 !important;
+  background: rgba(110, 147, 207, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7. PRESCRIPTION — paper card heritage feel with Clarté stamp
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .rx-paper {
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 246, 240, 0.92) 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  transition:
+    transform 500ms var(--legacy-ease),
+    box-shadow 500ms var(--legacy-ease),
+    border-color 500ms var(--legacy-ease);
+}
+
+/* Subtle diagonal watermark — repeated "CLARTÉ · MD" across the paper */
+.protocol-page-redesigned .legacy-body .rx-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      -22deg,
+      rgba(14, 31, 58, 0) 0,
+      rgba(14, 31, 58, 0) 220px,
+      rgba(14, 31, 58, 0.025) 220px,
+      rgba(14, 31, 58, 0.025) 222px
+    );
+}
+
+/* Top-right corner perforation hint — gives the paper an issued feel */
+.protocol-page-redesigned .legacy-body .rx-paper::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center,
+      rgba(46, 91, 168, 0.08) 0%,
+      rgba(46, 91, 168, 0) 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.protocol-page-redesigned .legacy-body .rx-paper:hover {
+  transform: translateY(-4px) rotate(-0.2deg);
+  box-shadow:
+    0 1px 2px rgba(14, 31, 58, 0.05),
+    0 40px 80px -28px rgba(14, 31, 58, 0.32) !important;
+  border-color: rgba(46, 91, 168, 0.35) !important;
+}
+
+/* Bring all content above the watermark */
+.protocol-page-redesigned .legacy-body .rx-paper > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── The Clarté clinical stamp ─── */
+.protocol-page-redesigned .legacy-body .clarte-stamp {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 76px !important;
+  height: 76px !important;
+  background: transparent !important;
+  color: #0e1f3a !important; /* drives the SVG circle fill via currentColor */
+  border-radius: 50% !important;
+  flex-shrink: 0;
+  transition: transform 500ms var(--legacy-ease);
+}
+.protocol-page-redesigned .legacy-body .clarte-stamp:hover {
+  transform: rotate(-6deg) scale(1.04);
+}
+.protocol-page-redesigned .legacy-body .clarte-stamp svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.protocol-page-redesigned .legacy-body .clarte-stamp .stamp-arc-text {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 5px;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  fill: rgba(255, 255, 255, 0.85);
+}
+.protocol-page-redesigned .legacy-body .clarte-stamp .stamp-glyph {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  color: #ffffff;
+  line-height: 1;
+  /* nudge slightly so the C visually centers under the dotted ring */
+  transform: translateY(1px);
+}
+.protocol-page-redesigned .legacy-body .clarte-stamp .stamp-c {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 350;
+  font-style: italic;
+  letter-spacing: -0.04em;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+}
+.protocol-page-redesigned .legacy-body .clarte-stamp .stamp-md {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-top: -10px;
+}
+
+/* ─── Rx list — refined item rows ─── */
+.protocol-page-redesigned .legacy-body .rx-list li {
+  border-bottom-color: rgba(184, 168, 144, 0.3) !important;
+  transition:
+    background 300ms var(--legacy-ease),
+    padding 300ms var(--legacy-ease);
+}
+.protocol-page-redesigned .legacy-body .rx-list li:hover {
+  background: rgba(46, 91, 168, 0.05);
+}
+.protocol-page-redesigned .legacy-body .rx-list .rx-prod-name {
+  font-family: 'Fraunces', serif !important;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  color: #0e1f3a;
+  letter-spacing: -0.005em;
+  font-variation-settings: 'opsz' 36, 'SOFT' 50;
+}
+.protocol-page-redesigned .legacy-body .rx-list .rx-active {
+  color: #2e5ba8 !important;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+}
+.protocol-page-redesigned .legacy-body .rx-price s {
+  opacity: 0.45;
+  font-weight: 400;
+}
+
+/* ─── Doctor signature — softer paper-pen feel ─── */
+.protocol-page-redesigned .legacy-body .rx-signature {
+  font-family: 'Fraunces', serif !important;
+  font-style: italic;
+  font-size: 17px;
+  color: #0e1f3a;
+  border-top: 1px solid rgba(184, 168, 144, 0.5);
+  padding-top: 14px;
+  position: relative;
+}
+.protocol-page-redesigned .legacy-body .rx-signature small {
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  font-style: normal;
+  font-size: 10px;
+  color: #4d5d7d;
+  display: block;
+  margin-top: 4px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ─── The Rx-paper headline (display) ─── */
+.protocol-page-redesigned .legacy-body .rx-paper h3.display,
+.protocol-page-redesigned .legacy-body .rx-paper .rx-name {
+  font-size: clamp(32px, 4vw, 44px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+
+/* ─── Subhead pills (Subject / Diagnosis / Supply) ─── */
+.protocol-page-redesigned .legacy-body .rx-subhead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(184, 168, 144, 0.4);
+  border-bottom: 1px solid rgba(184, 168, 144, 0.4);
+  margin: 18px 0 24px;
+}
+.protocol-page-redesigned .legacy-body .rx-subhead span {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4d5d7d;
+}
+.protocol-page-redesigned .legacy-body .rx-subhead span b {
+  color: #2e5ba8;
+  font-weight: 600;
+}
+
+/* ─── Right aside — included perks ─── */
+.protocol-page-redesigned .legacy-body .rx-aside {
+  background: linear-gradient(180deg, #0e1f3a 0%, #142a4f 100%) !important;
+  color: #fff !important;
+  border-color: rgba(138, 176, 224, 0.16) !important;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.protocol-page-redesigned .legacy-body .rx-aside::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% -20%, rgba(138, 176, 224, 0.18), transparent 60%);
+  pointer-events: none;
+}
+.protocol-page-redesigned .legacy-body .rx-aside .aside-label {
+  color: #8ab0e0 !important;
+}
+.protocol-page-redesigned .legacy-body .rx-aside h4.display {
+  color: #ffffff !important;
+}
+.protocol-page-redesigned .legacy-body .rx-aside h4.display em {
+  color: #8ab0e0 !important;
+}
+.protocol-page-redesigned .legacy-body .rx-includes {
+  color: rgba(255, 255, 255, 0.82);
+}
+.protocol-page-redesigned .legacy-body .rx-includes li {
+  position: relative;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.protocol-page-redesigned .legacy-body .rx-includes li::before {
+  color: #8ab0e0 !important;
+}
+.protocol-page-redesigned .legacy-body .rx-strip {
+  background: rgba(138, 176, 224, 0.14) !important;
+  border-color: rgba(138, 176, 224, 0.25) !important;
+}
+.protocol-page-redesigned .legacy-body .rx-cta {
+  background: #ffffff !important;
+  color: #0e1f3a !important;
+  border: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 16px 24px !important;
+  border-radius: 999px !important;
+}
+.protocol-page-redesigned .legacy-body .rx-cta:hover {
+  background: #8ab0e0 !important;
+  color: #08152a !important;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 36px -14px rgba(0, 0, 0, 0.5) !important;
+}
+.protocol-page-redesigned .legacy-body .rx-foot-line {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   8. INTAKE FORM — premium inputs
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .intake input,
+.protocol-page-redesigned .legacy-body .intake select,
+.protocol-page-redesigned .legacy-body .intake textarea {
+  border-radius: 10px !important;
+  border-color: rgba(184, 168, 144, 0.5) !important;
+  background: #ffffff !important;
+  transition:
+    border-color 300ms var(--legacy-ease),
+    box-shadow 300ms var(--legacy-ease),
+    transform 300ms var(--legacy-ease) !important;
+}
+.protocol-page-redesigned .legacy-body .intake input:hover,
+.protocol-page-redesigned .legacy-body .intake select:hover,
+.protocol-page-redesigned .legacy-body .intake textarea:hover {
+  border-color: #b8c4d7 !important;
+}
+.protocol-page-redesigned .legacy-body .intake input:focus,
+.protocol-page-redesigned .legacy-body .intake select:focus,
+.protocol-page-redesigned .legacy-body .intake textarea:focus {
+  border-color: #2e5ba8 !important;
+  box-shadow:
+    0 0 0 3px rgba(46, 91, 168, 0.14),
+    0 8px 24px -12px rgba(14, 31, 58, 0.18) !important;
+  transform: translateY(-1px);
+  outline: 0 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   9. FAQ — accordion polish
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .faq-item {
+  border-radius: 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.protocol-page-redesigned .legacy-body .faq-item summary,
+.protocol-page-redesigned .legacy-body .faq-item .faq-q {
+  cursor: pointer;
+  transition: color 250ms var(--legacy-ease);
+}
+.protocol-page-redesigned .legacy-body .faq-item:hover summary,
+.protocol-page-redesigned .legacy-body .faq-item:hover .faq-q {
+  color: #2e5ba8 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   10. TIMELINE — narrative beats
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .tl-card {
+  border-radius: 14px;
+}
+.protocol-page-redesigned .legacy-body .tl-card .tl-week,
+.protocol-page-redesigned .legacy-body .tl-card .tl-num {
+  color: #2e5ba8 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   11. REVIEWS — quote polish
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .review-card {
+  border-radius: 14px;
+}
+.protocol-page-redesigned .legacy-body .review-card .review-rating,
+.protocol-page-redesigned .legacy-body .review-card .stars {
+  color: #d4a574;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   12. COLOPHON — heritage warm
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .colophon {
+  border-top: 1px solid rgba(184, 168, 144, 0.5);
+  border-bottom: 1px solid rgba(184, 168, 144, 0.5);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   13. SECTION HEADERS — consistent Fraunces emphasis
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .section-head {
+  margin-bottom: 48px;
+}
+.protocol-page-redesigned .legacy-body .specimen-label,
+.protocol-page-redesigned .legacy-body .aside-label,
+.protocol-page-redesigned .legacy-body .case-id {
+  color: #2e5ba8 !important;
+  letter-spacing: 0.22em !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   14. CROSS-SELL CARDS
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .cross-card {
+  border-radius: 14px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   15. WHATSAPP QUICK-BUY BAR
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .wa-pill {
+  background: #25d366 !important;
+  color: #ffffff !important;
+  border-radius: 999px;
+  transition: transform 250ms var(--legacy-ease), box-shadow 250ms var(--legacy-ease);
+  box-shadow: 0 8px 20px -8px rgba(37, 211, 102, 0.5);
+}
+.protocol-page-redesigned .legacy-body .wa-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -8px rgba(37, 211, 102, 0.6);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   17. SKIN MAP — GPT-4o vision panel inside stageResult
+   ───────────────────────────────────────────────────────────── */
+.protocol-page-redesigned .legacy-body .skin-map-panel {
+  margin-top: 28px;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(184, 168, 144, 0.5);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 246, 240, 0.92) 100%);
+  box-shadow:
+    0 1px 2px rgba(14, 31, 58, 0.04),
+    0 20px 40px -24px rgba(14, 31, 58, 0.14);
+  position: relative;
+  overflow: hidden;
+}
+.protocol-page-redesigned .legacy-body .skin-map-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      -22deg,
+      rgba(14, 31, 58, 0) 0,
+      rgba(14, 31, 58, 0) 220px,
+      rgba(14, 31, 58, 0.022) 220px,
+      rgba(14, 31, 58, 0.022) 222px
+    );
+}
+.protocol-page-redesigned .legacy-body .skin-map-panel > * {
+  position: relative;
+  z-index: 1;
+}
+.protocol-page-redesigned .legacy-body .skin-map-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(184, 168, 144, 0.4);
+}
+.protocol-page-redesigned .legacy-body .skin-map-eyebrow {
+  color: #2e5ba8;
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 600;
+}
+.protocol-page-redesigned .legacy-body .skin-map-meta {
+  color: #4d5d7d;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+.protocol-page-redesigned .legacy-body .skin-map-observation {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.55;
+  color: #1f2f50;
+  margin: 0 0 18px;
+  max-width: 52rem;
+}
+.protocol-page-redesigned .legacy-body .skin-map-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+@media (min-width: 640px) {
+  .protocol-page-redesigned .legacy-body .skin-map-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+.protocol-page-redesigned .legacy-body .skin-map-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.protocol-page-redesigned .legacy-body .skin-map-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #4d5d7d;
+}
+.protocol-page-redesigned .legacy-body .skin-map-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.protocol-page-redesigned .legacy-body .skin-map-list li {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: #0e1f3a;
+  padding-left: 14px;
+  position: relative;
+}
+.protocol-page-redesigned .legacy-body .skin-map-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: -2px;
+  font-size: 18px;
+  color: #2e5ba8;
+}
+.protocol-page-redesigned .legacy-body .skin-map-list.muted li {
+  color: #4d5d7d;
+  font-size: 14px;
+}
+.protocol-page-redesigned .legacy-body .skin-map-list.cobalt li {
+  color: #2e5ba8;
+}
+.protocol-page-redesigned .legacy-body .skin-map-warning {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(217, 119, 87, 0.08);
+  border-left: 3px solid #d97757;
+  color: #1f2f50;
+  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.5;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   18. REDUCED MOTION
+   ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .protocol-page-redesigned .legacy-body * {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+  .protocol-page-redesigned .legacy-body section[data-reveal-in] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

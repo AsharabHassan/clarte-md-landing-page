@@ -66,7 +66,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="live">Live</span>
         </div>
         <h2 class="display">See your <em>twelve-week</em> skin.</h2>
-        <p>Upload one selfie. Watch a photoreal projection of your skin after the full Renewal Protocol — identity, lighting, and pose preserved. Free. ~20 seconds.</p>
+        <p>Upload one selfie. See how your skin will look after 12 weeks on the Renewal Protocol. Free. Takes ~20 seconds.</p>
         <div class="ai-cta">
           <span>Begin the analysis</span>
           <svg width="22" height="11" viewBox="0 0 22 11" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5.5h20M16 1l4 4.5-4 4.5"/></svg>
@@ -85,8 +85,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span>CS-003 · Step 01</span>
     </div>
     <div class="section-head">
-      <span class="specimen-label">A free clinical preview</span>
-      <h2 class="display">See your skin <span class="h-em">after twelve weeks.</span></h2>
+      <span class="specimen-label">Free preview · 30 seconds</span>
+      <h2 class="display">See your skin <span class="h-em">in 12 weeks.</span></h2>
       <p class="deck">Upload one clear, front-facing selfie in even light. Our model projects your skin at the end of a complete Renewal Protocol. About twenty seconds. No card. No email.</p>
     </div>
 
@@ -107,8 +107,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
             </div>
-            <h4 class="display">Submit specimen.</h4>
-            <p>Drag a photograph here, or choose one from your device.</p>
+            <h4 class="display">Upload your photo.</h4>
+            <p>Drag a photo here, or pick one from your device.</p>
             <div class="dz-buttons">
               <label for="fileInput" id="btnUpload" role="button" tabindex="0">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
@@ -126,13 +126,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="stage-side">
             <div class="specimen-label">What you'll receive</div>
-            <h3 class="display">A photoreal projection of your skin <em>after week twelve.</em></h3>
-            <p class="deck">Identity, lighting, ethnicity, and pose preserved. Fine lines softened. Skin firmer. Brighter, more luminous tone. No filter sheen, no idealization.</p>
+            <h3 class="display">See how your skin will look <em>in 12 weeks.</em></h3>
+            <p class="deck">Same person, same lighting, same pose — just fresher skin. Fine lines softened. Skin firmer. Brighter, more even tone. No filters, no fake glow.</p>
             <ol class="protocol-list">
               <li>One AI projection, presented side-by-side with your photograph.</li>
-              <li>An editorial note from our team on the projection.</li>
+              <li>A short note from our team about your result.</li>
               <li>Your image is processed once, then deleted — never stored, sold, or shared.</li>
-              <li>Optional: order the protocol to receive a personal WhatsApp consultation.</li>
+              <li>Optional: order the protocol to begin the 12-week regimen.</li>
             </ol>
           </div>
         </div>
@@ -142,12 +142,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="specimen-frame">
             <span class="corner tl"></span><span class="corner tr"></span>
             <span class="corner bl"></span><span class="corner br"></span>
-            <img id="previewImg" alt="Your submitted specimen" />
+            <img id="previewImg" alt="Your photo" />
             <span class="frame-label">Subject 001 · Day 00</span>
             <button class="replace" id="btnReplace">↺ Replace</button>
           </div>
           <div class="uploaded-side">
-            <div class="specimen-label">Specimen received</div>
+            <div class="specimen-label">Photo received</div>
             <h3 class="display">Confirm and <em>begin analysis</em>.</h3>
             <p>One brief consent, then we model your twelve-week skin. The analysis takes about twenty seconds.</p>
             <div class="consent-block">
@@ -170,7 +170,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="lm-row"><span class="lm-key">Window</span><span class="lm-dots">··············</span><span class="lm-val">Week 12</span></div>
             <div class="lm-row"><span class="lm-key">Engine</span><span class="lm-dots">·············</span><span class="lm-val" id="lmStatus">Running</span></div>
           </div>
-          <h3 class="display">Analysing <em>specimen</em>.</h3>
+          <h3 class="display">Analysing <em>your photo</em>.</h3>
           <p class="progress-msg" id="progressMsg">Reading texture, tone, and inflammation markers…</p>
           <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
           <div class="ticker">DO NOT REFRESH &nbsp;·&nbsp; ~20 SECONDS</div>
@@ -300,7 +300,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="rx-grid">
       <article class="rx-paper">
         <div class="rx-head">
-          <div class="rx-symbol">Rx</div>
+          <div class="rx-symbol clarte-stamp" aria-label="Clarté MD"><svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><defs><path id="stamp-arc-top" d="M 10,40 a 30,30 0 0 1 60,0" fill="none"/><path id="stamp-arc-bot" d="M 12,42 a 28,28 0 0 0 56,0" fill="none"/></defs><circle cx="40" cy="40" r="38" fill="currentColor" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/><circle cx="40" cy="40" r="33" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.7"/><text class="stamp-arc-text" fill="#fff"><textPath href="#stamp-arc-top" startOffset="50%" text-anchor="middle">CLARTÉ · DERMATOLOGY</textPath></text><text class="stamp-arc-text" fill="#fff"><textPath href="#stamp-arc-bot" startOffset="50%" text-anchor="middle">LAHORE · MMXXIV</textPath></text></svg><span class="stamp-glyph"><em class="stamp-c">C</em><span class="stamp-md">MD</span></span></div>
           <div class="rx-meta">
             <strong>Dermatology · Clarté MD</strong>
             Lahore<br>
@@ -377,7 +377,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h4 class="display">Four perks Clarté extends to <em>every patient.</em></h4>
         <ol class="rx-includes">
           <li>Nationwide shipping, complimentary.</li>
-          <li>One-to-one WhatsApp consultation with our team — reply within two hours.</li>
+          <li>WhatsApp support for order updates and care questions — reply within two hours.</li>
           <li>A printed twenty-eight-day protocol card, signed by our doctor.</li>
           <li>Authenticity guarantee. Twofold refund if any unit is found counterfeit.</li>
         </ol>
@@ -385,7 +385,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           Fill the prescription — Rs. 7,999
           <svg width="22" height="11" viewBox="0 0 22 11" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5.5h20M16 1l4 4.5-4 4.5"/></svg>
         </button>
-        <div class="cred-line"><span class="stars">★★★★★</span><span>Loved by Pakistani patients</span><span class="sep">·</span><span>Free GMC consultation</span></div>
+        <div class="cred-line"><span class="stars">★★★★★</span><span>Loved by Pakistani patients</span><span class="sep">·</span><span>Made in Pakistan</span></div>
         <div class="rx-foot-line">Cash on delivery · 30-day returns<br>WhatsApp confirmation within 2 hours</div>
       </aside>
     </div>
@@ -470,7 +470,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="colo-item">
         <div class="k">Counsel</div>
         <div class="num">iv.</div>
-        <div class="v">Complimentary WhatsApp consultation with our team. <strong>Reply within two hours,</strong> Mon to Sat.</div>
+        <div class="v">WhatsApp support for order updates and care questions. <strong>Reply within two hours,</strong> Mon to Sat.</div>
       </div>
     </div>
   </div>
@@ -495,11 +495,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </details>
       <details class="qa">
         <summary>I'm already on prescription tretinoin. Should I switch?</summary>
-        <p class="a">Probably not on your own. Tretinoin is more potent than encapsulated 0.3% retinol; if it's working for you, our Vit C, HA, and SPF are excellent complements. Please consult our team — combining a second retinoid is not recommended, but you can use the supporting products around your existing prescription. The free consultation will sort this out.</p>
+        <p class="a">Probably not on your own. Tretinoin is more potent than encapsulated 0.3% retinol; if it's working for you, our Vit C, HA, and SPF are excellent complements. Message our team on WhatsApp before ordering — combining a second retinoid is not recommended, but you can use the supporting products around your existing prescription.</p>
       </details>
       <details class="qa">
         <summary>Is this safe during pregnancy or breastfeeding?</summary>
-        <p class="a">Retinol is not recommended during pregnancy or breastfeeding. The Prep Cleanser, Vitamin CE Ferulic, Hyaluronic Acid Serum, and Barrier SPF are all pregnancy-safe. Book the free consultation on order and we'll prescribe a pregnancy-appropriate variant — usually substituting bakuchiol for the retinol step.</p>
+        <p class="a">Retinol is not recommended during pregnancy or breastfeeding. The Prep Cleanser, Vitamin CE Ferulic, Hyaluronic Acid Serum, and Barrier SPF are all pregnancy-safe. Message our team on WhatsApp before ordering — we'll usually substitute bakuchiol for the retinol step in pregnancy.</p>
       </details>
       <details class="qa">
         <summary>Will I become "dependent" on retinol?</summary>

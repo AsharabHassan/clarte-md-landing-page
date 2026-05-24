@@ -53,7 +53,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <ul class="hero-trust">
           <li><span class="ht-dot"></span> Dermatologist-formulated</li>
           <li><span class="ht-dot"></span> COD nationwide</li>
-          <li><span class="ht-dot"></span> Made in Lahore</li>
+          <li><span class="ht-dot"></span> Made in Pakistan</li>
         </ul>
         <dl class="hero-meta">
           <div><dt>Case</dt><dd>CS-001</dd></div>
@@ -69,7 +69,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="live">Live</span>
         </div>
         <h2 class="display">See your <em>twelve-week</em> skin.</h2>
-        <p>Upload one selfie. Watch a photoreal projection of your skin after the full Clear Skin Protocol — identity, lighting, and pose preserved. Free. ~20 seconds.</p>
+        <p>Upload one selfie. See how your skin will look after 12 weeks on the Clear Skin Protocol. Free. Takes ~20 seconds.</p>
         <div class="ai-cta">
           <span>Begin the analysis</span>
           <svg width="22" height="11" viewBox="0 0 22 11" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 5.5h20M16 1l4 4.5-4 4.5"/></svg>
@@ -88,8 +88,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span>CS-001 · Step 01</span>
     </div>
     <div class="section-head">
-      <span class="specimen-label">A free clinical preview</span>
-      <h2 class="display">See your skin <span class="h-em">after twelve weeks.</span></h2>
+      <span class="specimen-label">Free preview · 30 seconds</span>
+      <h2 class="display">See your skin <span class="h-em">in 12 weeks.</span></h2>
       <p class="deck">Upload one clear, front-facing selfie in even light. Our model projects your skin at the end of a complete Clear Skin Protocol. About twenty seconds. No card. No email.</p>
     </div>
 
@@ -110,8 +110,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
             </div>
-            <h4 class="display">Submit specimen.</h4>
-            <p>Drag a photograph here, or choose one from your device.</p>
+            <h4 class="display">Upload your photo.</h4>
+            <p>Drag a photo here, or pick one from your device.</p>
             <div class="dz-buttons">
               <label for="fileInput" id="btnUpload" role="button" tabindex="0">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
@@ -129,13 +129,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="stage-side">
             <div class="specimen-label">What you'll receive</div>
-            <h3 class="display">A photoreal projection of your skin <em>after week twelve.</em></h3>
-            <p class="deck">Identity, lighting, ethnicity, and pose preserved. Active breakouts cleared. Post-acne pigmentation faded. Texture smoothed. No filter sheen, no idealization.</p>
+            <h3 class="display">See how your skin will look <em>in 12 weeks.</em></h3>
+            <p class="deck">Same person, same lighting, same pose — just clearer skin. Breakouts cleared. Marks faded. Smoother texture. No filters, no fake glow.</p>
             <ol class="protocol-list">
               <li>One AI projection, presented side-by-side with your photograph.</li>
-              <li>An editorial note from our team on the projection.</li>
+              <li>A short note from our team about your result.</li>
               <li>Your image is processed once, then deleted — never stored, sold, or shared.</li>
-              <li>Optional: order the protocol to receive a personal WhatsApp consultation.</li>
+              <li>Optional: order the protocol to begin the 12-week regimen.</li>
             </ol>
           </div>
         </div>
@@ -145,12 +145,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="specimen-frame">
             <span class="corner tl"></span><span class="corner tr"></span>
             <span class="corner bl"></span><span class="corner br"></span>
-            <img id="previewImg" alt="Your submitted specimen" loading="lazy" decoding="async" />
+            <img id="previewImg" alt="Your photo" loading="lazy" decoding="async" />
             <span class="frame-label">Subject 001 · Day 00</span>
             <button class="replace" id="btnReplace">↺ Replace</button>
           </div>
           <div class="uploaded-side">
-            <div class="specimen-label">Specimen received</div>
+            <div class="specimen-label">Photo received</div>
             <h3 class="display">Confirm and <em>begin analysis</em>.</h3>
             <p>One brief consent, then we model your twelve-week skin. The analysis takes about twenty seconds.</p>
             <div class="consent-block">
@@ -173,7 +173,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="lm-row"><span class="lm-key">Window</span><span class="lm-dots">··············</span><span class="lm-val">Week 12</span></div>
             <div class="lm-row"><span class="lm-key">Engine</span><span class="lm-dots">·············</span><span class="lm-val" id="lmStatus">Running</span></div>
           </div>
-          <h3 class="display">Analysing <em>specimen</em>.</h3>
+          <h3 class="display">Analysing <em>your photo</em>.</h3>
           <p class="progress-msg" id="progressMsg">Reading texture, tone, and inflammation markers…</p>
           <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
           <div class="ticker">DO NOT REFRESH &nbsp;·&nbsp; ~20 SECONDS</div>
@@ -284,7 +284,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <article class="review-card">
         <div class="review-photo"><span class="photo-placeholder">[REAL PATIENT PHOTO]</span></div>
         <div class="review-stars" aria-label="4 out of 5 stars">★★★★☆</div>
-        <blockquote>"Week 2 I had purging — I almost stopped. The WhatsApp consult told me to expect it and it passed. By week 8 the breakouts were down 80%. Marks still fading. Patience required."</blockquote>
+        <blockquote>"Week 2 I had purging — I almost stopped. Reading the protocol notes told me to expect it and it passed. By week 8 the breakouts were down 80%. Marks still fading. Patience required."</blockquote>
         <footer class="review-meta">
           <strong>Maham R.</strong> · 22 · Lahore · 12 weeks on protocol
         </footer>
@@ -314,7 +314,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="rx-grid">
       <article class="rx-paper">
         <div class="rx-head">
-          <div class="rx-symbol">Rx</div>
+          <div class="rx-symbol clarte-stamp" aria-label="Clarté MD"><svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><defs><path id="stamp-arc-top" d="M 10,40 a 30,30 0 0 1 60,0" fill="none"/><path id="stamp-arc-bot" d="M 12,42 a 28,28 0 0 0 56,0" fill="none"/></defs><circle cx="40" cy="40" r="38" fill="currentColor" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/><circle cx="40" cy="40" r="33" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.7"/><text class="stamp-arc-text" fill="#fff"><textPath href="#stamp-arc-top" startOffset="50%" text-anchor="middle">CLARTÉ · DERMATOLOGY</textPath></text><text class="stamp-arc-text" fill="#fff"><textPath href="#stamp-arc-bot" startOffset="50%" text-anchor="middle">LAHORE · MMXXIV</textPath></text></svg><span class="stamp-glyph"><em class="stamp-c">C</em><span class="stamp-md">MD</span></span></div>
           <div class="rx-meta">
             <strong>Dermatology · Clarté MD</strong>
             Lahore<br>
@@ -383,7 +383,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h4 class="display">Four perks Clarté extends to <em>every patient.</em></h4>
         <ol class="rx-includes">
           <li>Nationwide shipping, complimentary.</li>
-          <li>One-to-one WhatsApp consultation with our team — reply within two hours.</li>
+          <li>WhatsApp support for order updates and care questions — reply within two hours.</li>
           <li>A printed twenty-eight-day protocol card, signed by our doctor.</li>
           <li>Authenticity guarantee. Twofold refund if any unit is found counterfeit.</li>
         </ol>
@@ -435,6 +435,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Required schema per patient: before_url, after_url, weeks_elapsed, age, city, concern, consent_doc_ref.
       Currently 3 placeholder pairs at varying timelines (10, 12, 14 weeks) for visual rhythm.
     -->
+    <!-- Removed legacy placeholder grid; AI visual studies render after the projection section. -->
+    <!--
     <div class="ba-grid" data-content-state="placeholder">
       <article class="ba-pair">
         <div class="ba-imgs">
@@ -458,6 +460,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <footer class="ba-meta"><strong>Patient C</strong> · 31 · Islamabad · 14 weeks</footer>
       </article>
     </div>
+    -->
     <div class="tl-grid">
       <article class="tl-card">
         <span class="tl-week-label">Adjustment</span>
@@ -514,7 +517,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="colo-item">
         <div class="k">Counsel</div>
         <div class="num">iv.</div>
-        <div class="v">Complimentary WhatsApp consultation with our team. <strong>Reply within two hours,</strong> Mon to Sat.</div>
+        <div class="v">WhatsApp support for order updates and care questions. <strong>Reply within two hours,</strong> Mon to Sat.</div>
       </div>
     </div>
   </div>
@@ -539,11 +542,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </details>
       <details class="qa">
         <summary>I'm already on a prescription. Can I use this alongside?</summary>
-        <p class="a">If you're on isotretinoin, topical retinoids (tretinoin, adapalene), or oral antibiotics, please consult our team before ordering. The protocol is designed as a standalone regimen; combining with prescription actives requires staggering to avoid irritation. The consultation is complimentary and included with the bundle.</p>
+        <p class="a">If you're on isotretinoin, topical retinoids (tretinoin, adapalene), or oral antibiotics, please message our team on WhatsApp before ordering. The protocol is designed as a standalone regimen; combining with prescription actives requires staggering to avoid irritation, and we'd rather flag it before you buy.</p>
       </details>
       <details class="qa">
         <summary>Is this safe during pregnancy or breastfeeding?</summary>
-        <p class="a">The Acne Serum, which contains 1% BHA, is generally not recommended during pregnancy. The Rescue Wash, Hyaluronic Serum, and SPF are pregnancy-safe. Book the free consultation on order and we'll prescribe a pregnancy-appropriate variant of the protocol.</p>
+        <p class="a">The Acne Serum, which contains 1% BHA, is generally not recommended during pregnancy. The Rescue Wash, Hyaluronic Serum, and SPF are pregnancy-safe. Message our team on WhatsApp before ordering and we'll advise on a pregnancy-appropriate variant of the protocol.</p>
       </details>
       <details class="qa">
         <summary>How does the AI preview actually work? Is my photograph safe?</summary>

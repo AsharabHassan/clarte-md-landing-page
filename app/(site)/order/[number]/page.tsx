@@ -1,9 +1,23 @@
 /* eslint-disable react/no-unescaped-entities */
 import { headers } from 'next/headers';
-import { ArrowUpRight, MessageCircle } from 'lucide-react';
+import Link from 'next/link';
+import {
+  ArrowUpRight,
+  CheckCircle2,
+  Circle,
+  MessageCircle,
+  PackageCheck,
+  Truck,
+  Package,
+  Sparkles,
+  XCircle,
+} from 'lucide-react';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { TrustStrip } from '@/components/marketing/TrustStrip';
+import { UpsellRow } from '@/components/marketing/UpsellRow';
+import { Reveal, RevealGroup } from '@/lib/anim/reveal';
 import { cn } from '@/lib/utils';
 
 interface PageParams {
@@ -29,13 +43,28 @@ interface OrderPayload {
   created_at: string;
 }
 
+/** Step in the visual timeline. Linear order: pending → confirmed → dispatched → delivered. */
+const TIMELINE_STEPS = [
+  { key: 'pending', label: 'Order received', icon: PackageCheck },
+  { key: 'confirmed', label: 'Preparing parcel', icon: Package },
+  { key: 'dispatched', label: 'Courier on the way', icon: Truck },
+  { key: 'delivered', label: 'Delivered', icon: CheckCircle2 },
+] as const;
+
+const TIMELINE_INDEX: Record<string, number> = {
+  pending: 0,
+  confirmed: 1,
+  dispatched: 2,
+  delivered: 3,
+};
+
 const STATUS_COPY: Record<string, { label: string; sub: string }> = {
   pending: {
     label: 'Order received',
     sub: 'We are confirming and will dispatch within 24 hours.',
   },
   confirmed: {
-    label: 'Confirmed — preparing',
+    label: 'Confirmed — preparing your parcel',
     sub: 'Packing now. Courier collects within 24 hours.',
   },
   dispatched: {
@@ -56,26 +85,11 @@ const STATUS_COPY: Record<string, { label: string; sub: string }> = {
   },
 };
 
-// Status callout uses a left-bar color keyed to outcome severity.
-// Neutral (cobalt) = in progress; green = delivered; destructive = cancelled/refunded.
-function statusCalloutClass(status: string): string {
-  switch (status) {
-    case 'delivered':
-      return 'bg-emerald-50 border-l-emerald-600';
-    case 'cancelled':
-    case 'refunded':
-      return 'bg-rose-50 border-l-destructive';
-    default:
-      return 'bg-sky border-l-cobalt';
-  }
-}
-
 async function fetchOrder(number: string, phone: string): Promise<OrderPayload | null> {
-  // Derive base URL from the incoming request so this works on any
-  // localhost port (dev, E2E) AND on prod (lp.clartemd.com.pk).
   const h = await headers();
   const host = h.get('host') ?? 'localhost:3000';
-  const proto = h.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https');
+  const proto =
+    h.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https');
   const base = `${proto}://${host}`;
   const res = await fetch(
     `${base}/api/order/${encodeURIComponent(number)}?phone=${encodeURIComponent(phone)}`,
@@ -86,248 +100,439 @@ async function fetchOrder(number: string, phone: string): Promise<OrderPayload |
   return data.order;
 }
 
-const containerClass = 'mx-auto max-w-[45rem] px-6 pt-12 pb-24';
+const PHONE_LOOKUP_WRAP = 'mx-auto max-w-[42rem] px-6 pt-16 pb-24 md:pt-24';
 
 export default async function OrderPage({ params, searchParams }: PageParams) {
   const { number } = await params;
   const { phone, placed } = await searchParams;
   const isFirstVisit = placed === '1';
 
+  /* ─── Phone-input lookup (anyone hitting /order/[number] without ?phone) ─── */
   if (!phone) {
-    // Phone-input form to start the lookup
     return (
-      <div className={containerClass}>
-        <h1 className="mb-3 mt-6 font-display text-3xl font-normal text-navy">
-          Track your order
-        </h1>
-        <p className="mb-7 text-base text-ink-mute">
-          Enter the last 4 digits of the phone number you ordered with.
-        </p>
-        <form method="get">
-          <label className="mb-3.5 block">
-            <span className="mb-1.5 block text-[13px] text-ink-mute">
-              Last 4 digits of your phone
-            </span>
-            <Input
-              name="phone"
-              type="text"
-              inputMode="numeric"
-              maxLength={4}
-              pattern="[0-9]{4}"
-              required
-              placeholder="XXXX"
-              autoFocus
-              className="h-14 text-center font-mono text-lg tracking-[0.5em]"
-            />
-          </label>
-          <Button type="submit" size="lg" className="mt-3.5 w-full">
-            Look up {number} →
-          </Button>
-        </form>
-        <p className="mt-8 text-center text-sm text-ink-mute">
-          Can't find your order?{' '}
-          <a
-            href="https://wa.me/923249986822"
-            className="font-semibold text-cobalt no-underline hover:underline"
-          >
-            WhatsApp our team
-          </a>
-          .
-        </p>
+      <div className="bg-canvas">
+        <div className={PHONE_LOOKUP_WRAP}>
+          <RevealGroup stagger={0.1}>
+            <Reveal>
+              <Eyebrow className="mb-3 text-cobalt">— Track your order</Eyebrow>
+            </Reveal>
+            <Reveal>
+              <h1 className="mb-3 font-display font-light text-navy text-[clamp(32px,4.5vw,48px)] leading-[1.05] tracking-[-0.025em]">
+                Look up <em className="italic">{number}.</em>
+              </h1>
+            </Reveal>
+            <Reveal>
+              <p className="mb-8 font-display italic text-[16px] leading-relaxed text-ink-mute md:text-[18px]">
+                Enter the last 4 digits of the phone number you ordered with.
+              </p>
+            </Reveal>
+            <Reveal>
+              <form method="get" className="rounded-2xl border border-rule bg-card p-5 md:p-6">
+                <label className="block">
+                  <span className="mb-2 block font-mono text-[11px] uppercase tracking-[0.18em] text-ink-mute">
+                    Last 4 digits of your phone
+                  </span>
+                  <Input
+                    name="phone"
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={4}
+                    pattern="[0-9]{4}"
+                    required
+                    placeholder="XXXX"
+                    autoFocus
+                    className="h-14 text-center font-mono text-lg tracking-[0.5em]"
+                  />
+                </label>
+                <Button type="submit" size="lg" className="mt-4 h-14 w-full text-[15px]">
+                  Look up {number} →
+                </Button>
+              </form>
+            </Reveal>
+          </RevealGroup>
+          <p className="mt-8 text-center text-[13.5px] text-ink-mute">
+            Can't find your order?{' '}
+            <a
+              href="https://wa.me/923249986822"
+              className="font-semibold text-cobalt hover:underline"
+            >
+              WhatsApp our team
+            </a>
+            .
+          </p>
+        </div>
       </div>
     );
   }
 
   const order = await fetchOrder(number, phone);
 
+  /* ─── Order not found ─── */
   if (!order) {
     return (
-      <div className={containerClass}>
-        <h1 className="mb-3 mt-6 font-display text-3xl font-normal text-navy">
-          Order not found.
-        </h1>
-        <p className="mb-7 text-base text-ink-mute leading-relaxed">
-          We couldn't find an order matching{' '}
-          <code className="rounded bg-sky px-1.5 py-0.5 font-mono text-[13px] text-navy">
-            {number}
-          </code>{' '}
-          with phone ending{' '}
-          <code className="rounded bg-sky px-1.5 py-0.5 font-mono text-[13px] text-navy">
-            {phone}
-          </code>
-          . Double-check the order number and the phone you used at checkout.
-        </p>
-        <p className="text-center text-sm text-ink-mute">
-          Still stuck?{' '}
-          <a
-            href="https://wa.me/923249986822"
-            className="font-semibold text-cobalt no-underline hover:underline"
-          >
-            WhatsApp our team
-          </a>{' '}
-          and we will look it up manually.
-        </p>
+      <div className="bg-canvas">
+        <div className={PHONE_LOOKUP_WRAP}>
+          <Eyebrow className="mb-3 text-destructive">— Not found</Eyebrow>
+          <h1 className="mb-3 font-display font-light text-navy text-[clamp(28px,4vw,40px)] leading-[1.05] tracking-[-0.02em]">
+            Couldn't find that order.
+          </h1>
+          <p className="mb-7 text-[15px] leading-relaxed text-ink-2">
+            We looked for{' '}
+            <code className="rounded bg-sky px-1.5 py-0.5 font-mono text-[13px] text-navy">
+              {number}
+            </code>{' '}
+            with phone ending{' '}
+            <code className="rounded bg-sky px-1.5 py-0.5 font-mono text-[13px] text-navy">
+              {phone}
+            </code>{' '}
+            — no match.
+          </p>
+          <p className="text-[14px] text-ink-mute">
+            Double-check the order number and the phone you used at checkout, or{' '}
+            <a
+              href="https://wa.me/923249986822"
+              className="font-semibold text-cobalt hover:underline"
+            >
+              WhatsApp our team
+            </a>{' '}
+            — we'll find it manually.
+          </p>
+        </div>
       </div>
     );
   }
 
-  const copy = STATUS_COPY[order.status] || {
-    label: order.status,
-    sub: '',
-  };
+  const copy = STATUS_COPY[order.status] || { label: order.status, sub: '' };
+  const isDead = order.status === 'cancelled' || order.status === 'refunded';
+  const activeIdx = TIMELINE_INDEX[order.status] ?? 0;
 
   return (
-    <div className={containerClass}>
-      {/*
-        Mode-aware thank-you band — renders only when the user just placed
-        the order (the checkout redirect appends ?placed=1). Subsequent
-        visits via WhatsApp / email links omit the flag and the band stays
-        hidden, so the same route doubles as the tracker.
-        Per 06-thank-you.md: highest-conversion confirmation pattern in
-        the Baymard data; no separate /thank-you route needed.
-      */}
+    <div className="bg-canvas pb-24">
+      {/* ───── Cinematic celebration band — only after a fresh checkout submit ───── */}
       {isFirstVisit && (
-        <section className="mb-10 rounded-2xl border border-cobalt/25 bg-canvas-soft px-7 py-8 md:px-9 md:py-10">
-          <Eyebrow className="mb-3 text-cobalt">— Order confirmed</Eyebrow>
-          <h1 className="mb-3 font-display font-light text-navy text-[clamp(28px,4vw,40px)] leading-[1.1] tracking-[-0.02em]">
-            <em className="italic">Thank you, {order.customer_first_name}.</em>
-          </h1>
-          <p className="mb-7 max-w-[34rem] font-body text-[15px] leading-relaxed text-ink-2">
-            We&apos;ve received order{' '}
-            <span className="font-mono text-[13px] tracking-[0.02em] text-navy">
-              {order.order_number}
-            </span>{' '}
-            and will dispatch within 24 hours. A WhatsApp confirmation is on its way.
-          </p>
+        <section className="relative isolate overflow-hidden bg-navy-deep text-white">
+          {/* Backdrop grid + halo */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:linear-gradient(to_right,#8ab0e0_1px,transparent_1px),linear-gradient(to_bottom,#8ab0e0_1px,transparent_1px)] [background-size:60px_60px]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-32 -top-32 h-[28rem] w-[28rem] rounded-full bg-cobalt/30 blur-[120px]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-24 bottom-0 h-[24rem] w-[24rem] rounded-full bg-cobalt-glow/15 blur-[100px]"
+          />
 
-          <ol className="mb-7 grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-6">
-            <NextStep
-              num="01"
-              title="We confirm"
-              body="A WhatsApp message lands within 2 hours."
-            />
-            <NextStep
-              num="02"
-              title="Courier collects"
-              body="Sealed protocol leaves Lahore within 24 hours."
-            />
-            <NextStep
-              num="03"
-              title="Pay on delivery"
-              body={`Rs. ${order.totals.total_pkr.toLocaleString('en-PK')} in cash to the courier.`}
-            />
-          </ol>
+          <div className="relative mx-auto max-w-[60rem] px-6 pt-16 pb-12 md:pt-20 md:pb-16 [text-shadow:0_2px_18px_rgba(8,21,42,0.55)]">
+            <RevealGroup stagger={0.1}>
+              <Reveal>
+                <span className="mb-4 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.22em] text-cobalt-glow">
+                  <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} />
+                  Order confirmed
+                </span>
+              </Reveal>
+              <Reveal>
+                <h1
+                  style={{ color: '#ffffff' }}
+                  className="mb-3 font-display font-light text-[clamp(34px,5.5vw,64px)] leading-[1.02] tracking-[-0.025em]"
+                >
+                  Thank you, <em className="italic text-cobalt-glow">{order.customer_first_name}.</em>
+                </h1>
+              </Reveal>
+              <Reveal>
+                <p className="mb-8 max-w-[40rem] font-display italic text-[clamp(16px,1.7vw,20px)] leading-relaxed text-white/80">
+                  We've received order{' '}
+                  <span className="font-mono text-[14px] text-cobalt-glow">
+                    {order.order_number}
+                  </span>{' '}
+                  and will dispatch within 24 hours. A WhatsApp confirmation is on its way.
+                </p>
+              </Reveal>
 
-          <a
-            href="https://wa.me/923249986822"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.22em] text-cobalt hover:underline"
-          >
-            <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" strokeWidth={1.5} />
-            Need to change something? WhatsApp us
-            <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
-          </a>
+              {/* Three-step "what happens next" */}
+              <ol className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+                <Reveal>
+                  <NextStepCard
+                    num="01"
+                    title="We confirm"
+                    body="A WhatsApp message lands within 2 hours."
+                  />
+                </Reveal>
+                <Reveal>
+                  <NextStepCard
+                    num="02"
+                    title="Courier collects"
+                    body="Sealed protocol leaves Lahore within 24 hours."
+                  />
+                </Reveal>
+                <Reveal>
+                  <NextStepCard
+                    num="03"
+                    title="Pay on delivery"
+                    body={`Rs. ${order.totals.total_pkr.toLocaleString('en-PK')} in cash to the courier.`}
+                  />
+                </Reveal>
+              </ol>
+
+              <Reveal>
+                <a
+                  href="https://wa.me/923249986822"
+                  target="_blank"
+                  rel="noopener"
+                  className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 font-mono text-[10.5px] uppercase tracking-[0.22em] text-white backdrop-blur transition-colors hover:bg-white/20"
+                >
+                  <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.8} />
+                  Need to change something? WhatsApp us
+                  <ArrowUpRight className="h-3 w-3" />
+                </a>
+              </Reveal>
+            </RevealGroup>
+          </div>
         </section>
       )}
 
-      <header className="mb-8 border-b border-rule pb-[22px]">
-        <Eyebrow className="mb-2 text-ink-mute">Order</Eyebrow>
-        {/*
-          Heading level: on the first visit the celebration band's H1 is the
-          page subject, so this becomes H2. On return-tracker visits there's
-          no celebration band and this IS the page subject — H1.
-        */}
-        {isFirstVisit ? (
-          <h2 className="mb-2 font-mono text-[28px] font-semibold tracking-[0.02em] text-navy">
-            {order.order_number}
-          </h2>
-        ) : (
-          <h1 className="mb-2 font-mono text-[28px] font-semibold tracking-[0.02em] text-navy">
-            {order.order_number}
-          </h1>
-        )}
-        <p className="font-mono text-[13px] text-ink-mute">
-          Placed {new Date(order.created_at).toLocaleString('en-PK')} · {order.shipping_city}
-        </p>
-      </header>
-
-      <section className={cn('mb-9 rounded-2xl border-l-4 px-7 py-6', statusCalloutClass(order.status))}>
-        <h2 className="mb-2 font-display text-[22px] font-medium text-navy">{copy.label}</h2>
-        <p className="text-[15px] leading-relaxed text-ink-2">{copy.sub}</p>
-      </section>
-
-      <section className="mb-7">
-        <Eyebrow className="mb-3.5">Items</Eyebrow>
-        <ul className="mb-[18px] list-none border-b border-rule p-0">
-          {order.items.map((i, idx) => (
-            <li
-              key={idx}
-              className="grid grid-cols-[1fr_auto_auto] gap-3 border-t border-rule-soft py-3 text-sm"
+      {/* ───── Order details + timeline ───── */}
+      <div className="mx-auto max-w-[60rem] px-6 pt-12 md:pt-16">
+        <Reveal>
+          <header className="mb-7 flex flex-wrap items-end justify-between gap-3 border-b border-rule pb-5 md:mb-9">
+            <div>
+              <Eyebrow className="mb-2 text-ink-mute">Order</Eyebrow>
+              {isFirstVisit ? (
+                <h2 className="font-mono text-[24px] font-semibold tracking-[0.02em] text-navy md:text-[28px]">
+                  {order.order_number}
+                </h2>
+              ) : (
+                <h1 className="font-mono text-[24px] font-semibold tracking-[0.02em] text-navy md:text-[28px]">
+                  {order.order_number}
+                </h1>
+              )}
+              <p className="mt-1 font-mono text-[11.5px] uppercase tracking-[0.18em] text-ink-mute">
+                Placed {new Date(order.created_at).toLocaleDateString('en-PK', { day: 'numeric', month: 'short', year: 'numeric' })} · {order.shipping_city}
+              </p>
+            </div>
+            <span
+              className={cn(
+                'rounded-full px-3 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.18em]',
+                isDead
+                  ? 'bg-rose-50 text-destructive'
+                  : order.status === 'delivered'
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : 'bg-cobalt/10 text-cobalt',
+              )}
             >
-              <span className="font-medium text-ink">
-                {i.name}
-                {i.is_bundle && (
-                  <span className="ml-2 inline-block rounded bg-cobalt/10 px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.05em] text-cobalt">
-                    Bundle
-                  </span>
-                )}
-              </span>
-              <span className="font-mono text-ink-mute">×{i.qty}</span>
-              <span className="text-ink tabular-nums">
-                Rs. {i.line_total_pkr.toLocaleString()}
-              </span>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-[18px]">
-          <div className="flex justify-between py-1.5 text-sm text-ink-2">
-            <span>Subtotal</span>
-            <span>Rs. {order.totals.subtotal_pkr.toLocaleString()}</span>
-          </div>
-          <div className="flex justify-between py-1.5 text-sm text-ink-2">
-            <span>Shipping</span>
-            <span>
-              {order.totals.shipping_pkr === 0
-                ? 'FREE'
-                : `Rs. ${order.totals.shipping_pkr.toLocaleString()}`}
+              {copy.label}
             </span>
-          </div>
-          <div className="mt-1.5 flex justify-between border-t border-rule pt-3 font-display text-xl font-medium text-navy">
-            <span>Total</span>
-            <span>Rs. {order.totals.total_pkr.toLocaleString()}</span>
-          </div>
-        </div>
-        <p className="mt-[18px] font-mono text-xs text-ink-mute">
-          Payment: {order.payment_method} · {order.payment_status}
-        </p>
-      </section>
+          </header>
+        </Reveal>
 
-      <p className="mt-8 text-center text-sm text-ink-mute">
-        Questions?{' '}
-        <a
-          href="https://wa.me/923249986822"
-          className="font-semibold text-cobalt no-underline hover:underline"
-        >
-          WhatsApp our team
-        </a>
-        .
-      </p>
+        {/* Visual timeline */}
+        {!isDead && (
+          <Reveal>
+            <section className="mb-10 rounded-2xl border border-rule bg-card p-5 md:p-7" aria-label="Delivery timeline">
+              <ol className="relative grid grid-cols-1 gap-5 sm:grid-cols-4 sm:gap-0">
+                {TIMELINE_STEPS.map((step, idx) => {
+                  const isDone = idx < activeIdx;
+                  const isActive = idx === activeIdx;
+                  const Icon = step.icon;
+                  return (
+                    <li key={step.key} className="relative flex items-start gap-3 sm:flex-col sm:items-center sm:text-center">
+                      <span
+                        className={cn(
+                          'relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 transition-colors',
+                          isDone && 'border-cobalt bg-cobalt text-white',
+                          isActive && 'border-cobalt bg-white text-cobalt ring-4 ring-cobalt/15',
+                          !isDone && !isActive && 'border-rule bg-white text-ink-faint',
+                        )}
+                      >
+                        {isDone ? (
+                          <CheckCircle2 className="h-5 w-5" strokeWidth={2} />
+                        ) : (
+                          <Icon className="h-4.5 w-4.5" strokeWidth={1.5} />
+                        )}
+                      </span>
+                      <div className="min-w-0 flex-1 sm:mt-3">
+                        <p
+                          className={cn(
+                            'font-display text-[14px] font-medium leading-tight',
+                            isActive ? 'text-navy' : isDone ? 'text-cobalt' : 'text-ink-mute',
+                          )}
+                        >
+                          {step.label}
+                        </p>
+                        {isActive && (
+                          <p className="mt-1 font-body text-[12.5px] leading-snug text-ink-mute">
+                            {copy.sub}
+                          </p>
+                        )}
+                      </div>
+                      {/* Connector line (desktop only) */}
+                      {idx < TIMELINE_STEPS.length - 1 && (
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            'absolute top-5 left-1/2 hidden h-0.5 w-full -translate-y-1/2 sm:block',
+                            idx < activeIdx ? 'bg-cobalt' : 'bg-rule',
+                          )}
+                        />
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+          </Reveal>
+        )}
+
+        {isDead && (
+          <Reveal>
+            <section
+              className={cn(
+                'mb-10 flex items-start gap-3 rounded-2xl border-l-4 border-l-destructive bg-rose-50/50 px-5 py-5',
+              )}
+            >
+              <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" strokeWidth={1.5} />
+              <div>
+                <h2 className="font-display text-[18px] font-medium text-navy">{copy.label}</h2>
+                <p className="mt-1 text-[14px] leading-relaxed text-ink-2">{copy.sub}</p>
+              </div>
+            </section>
+          </Reveal>
+        )}
+
+        {/* Items + totals */}
+        <Reveal>
+          <section className="mb-10 rounded-2xl border border-rule bg-card p-5 md:p-7">
+            <div className="mb-4 flex items-center justify-between">
+              <Eyebrow className="text-cobalt">— What's in this order</Eyebrow>
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-mute">
+                {order.items.reduce((n, i) => n + i.qty, 0)} {order.items.reduce((n, i) => n + i.qty, 0) === 1 ? 'item' : 'items'}
+              </span>
+            </div>
+            <ul className="mb-5 flex flex-col divide-y divide-rule-soft">
+              {order.items.map((i, idx) => (
+                <li
+                  key={idx}
+                  className="grid grid-cols-[1fr_auto_auto] items-center gap-3 py-3 text-[14px] sm:gap-5"
+                >
+                  <span className="min-w-0">
+                    <span className="font-display font-medium text-navy">{i.name}</span>
+                    {i.is_bundle && (
+                      <span className="ml-2 inline-block rounded bg-cobalt/10 px-1.5 py-0.5 font-mono text-[9.5px] font-semibold uppercase tracking-[0.08em] text-cobalt">
+                        Bundle
+                      </span>
+                    )}
+                  </span>
+                  <span className="font-mono text-[12px] text-ink-mute tabular-nums">×{i.qty}</span>
+                  <span className="font-mono text-[13.5px] tabular-nums text-navy">
+                    Rs. {i.line_total_pkr.toLocaleString('en-PK')}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="space-y-2 border-t border-rule pt-4 text-[13.5px] text-ink-2">
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span className="font-mono tabular-nums">Rs. {order.totals.subtotal_pkr.toLocaleString('en-PK')}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Shipping</span>
+                <span className="font-mono tabular-nums">
+                  {order.totals.shipping_pkr === 0
+                    ? 'FREE'
+                    : `Rs. ${order.totals.shipping_pkr.toLocaleString('en-PK')}`}
+                </span>
+              </div>
+              <div className="mt-2 flex items-baseline justify-between border-t border-rule pt-3 font-display text-[18px] font-medium text-navy">
+                <span>Total</span>
+                <span className="font-mono font-semibold tabular-nums">
+                  Rs. {order.totals.total_pkr.toLocaleString('en-PK')}
+                </span>
+              </div>
+              <p className="pt-3 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-mute">
+                Payment: {order.payment_method} · {order.payment_status}
+              </p>
+            </div>
+          </section>
+        </Reveal>
+
+        {/* WhatsApp support card */}
+        <Reveal>
+          <section className="mb-12 flex flex-col items-start gap-4 rounded-2xl border border-cobalt/25 bg-cobalt/5 p-5 sm:flex-row sm:items-center md:p-6">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-cobalt text-white">
+              <MessageCircle className="h-5 w-5" strokeWidth={1.6} />
+            </span>
+            <div className="flex-1">
+              <h2 className="font-display text-[16px] font-medium text-navy md:text-[18px]">
+                Anything we can help with?
+              </h2>
+              <p className="mt-1 font-body text-[13.5px] leading-relaxed text-ink-2">
+                A real person from our team replies on WhatsApp, usually within 2 hours, Mon–Sat.
+              </p>
+            </div>
+            <a
+              href="https://wa.me/923249986822"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex h-11 items-center gap-2 rounded-lg bg-emerald-600 px-5 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-emerald-700"
+            >
+              WhatsApp our team
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          </section>
+        </Reveal>
+
+        {/* Continue-shopping CTA */}
+        <Reveal>
+          <div className="mb-12 flex flex-wrap items-center justify-between gap-3">
+            <span className="inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-mute">
+              <Sparkles className="h-3.5 w-3.5 text-cobalt" />
+              Want to add to the protocol later?
+            </span>
+            <Link
+              href="/products"
+              className="inline-flex h-11 items-center gap-2 rounded-lg border border-rule bg-card px-5 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-navy transition-colors hover:border-navy/30"
+            >
+              Browse the catalogue →
+            </Link>
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Post-purchase upsell — strongest cross-sell moment */}
+      <UpsellRow
+        tone="dark"
+        title="Pair your protocol with these add-ons."
+        sub="Most customers add SPF or hydration to their first shipment. Same COD, single order, no extra shipping."
+      />
+
+      {/* Trust band */}
+      <section className="bg-canvas-soft py-12 md:py-16">
+        <div className="mx-auto max-w-[60rem] px-6">
+          <Reveal>
+            <Eyebrow className="mb-5 text-cobalt">— Every order, every time</Eyebrow>
+          </Reveal>
+          <Reveal>
+            <TrustStrip variant="cards" tone="light" limit={6} />
+          </Reveal>
+        </div>
+      </section>
     </div>
   );
 }
 
-function NextStep({ num, title, body }: { num: string; title: string; body: string }) {
+function NextStepCard({ num, title, body }: { num: string; title: string; body: string }) {
   return (
-    <li className="flex flex-col gap-2">
+    <li className="rounded-2xl border border-white/15 bg-white/[0.07] p-5 backdrop-blur-sm">
       <span
         aria-hidden="true"
-        className="font-display italic text-cobalt text-[clamp(24px,3vw,32px)] leading-none"
+        className="font-display italic text-cobalt-glow text-[28px] leading-none"
       >
         {num}
       </span>
-      <h3 className="font-display text-base font-medium text-navy">{title}</h3>
-      <p className="font-body text-[13.5px] leading-snug text-ink-mute">{body}</p>
+      <h3 className="mt-3 font-display text-[15px] font-medium text-white">{title}</h3>
+      <p className="mt-1 font-body text-[12.5px] leading-snug text-white/70">{body}</p>
     </li>
   );
 }

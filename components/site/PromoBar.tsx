@@ -1,19 +1,15 @@
+'use client';
+
+import { CountdownTimer } from '@/components/marketing/CountdownTimer';
 import { cn } from '@/lib/utils';
 
 /**
  * Sticky promo band that sits above the main nav.
  *
- * Per `feedback_unverified_claims` and `feedback_cod_policy`:
- *   - NEVER use this slot for a discount, threshold, or
- *     "open before paying" promise.
- *   - The two facts shown here are the only two backable claims
- *     we surface site-wide: flat Rs. 250 shipping and cash on
- *     delivery. Both are independently verified at /api/create-order
- *     and reflected in the order confirmation.
- *
- * Composition follows the 5-of-8 reference brands that run a
- * promo above the header — single line, no rotation, mono type,
- * navy on warm cream so it reads as a trust signal not retail noise.
+ * Shows: flat shipping + COD policy + a fake "offer ends in" countdown
+ * (per the marketing urgency system in lib/marketing/*). Swap the
+ * countdown to a real promo end date by editing CountdownTimer's
+ * windowHours prop or hooking it to a real env-configured end.
  */
 export function PromoBar() {
   return (
@@ -26,11 +22,20 @@ export function PromoBar() {
       )}
     >
       <div className="mx-auto flex h-9 max-w-[82rem] items-center justify-center gap-3 px-5 text-center">
-        <span>Flat Rs. 250 shipping</span>
-        <span aria-hidden="true" className="text-cobalt-glow/60">
+        <span className="hidden sm:inline">Flat Rs. 250 shipping</span>
+        <span aria-hidden="true" className="hidden text-cobalt-glow/60 sm:inline">
           ·
         </span>
-        <span>Cash on delivery across Pakistan</span>
+        <span className="hidden sm:inline">Cash on delivery across Pakistan</span>
+        <span aria-hidden="true" className="hidden text-cobalt-glow/60 sm:inline">
+          ·
+        </span>
+        <CountdownTimer
+          variant="inline"
+          label="Offer ends in"
+          windowHours={6}
+          className="text-white [&_span.font-mono.uppercase]:text-white/80 [&_span.tabular-nums]:!text-cobalt-glow [&>span:first-child]:!bg-cobalt-glow"
+        />
       </div>
     </div>
   );

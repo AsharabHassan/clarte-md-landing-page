@@ -61,3 +61,6 @@ docs/research/competitor-screenshots/*.png
 # Claude Code local config + smoke-test output
 .claude/
 scripts/smoke-out/
+
+# Codex QA artifacts (generated)
+.codex-qa/

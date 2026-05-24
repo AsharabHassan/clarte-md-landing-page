@@ -2,10 +2,12 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { AnimatePresence, motion } from 'motion/react';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { ProductCard } from './ProductCard';
 import { BundleCard } from './BundleCard';
 import { Eyebrow } from '@/components/ui/eyebrow';
+import { useReducedMotion } from '@/lib/anim/hooks';
 import type { Bundle, Product } from '@/lib/db/schema';
 import {
   CONCERN_OPTIONS,
@@ -98,6 +100,8 @@ export function CatalogFilterChips({
     setTypes([]);
   }
 
+  const reduced = useReducedMotion();
+
   return (
     <div>
       <div className="mb-8 flex flex-col gap-4 border-b border-rule pb-6">
@@ -181,19 +185,49 @@ export function CatalogFilterChips({
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(16rem,1fr))]">
-          {filteredBundles.map(({ bundle, itemCount, listPriceSum }) => (
-            <BundleCard
-              key={bundle.id}
-              bundle={bundle}
-              itemCount={itemCount}
-              listPriceSum={listPriceSum}
-            />
-          ))}
-          {filteredProducts.map(({ product }) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <motion.div
+          layout
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(16rem,1fr))]"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredBundles.map(({ bundle, itemCount, listPriceSum }, i) => (
+              <motion.div
+                key={bundle.id}
+                layout
+                initial={reduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+                transition={{
+                  duration: 0.45,
+                  delay: reduced ? 0 : i * 0.04,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <BundleCard
+                  bundle={bundle}
+                  itemCount={itemCount}
+                  listPriceSum={listPriceSum}
+                />
+              </motion.div>
+            ))}
+            {filteredProducts.map(({ product }, i) => (
+              <motion.div
+                key={product.id}
+                layout
+                initial={reduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+                transition={{
+                  duration: 0.45,
+                  delay: reduced ? 0 : (filteredBundles.length + i) * 0.04,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <ProductCard product={product} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       )}
     </div>
   );

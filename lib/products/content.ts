@@ -412,10 +412,28 @@ export const PRODUCT_CONTENT: Record<string, ProductContent> = {
 export function productImagePaths(sku: string) {
   return {
     hero: `/products/${sku}/hero.webp`,
+    /**
+     * Cinematic hero shot path. Currently aliased to the existing hero.webp
+     * — the cinematic feel is achieved via CSS treatment (dark gradient,
+     * parallax, cursor-glow) in lib/anim/cinematic-photo. Swap to a bespoke
+     * shot here when one is produced.
+     */
+    cinematic: `/products/${sku}/hero.webp`,
     views: [
       `/products/${sku}/view-1.webp`,
       `/products/${sku}/view-2.webp`,
       `/products/${sku}/view-3.webp`,
     ],
   };
+}
+
+const BUNDLE_HERO_PATH: Record<string, string> = {
+  'clear-skin-protocol': '/protocols/clear-skin-protocol/hero-gpt.webp',
+  'even-tone-protocol': '/protocols/even-tone-protocol/hero-gpt.webp',
+  'renewal-protocol': '/protocols/renewal-protocol/hero-gpt.webp',
+  'barrier-protocol': '/protocols/barrier-protocol/hero-gpt.webp',
+};
+
+export function bundleCinematicPath(slug: string) {
+  return BUNDLE_HERO_PATH[slug] ?? '/products/vitc/hero.webp';
 }

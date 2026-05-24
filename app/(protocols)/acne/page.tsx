@@ -7,6 +7,7 @@ import { ProtocolPageShell } from '@/components/protocol/ProtocolPageShell';
 
 const BUNDLE_SLUG = 'clear-skin-protocol';
 const ROUTE = '/acne';
+const HERO_IMAGE = '/protocols/clear-skin-protocol/hero-gpt.webp';
 const TITLE = 'Clear Skin Protocol — Active acne + post-acne marks';
 const DESCRIPTION =
   'A 12-week clinical regimen for active breakouts and PIH. Niacinamide 10%, azelaic acid, and 2% salicylic — clinically dosed, dermatologist-formulated, manufactured in Lahore.';
@@ -31,6 +32,7 @@ export default function AcneProtocolPage() {
       bundleSlug={BUNDLE_SLUG}
       route={ROUTE}
       description={DESCRIPTION}
+      heroImageSrc={HERO_IMAGE}
       legacyBody={ACNE_PROTOCOL_BODY}
       legacyClient={<AcneClient />}
     />

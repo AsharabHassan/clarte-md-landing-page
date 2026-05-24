@@ -170,7 +170,9 @@
   html,
   body {
     max-width: 100vw;
-    overflow-x: hidden;
+    /* `clip` (vs `hidden`) doesn't create a scroll container, so
+       sticky descendants stay sticky relative to the viewport. */
+    overflow-x: clip;
   }
 
   body {
@@ -196,3 +198,219 @@
  *
  * Apply via Tailwind utilities: `font-display`, `font-body`, `font-mono`.
  */
+
+/* ─────────────────────────────────────────────────────────────
+   Tech-luxe motion tokens — added 2026-05-23.
+   Used by lib/anim primitives. Keep durations conservative;
+   premium ≠ slow. Easing is the "luxe" out-quint we use everywhere.
+   ───────────────────────────────────────────────────────────── */
+@theme inline {
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 200ms;
+  --dur-base: 400ms;
+  --dur-slow: 800ms;
+}
+
+@keyframes kenburns {
+  0%, 100% { transform: scale(1.0); }
+  50%      { transform: scale(1.05); }
+}
+.kenburns-anim {
+  animation: kenburns 20s ease-in-out infinite;
+}
+
+@keyframes lightsweep {
+  0%   { transform: translateX(-110%) skewX(-12deg); }
+  100% { transform: translateX(110%) skewX(-12deg); }
+}
+.lightsweep-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.lightsweep-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  transform: translateX(-110%) skewX(-12deg);
+}
+.group:hover .lightsweep-overlay::after {
+  animation: lightsweep 1.1s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .kenburns-anim {
+    animation: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Live camera modal (lib/camera/live-camera.ts).
+   Rendered as a portal at <body> level when openLiveCamera() runs.
+   ───────────────────────────────────────────────────────────── */
+.live-camera-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(8, 21, 42, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: #fff;
+  animation: live-camera-fade 250ms ease-out;
+}
+@keyframes live-camera-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.live-camera-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.live-camera-status {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(138, 176, 224, 0.9);
+}
+.live-camera-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+.live-camera-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.live-camera-stage {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.live-camera-video {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: #000;
+}
+.live-camera-guide {
+  position: absolute;
+  inset: 50% 50%;
+  width: min(70vmin, 520px);
+  height: min(70vmin, 520px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.live-camera-corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: rgba(138, 176, 224, 0.85);
+  border-style: solid;
+  border-width: 0;
+}
+.live-camera-corner.tl { top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; border-top-left-radius: 6px; }
+.live-camera-corner.tr { top: 0; right: 0; border-top-width: 2px; border-right-width: 2px; border-top-right-radius: 6px; }
+.live-camera-corner.bl { bottom: 0; left: 0; border-bottom-width: 2px; border-left-width: 2px; border-bottom-left-radius: 6px; }
+.live-camera-corner.br { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; border-bottom-right-radius: 6px; }
+.live-camera-bottombar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 24px calc(24px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.live-camera-switch {
+  justify-self: start;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+.live-camera-switch:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.live-camera-shutter {
+  justify-self: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid rgba(255, 255, 255, 0.6);
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  transition: transform 150ms ease, box-shadow 200ms ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.live-camera-shutter:hover {
+  transform: scale(1.04);
+}
+.live-camera-shutter:active {
+  transform: scale(0.94);
+}
+.live-camera-shutter-ring {
+  display: block;
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 2px solid #08152a;
+}
+.live-camera-hint {
+  justify-self: end;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  text-align: right;
+  max-width: 18ch;
+}
+@media (max-width: 540px) {
+  .live-camera-hint {
+    display: none;
+  }
+  .live-camera-bottombar {
+    grid-template-columns: 1fr auto 1fr;
+  }
+}

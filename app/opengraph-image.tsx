@@ -96,7 +96,7 @@ export default async function Image() {
             letterSpacing: '0.05em',
           }}
         >
-          <span>Made in Lahore · GMC-registered doctor</span>
+          <span>Made in Pakistan · Dermatologist-led</span>
           <span style={{ color: '#0e1f3a', fontWeight: 600 }}>
             clartemd.com.pk
           </span>

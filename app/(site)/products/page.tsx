@@ -7,6 +7,9 @@ import {
   type EnrichedProduct,
 } from '@/components/product/CatalogFilterChips';
 import { SITE_URL } from '@/lib/schema/json-ld';
+import { bundleCinematicPath } from '@/lib/products/content';
+import { Reveal } from '@/lib/anim/reveal';
+import { CinematicPhoto } from '@/lib/anim/cinematic-photo';
 
 const TITLE = 'All protocols + individual products';
 const DESCRIPTION =
@@ -93,17 +96,49 @@ export default async function CatalogPage() {
   const { products, bundles } = await getCatalog();
 
   return (
-    <div className="mx-auto max-w-[75rem] px-6 pt-12 pb-20">
-      <header className="mb-12 text-center">
-        <h1 className="mb-3 font-display font-light text-navy text-[clamp(32px,4.5vw,48px)] leading-[1.05] tracking-[-0.02em]">
-          The Catalogue
-        </h1>
-        <p className="font-display italic text-[clamp(15px,1.4vw,18px)] text-ink-mute">
-          {bundles.length} protocol bundles · {products.length} individual formulations
-        </p>
-      </header>
+    <div className="bg-canvas">
+      {/* Cinematic catalog banner — dark gradient over existing protocol shot */}
+      <section className="relative overflow-hidden border-b border-sand/40">
+        <CinematicPhoto
+          src={bundleCinematicPath('even-tone-protocol')}
+          alt=""
+          width={2400}
+          height={900}
+          priority
+          parallax={0.08}
+          aspectClass="aspect-[21/9] md:aspect-[24/7]"
+          wrapperClassName="w-full"
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-canvas via-canvas/70 to-canvas/0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-canvas/60" />
+        <div className="absolute inset-0 flex items-center">
+          <div className="mx-auto w-full max-w-[75rem] px-6">
+            <Reveal>
+              <span className="mb-4 inline-block font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt">
+                — The full catalogue
+              </span>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <h1 className="max-w-[40rem] font-display font-light text-navy text-[clamp(36px,6vw,72px)] leading-[0.95] tracking-[-0.025em]">
+                Every <em className="italic text-cobalt">formulation,</em>
+                <br />
+                à la carte.
+              </h1>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <p className="mt-4 font-display italic text-[clamp(15px,1.4vw,18px)] text-ink-mute">
+                {bundles.length} protocol bundles · {products.length} individual formulations
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
 
-      <CatalogFilterChips bundles={bundles} products={products} />
+      <div className="mx-auto max-w-[75rem] px-6 pt-16 pb-20">
+        <CatalogFilterChips bundles={bundles} products={products} />
+      </div>
     </div>
   );
 }
