@@ -1,136 +1,205 @@
 import Link from 'next/link';
-import { desc } from 'drizzle-orm';
+import { desc, sql } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
 import { requireAdminSession } from '@/lib/auth/admin';
-import { AdminOrdersQuerySchema } from '@/lib/validators/admin-orders';
+import { AREA_ACCESS } from '@/lib/auth/roles';
+import { AdminOrdersQuerySchema, ORDER_STATUSES } from '@/lib/validators/admin-orders';
 import { buildAdminOrdersWhere } from '@/lib/db/admin-queries';
+import { PageHeader } from '@/components/admin/page-header';
+import { OrderStatusBadge } from '@/components/admin/status-badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { formatPkr, formatDateTime } from '@/lib/admin/format';
+import { cn } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
+
+const PAGE_SIZE = 25;
+
+type SP = Record<string, string | undefined>;
+
+function buildQs(params: SP): string {
+  const sp = new URLSearchParams();
+  for (const [k, v] of Object.entries(params)) if (v) sp.set(k, v);
+  const s = sp.toString();
+  return s ? `?${s}` : '';
+}
 
 export default async function AdminOrdersPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; q?: string }>;
+  searchParams: Promise<SP>;
 }) {
-  await requireAdminSession();
+  await requireAdminSession(AREA_ACCESS.orders);
   const params = await searchParams;
 
   const parsed = AdminOrdersQuerySchema.safeParse({
     status: params.status,
     q: params.q,
+    city: params.city,
+    ai: params.ai,
+    from: params.from,
+    to: params.to,
+    limit: PAGE_SIZE,
+    offset: params.offset,
   });
-  const { status, q } = parsed.success ? parsed.data : { status: undefined, q: undefined };
-  const where = buildAdminOrdersWhere({ status, q });
+  const filters = parsed.success
+    ? parsed.data
+    : { limit: PAGE_SIZE, offset: 0 as number };
+  const { status, q, city, ai, from, to, offset } = filters as typeof filters & { offset: number };
+  const where = buildAdminOrdersWhere({ status, q, city, ai, from, to });
 
-  const baseQuery = db.select().from(schema.orders);
-  const orders = await (where ? baseQuery.where(where) : baseQuery)
-    .orderBy(desc(schema.orders.createdAt))
-    .limit(100);
+  const base = db.select().from(schema.orders);
+  const [orders, countRows] = await Promise.all([
+    (where ? base.where(where) : base)
+      .orderBy(desc(schema.orders.createdAt))
+      .limit(PAGE_SIZE)
+      .offset(offset),
+    db
+      .select({ c: sql<number>`count(*)::int` })
+      .from(schema.orders)
+      .where(where),
+  ]);
+  const total = Number(countRows[0]?.c ?? 0);
 
-  const statusHref = (next?: string) => {
-    const sp = new URLSearchParams();
-    if (next) sp.set('status', next);
-    if (q) sp.set('q', q);
-    const qs = sp.toString();
-    return qs ? `/admin/orders?${qs}` : '/admin/orders';
-  };
+  // Preserve non-status filters when switching status tabs / pages.
+  const carry: SP = { q, city, ai, from, to };
+  const tabHref = (next?: string) => `/admin/orders${buildQs({ ...carry, status: next })}`;
+  const pageHref = (nextOffset: number) =>
+    `/admin/orders${buildQs({ ...carry, status, offset: nextOffset > 0 ? String(nextOffset) : undefined })}`;
+  const exportHref = `/api/admin/orders/export${buildQs({ status, q, city, ai, from, to })}`;
+
+  const pageStart = total === 0 ? 0 : offset + 1;
+  const pageEnd = Math.min(offset + PAGE_SIZE, total);
 
   return (
-    <main style={{ maxWidth: 1200, margin: '40px auto', padding: 24, fontFamily: 'system-ui' }}>
-      <header
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          marginBottom: 24,
-        }}
-      >
-        <h1 style={{ fontSize: 24 }}>Orders</h1>
-        <nav style={{ display: 'flex', gap: 12, fontSize: 14 }}>
-          <Link href={statusHref()}>All</Link>
-          <Link href={statusHref('pending')}>Pending</Link>
-          <Link href={statusHref('confirmed')}>Confirmed</Link>
-          <Link href={statusHref('dispatched')}>Dispatched</Link>
-          <Link href={statusHref('delivered')}>Delivered</Link>
-        </nav>
-      </header>
-      <form
-        method="get"
-        action="/admin/orders"
-        style={{ display: 'flex', gap: 8, marginBottom: 16, fontSize: 14 }}
-      >
-        {status && <input type="hidden" name="status" value={status} />}
-        <input
-          type="search"
-          name="q"
-          defaultValue={q ?? ''}
-          placeholder="Search order # / name / phone / email / city"
-          maxLength={80}
-          style={{
-            flex: 1,
-            padding: '6px 10px',
-            border: '1px solid #ccc',
-            borderRadius: 4,
-            fontFamily: 'inherit',
-            fontSize: 14,
-          }}
-        />
-        <button
-          type="submit"
-          style={{
-            padding: '6px 14px',
-            border: '1px solid #333',
-            background: '#fff',
-            cursor: 'pointer',
-            fontSize: 14,
-          }}
+    <div>
+      <PageHeader title="Orders" description={`${total.toLocaleString('en-PK')} matching`}>
+        <Button asChild variant="outline" size="sm">
+          <a href={exportHref}>Export CSV</a>
+        </Button>
+      </PageHeader>
+
+      {/* Status tabs */}
+      <div className="mb-4 flex flex-wrap gap-1.5">
+        <Link
+          href={tabHref()}
+          className={cn(
+            'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+            !status ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted',
+          )}
         >
-          Search
-        </button>
-        {q && (
+          All
+        </Link>
+        {ORDER_STATUSES.map((s) => (
           <Link
-            href={statusHref(status)}
-            style={{ padding: '6px 0', color: '#888', textDecoration: 'underline' }}
+            key={s}
+            href={tabHref(s)}
+            className={cn(
+              'rounded-md px-3 py-1.5 text-sm font-medium capitalize transition-colors',
+              status === s ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted',
+            )}
           >
-            clear
+            {s}
           </Link>
-        )}
+        ))}
+      </div>
+
+      {/* Filter form */}
+      <form method="get" action="/admin/orders" className="mb-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
+        {status && <input type="hidden" name="status" value={status} />}
+        <Input name="q" defaultValue={q ?? ''} placeholder="Order # / name / phone / email" maxLength={80} className="lg:col-span-2" />
+        <Input name="city" defaultValue={city ?? ''} placeholder="City" maxLength={80} />
+        <Input type="date" name="from" defaultValue={from ?? ''} aria-label="From date" />
+        <Input type="date" name="to" defaultValue={to ?? ''} aria-label="To date" />
+        <div className="flex items-center gap-3 lg:col-span-3">
+          <label className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <input type="checkbox" name="ai" value="1" defaultChecked={ai === '1'} /> Used AI preview
+          </label>
+        </div>
+        <div className="flex gap-2 lg:col-span-2 lg:justify-end">
+          <Button type="submit" size="sm">Apply filters</Button>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/admin/orders">Reset</Link>
+          </Button>
+        </div>
       </form>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
-        <thead>
-          <tr style={{ textAlign: 'left', borderBottom: '1px solid #ddd' }}>
-            <th style={{ padding: 8 }}>Order #</th>
-            <th>When</th>
-            <th>Customer</th>
-            <th>City</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>AI?</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((o) => (
-            <tr key={o.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-              <td style={{ padding: 8, fontFamily: 'monospace' }}>{o.orderNumber}</td>
-              <td>{new Date(o.createdAt).toLocaleString('en-PK')}</td>
-              <td>
-                {o.customerName}
-                <br />
-                <span style={{ color: '#888' }}>{o.customerPhone}</span>
-              </td>
-              <td>{o.shippingCity}</td>
-              <td>Rs. {o.totalPkr.toLocaleString()}</td>
-              <td>{o.status}</td>
-              <td>{o.usedAiPreview ? '✓' : ''}</td>
-              <td>
-                <Link href={`/admin/orders/${o.id}`}>open →</Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {orders.length === 0 && <p style={{ marginTop: 32, color: '#888' }}>No orders.</p>}
-    </main>
+
+      <Card className="py-0">
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Order #</TableHead>
+                <TableHead>When</TableHead>
+                <TableHead>Customer</TableHead>
+                <TableHead>City</TableHead>
+                <TableHead className="text-right">Total</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>AI</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {orders.map((o) => (
+                <TableRow key={o.id}>
+                  <TableCell className="font-mono text-xs">
+                    <Link href={`/admin/orders/${o.id}`} className="text-secondary hover:underline">
+                      {o.orderNumber}
+                    </Link>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">{formatDateTime(o.createdAt)}</TableCell>
+                  <TableCell>
+                    <div>{o.customerName}</div>
+                    <div className="text-xs text-muted-foreground">{o.customerPhone}</div>
+                  </TableCell>
+                  <TableCell>{o.shippingCity}</TableCell>
+                  <TableCell className="text-right tabular-nums">{formatPkr(o.totalPkr)}</TableCell>
+                  <TableCell>
+                    <OrderStatusBadge status={o.status} />
+                  </TableCell>
+                  <TableCell>{o.usedAiPreview && <Badge variant="secondary">AI</Badge>}</TableCell>
+                </TableRow>
+              ))}
+              {orders.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={7} className="py-10 text-center text-muted-foreground">
+                    No orders match these filters.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      {/* Pagination */}
+      <div className="mt-4 flex items-center justify-between text-sm">
+        <span className="text-muted-foreground">
+          {pageStart}–{pageEnd} of {total.toLocaleString('en-PK')}
+        </span>
+        <div className="flex gap-2">
+          <Button asChild variant="outline" size="sm" disabled={offset === 0}>
+            <Link href={pageHref(Math.max(0, offset - PAGE_SIZE))} aria-disabled={offset === 0}>
+              Previous
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="sm" disabled={pageEnd >= total}>
+            <Link href={pageHref(offset + PAGE_SIZE)} aria-disabled={pageEnd >= total}>
+              Next
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }

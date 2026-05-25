@@ -28,24 +28,32 @@ const VIDEOS: DoctorVideo[] = [
     productName: 'Clarifying Rescue Face Wash',
     pitch: 'Why a 2% salicylic cleanser is the first step for breakouts.',
     duration: '90 sec',
+    src: '/videos/doctor/rescue.mp4',
+    poster: '/products/rescue/hero.webp',
   },
   {
     sku: 'acne',
     productName: 'Clarifying Acne Serum',
     pitch: 'How niacinamide 10% + azelaic clears acne without harsh peeling.',
     duration: '90 sec',
+    src: '/videos/doctor/acne.mp4',
+    poster: '/products/acne/hero.webp',
   },
   {
     sku: 'vitc',
     productName: 'Vitamin CE Ferrulic Serum',
     pitch: 'Why vitamin C in the morning fades marks faster than anything else.',
     duration: '90 sec',
+    src: '/videos/doctor/vitc.mp4',
+    poster: '/products/vitc/hero.webp',
   },
   {
     sku: 'reti',
     productName: 'Retinol Serum',
     pitch: 'How to start retinol without redness, peeling, or burning.',
     duration: '90 sec',
+    src: '/videos/doctor/reti.mp4',
+    poster: '/products/reti/hero.webp',
   },
 ];
 

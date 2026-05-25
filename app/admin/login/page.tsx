@@ -2,6 +2,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -21,49 +25,48 @@ export default function AdminLoginPage() {
       setErr(error.message);
       return;
     }
-    router.push('/admin/orders');
+    router.push('/admin');
+    router.refresh();
   }
 
   return (
-    <main style={{ maxWidth: 420, margin: '80px auto', padding: 32, fontFamily: 'system-ui' }}>
-      <h1 style={{ fontSize: 24, marginBottom: 24 }}>Clarté MD · Admin</h1>
-      <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: '100%', padding: 10, marginTop: 4, border: '1px solid #ccc', borderRadius: 6 }}
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={pw}
-            onChange={(e) => setPw(e.target.value)}
-            required
-            style={{ width: '100%', padding: 10, marginTop: 4, border: '1px solid #ccc', borderRadius: 6 }}
-          />
-        </label>
-        <button
-          type="submit"
-          disabled={busy}
-          style={{
-            padding: 12,
-            background: '#0e1f3a',
-            color: '#fff',
-            border: 0,
-            borderRadius: 6,
-            cursor: busy ? 'wait' : 'pointer',
-          }}
-        >
-          {busy ? 'Signing in…' : 'Sign in'}
-        </button>
-        {err && <p style={{ color: '#c0392b' }}>{err}</p>}
-      </form>
-    </main>
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-xl">Clarté MD · Admin</CardTitle>
+          <CardDescription>Sign in to the admin console.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={onSubmit} className="flex flex-col gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={pw}
+                onChange={(e) => setPw(e.target.value)}
+                autoComplete="current-password"
+                required
+              />
+            </div>
+            <Button type="submit" disabled={busy} className="mt-2 w-full">
+              {busy ? 'Signing in…' : 'Sign in'}
+            </Button>
+            {err && <p className="text-sm text-destructive">{err}</p>}
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

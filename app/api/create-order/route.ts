@@ -7,6 +7,7 @@ import { nextOrderNumber } from '@/lib/orders/order-number';
 import { extractClientIp, hashIp, RATE_LIMIT_ORDERS_PER_HOUR } from '@/lib/ai/rate-limit';
 import { dispatchWebhook } from '@/lib/webhooks/dispatcher';
 import { buildOrderEventPayload } from '@/lib/webhooks/payloads';
+import { upsertCustomerByPhone } from '@/lib/customers/upsert';
 import type { OrderItem } from '@/lib/db/schema';
 
 export async function POST(req: NextRequest) {
@@ -116,11 +117,23 @@ export async function POST(req: NextRequest) {
     if (found.length) aiSessionUuid = found[0].id;
   }
 
+  // Ensure a managed customer profile exists for this phone and link the
+  // order to it. Best-effort — never blocks the order if it fails.
+  const customerId = await upsertCustomerByPhone({
+    name: input.contact.name,
+    phone: input.contact.phone,
+    email: input.contact.email,
+    address: input.shipping.address,
+    city: input.shipping.city,
+    postal: input.shipping.postal || null,
+  });
+
   try {
     const [order] = await db
       .insert(schema.orders)
       .values({
         orderNumber,
+        customerId,
         status: 'pending',
         concern: input.concern,
         sourcePage: input.page,

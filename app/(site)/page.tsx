@@ -15,6 +15,7 @@ import { EVIDENCE_BY_BUNDLE } from '@/lib/protocols/evidence';
 import { db, schema } from '@/lib/db/client';
 import { ProductCard } from '@/components/product/ProductCard';
 import { Reviews } from '@/components/marketing/Reviews';
+import { getApprovedReviews } from '@/lib/db/review-queries';
 import { Button } from '@/components/ui/button';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { SITE_URL } from '@/lib/schema/json-ld';
@@ -91,6 +92,7 @@ async function getCatalog() {
 
 export default async function HomePage() {
   const { bundles, products } = await getCatalog();
+  const approvedReviews = await getApprovedReviews();
   const ordered = [
     'clear-skin-protocol',
     'even-tone-protocol',
@@ -623,10 +625,14 @@ export default async function HomePage() {
               )}
             >
               {orderedProducts.map((p) => (
-                <Reveal key={p.id}>
-                  <div className="w-[72%] flex-shrink-0 snap-start sm:w-auto sm:flex-shrink">
-                    <ProductCard product={p} />
-                  </div>
+                /* Sizing must live on the flex item itself (the Reveal div),
+                   not a nested child — otherwise w-[72%]/flex-shrink-0 never
+                   apply and the cards collapse to ~120px on mobile. */
+                <Reveal
+                  key={p.id}
+                  className="w-[72%] flex-shrink-0 snap-start sm:w-auto sm:flex-shrink"
+                >
+                  <ProductCard product={p} />
                 </Reveal>
               ))}
             </div>
@@ -655,7 +661,7 @@ export default async function HomePage() {
           REVIEWS — verified patient testimonials with before/after
           photos (lightbox). Data: lib/marketing/reviews.ts.
           ───────────────────────────────────────────────────────────── */}
-      <Reviews />
+      <Reviews reviews={approvedReviews} />
 
       {/* ─────────────────────────────────────────────────────────────
           BRAND STORY — navy heritage moment. Signature concept named.

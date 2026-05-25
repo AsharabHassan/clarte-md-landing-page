@@ -57,7 +57,9 @@ export function ProductDetailPage({
   const hasDiscount =
     product.listPricePkr !== null && product.listPricePkr > product.pricePkr;
 
-  const content = PRODUCT_CONTENT[product.sku];
+  // Prefer DB-backed content (editable from the admin panel); fall back
+  // to the static map for any SKU not yet migrated/edited.
+  const content = product.content ?? PRODUCT_CONTENT[product.sku];
   const images = productImagePaths(product.sku);
   const gallery = content ? [images.hero, ...images.views] : [];
   const [activeImage, setActiveImage] = useState(0);
@@ -218,6 +220,15 @@ export function ProductDetailPage({
       </div>
 
       {/* CONTENT BODY */}
+      {product.description && (
+        <Reveal>
+          <Section title="Overview">
+            <p className="text-base leading-relaxed whitespace-pre-line text-ink-2">
+              {product.description}
+            </p>
+          </Section>
+        </Reveal>
+      )}
       {content ? (
         <RevealGroup stagger={0.06}>
           <Reveal>

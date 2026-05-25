@@ -80,16 +80,17 @@ export function ProductCard({ product }: { product: Product }) {
           onClick={() => addProduct(product.sku)}
           aria-label={`Add ${product.name} to cart for Rs. ${product.pricePkr.toLocaleString('en-PK')}`}
           className={cn(
-            'group/btn flex w-full items-center justify-between gap-3',
-            'rounded-md border border-cobalt/40 bg-transparent px-4 py-3 text-cobalt',
-            'font-mono text-[11px] font-medium uppercase tracking-[0.18em]',
+            // Tighter on mobile (narrow rail cards); identical to original on sm+.
+            'group/btn flex w-full items-center justify-between gap-2 whitespace-nowrap sm:gap-3',
+            'rounded-md border border-cobalt/40 bg-transparent px-3 py-3 text-cobalt sm:px-4',
+            'font-mono text-[10px] font-medium uppercase tracking-[0.06em] sm:text-[11px] sm:tracking-[0.18em]',
             'transition-colors duration-150',
             'hover:border-cobalt hover:bg-cobalt hover:text-white',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cobalt focus-visible:ring-offset-2 focus-visible:ring-offset-canvas',
           )}
         >
           <span>+ Add</span>
-          <span className="font-mono tracking-[0.08em]">
+          <span className="font-mono tracking-[0.04em] sm:tracking-[0.08em]">
             Rs. {product.pricePkr.toLocaleString('en-PK')}
           </span>
         </button>

@@ -58,6 +58,7 @@ const TOP_LINKS = [
   { href: '/products', label: 'Products' },
   { href: '/quiz', label: 'Quiz' },
   { href: '/about', label: 'About' },
+  { href: '/account', label: 'Account' },
 ];
 
 /**

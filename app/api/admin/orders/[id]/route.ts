@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
 import { UpdateOrderStatusSchema } from '@/lib/validators/admin-orders';
-import { requireAdminSession, unauthorizedResponse, UnauthorizedError } from '@/lib/auth/admin';
+import { guardAdminApi } from '@/lib/auth/admin';
+import { AREA_ACCESS, canDelete, getUserRole } from '@/lib/auth/roles';
+import { recordAudit } from '@/lib/audit/log';
 import { dispatchWebhook } from '@/lib/webhooks/dispatcher';
 import {
   buildOrderEventPayload,
@@ -11,12 +13,8 @@ import {
 } from '@/lib/webhooks/payloads';
 
 export async function GET(_req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
-  try {
-    await requireAdminSession();
-  } catch (e) {
-    if (e instanceof UnauthorizedError) return unauthorizedResponse();
-    throw e;
-  }
+  const guard = await guardAdminApi(AREA_ACCESS.orders);
+  if ('response' in guard) return guard.response;
   const { id } = await ctx.params;
 
   const [order] = await db.select().from(schema.orders).where(eq(schema.orders.id, id)).limit(1);
@@ -38,12 +36,9 @@ export async function GET(_req: NextRequest, ctx: { params: Promise<{ id: string
 }
 
 export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
-  try {
-    await requireAdminSession();
-  } catch (e) {
-    if (e instanceof UnauthorizedError) return unauthorizedResponse();
-    throw e;
-  }
+  const guard = await guardAdminApi(AREA_ACCESS.orders);
+  if ('response' in guard) return guard.response;
+  const actorEmail = guard.user.email ?? null;
   const { id } = await ctx.params;
 
   const body = await req.json().catch(() => null);
@@ -73,6 +68,24 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
 
   if (!updated) return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
 
+  if (newStatus !== previousStatus) {
+    // Append to the order timeline + the cross-cutting audit log.
+    await db.insert(schema.orderStatusHistory).values({
+      orderId: id,
+      fromStatus: previousStatus,
+      toStatus: newStatus,
+      note: parsed.data.note ?? null,
+      actorEmail,
+    });
+    await recordAudit({
+      actorEmail,
+      action: 'order.status_changed',
+      entityType: 'order',
+      entityId: id,
+      meta: { from: previousStatus, to: newStatus, note: parsed.data.note ?? null },
+    });
+  }
+
   // Fire status-change webhook (sub-project #3) only when status
   // actually changed and the new status has a webhook event mapped.
   if (newStatus !== previousStatus) {
@@ -97,4 +110,37 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
   }
 
   return NextResponse.json({ ok: true, order: { id: updated.id, status: updated.status } });
+}
+
+/**
+ * Hard-delete an order. Destructive → owner only. order_items and
+ * order_status_history are removed via their ON DELETE CASCADE FKs.
+ * (To merely cancel, set status to 'cancelled' instead.)
+ */
+export async function DELETE(_req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
+  const guard = await guardAdminApi(AREA_ACCESS.orders);
+  if ('response' in guard) return guard.response;
+  if (!canDelete(getUserRole(guard.user))) {
+    return NextResponse.json({ ok: false, error: 'Only an owner can delete orders' }, { status: 403 });
+  }
+  const { id } = await ctx.params;
+
+  const [existing] = await db
+    .select({ id: schema.orders.id, orderNumber: schema.orders.orderNumber })
+    .from(schema.orders)
+    .where(eq(schema.orders.id, id))
+    .limit(1);
+  if (!existing) return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
+
+  await db.delete(schema.orders).where(eq(schema.orders.id, id));
+
+  await recordAudit({
+    actorEmail: guard.user.email ?? null,
+    action: 'order.deleted',
+    entityType: 'order',
+    entityId: id,
+    meta: { orderNumber: existing.orderNumber },
+  });
+
+  return NextResponse.json({ ok: true });
 }

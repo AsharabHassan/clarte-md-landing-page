@@ -1,9 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import { AnimatePresence, motion } from 'motion/react';
-import { Star, BadgeCheck, X, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
+import Link from 'next/link';
+import { motion } from 'motion/react';
+import { Star, BadgeCheck, X, ChevronLeft, ChevronRight, Camera, PenLine } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Reveal } from '@/lib/anim/reveal';
@@ -333,6 +334,18 @@ export function Reviews({ reviews = REVIEWS, className }: ReviewsProps) {
     return sorted;
   }, [reviews, filter, sort]);
 
+  // Horizontal review slider: scroll-snap rail + arrow paging.
+  const railRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // Jump back to the first card whenever the result set changes.
+    railRef.current?.scrollTo({ left: 0 });
+  }, [filter, sort]);
+  const scrollByPage = useCallback((dir: 1 | -1) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    rail.scrollBy({ left: dir * rail.clientWidth * 0.85, behavior: 'smooth' });
+  }, []);
+
   if (stats.count === 0) return null;
 
   const noPhotos = stats.count - stats.withPhotos;
@@ -351,6 +364,17 @@ export function Reviews({ reviews = REVIEWS, className }: ReviewsProps) {
               Verified reviews from patients across Pakistan — many with their own before-and-after
               photographs.
             </p>
+            <Link
+              href="/account/reviews/new"
+              className={cn(
+                'mt-6 inline-flex items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-white no-underline',
+                'font-mono text-[11px] font-semibold uppercase tracking-[0.16em]',
+                'transition-colors duration-300 hover:bg-navy-2',
+              )}
+            >
+              <PenLine className="h-3.5 w-3.5" aria-hidden="true" />
+              Write a review
+            </Link>
           </header>
         </Reveal>
 
@@ -445,12 +469,34 @@ export function Reviews({ reviews = REVIEWS, className }: ReviewsProps) {
           </div>
         </Reveal>
 
-        {/* Result count */}
-        <p className="mb-6 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-faint">
-          Showing {visible.length} of {stats.count}
-        </p>
+        {/* Result count + slider arrows */}
+        <div className="mb-6 flex items-center justify-between gap-4">
+          <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-faint">
+            Showing {visible.length} of {stats.count}
+          </p>
+          {visible.length > 1 && (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => scrollByPage(-1)}
+                aria-label="Previous reviews"
+                className="grid h-9 w-9 place-items-center rounded-full border border-sand/60 bg-card text-navy transition-colors hover:border-navy/30 hover:bg-sky focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cobalt focus-visible:ring-offset-2"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollByPage(1)}
+                aria-label="Next reviews"
+                className="grid h-9 w-9 place-items-center rounded-full border border-sand/60 bg-card text-navy transition-colors hover:border-navy/30 hover:bg-sky focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cobalt focus-visible:ring-offset-2"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+          )}
+        </div>
 
-        {/* Grid — animates on filter/sort change */}
+        {/* Slider — horizontal scroll-snap rail; reacts to filter/sort */}
         {visible.length === 0 ? (
           <div className="rounded-2xl border border-sand/50 bg-card px-7 py-12 text-center">
             <p className="font-display text-[clamp(18px,2.2vw,24px)] italic text-navy">
@@ -465,26 +511,34 @@ export function Reviews({ reviews = REVIEWS, className }: ReviewsProps) {
             </button>
           </div>
         ) : (
-          <motion.div layout className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <AnimatePresence mode="popLayout">
-              {visible.map((review, i) => (
-                <motion.div
-                  key={review.id}
-                  layout
-                  initial={reduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                  animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
-                  exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: reduced ? 0 : i * 0.04,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  <ReviewCard review={review} onOpenPhoto={openPhoto} />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+          <div
+            ref={railRef}
+            className={cn(
+              // `relative` is load-bearing: without a positioning context this
+              // static flex scroll-container leaks its children's width to the
+              // document, causing horizontal page scroll on mobile.
+              'relative flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4',
+              '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+              // Full-bleed edge peek on mobile; contained on desktop.
+              '-mx-6 px-6 md:mx-0 md:px-0',
+            )}
+          >
+            {visible.map((review, i) => (
+              <motion.div
+                key={review.id}
+                initial={reduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
+                animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  delay: reduced ? 0 : Math.min(i, 6) * 0.04,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="w-[85%] shrink-0 snap-start sm:w-[46%] lg:w-[31.5%]"
+              >
+                <ReviewCard review={review} onOpenPhoto={openPhoto} />
+              </motion.div>
+            ))}
+          </div>
         )}
       </div>
 

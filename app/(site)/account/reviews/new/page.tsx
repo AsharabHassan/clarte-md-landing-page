@@ -1,0 +1,42 @@
+import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
+import { getPortalCustomer } from '@/lib/auth/portal';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import AccountNav from '@/components/account/account-nav.client';
+import ReviewForm from '@/components/account/review-form.client';
+
+export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'Write a review' };
+
+export default async function WriteReviewPage() {
+  // Not signed in → send to login, then come back here.
+  const customer = await getPortalCustomer();
+  if (!customer) redirect('/account/login?next=/account/reviews/new');
+
+  return (
+    <div className="mx-auto max-w-2xl px-5 py-12">
+      <AccountNav name={customer.name} />
+      <Link
+        href="/account/orders"
+        className="mb-4 inline-flex items-center gap-1 text-sm text-ink-mute hover:text-navy"
+      >
+        <ArrowLeft className="size-4" /> Your account
+      </Link>
+      <h1 className="mb-1 font-display text-2xl text-navy">Write a review</h1>
+      <p className="mb-6 text-sm text-ink-mute">
+        Share your honest experience — it helps others choose the right protocol.
+      </p>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Reviewing as {customer.name}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ReviewForm />
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
