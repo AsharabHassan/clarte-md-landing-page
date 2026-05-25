@@ -15,6 +15,8 @@ import { ProtocolSavings } from './ProtocolSavings';
 import { ProtocolDivider } from './ProtocolDivider';
 import { ProtocolVisualStudies } from './ProtocolVisualStudies';
 import { DoctorVideos } from '@/components/marketing/DoctorVideos';
+import { Reviews } from '@/components/marketing/Reviews';
+import { getReviewsForProtocol } from '@/lib/db/review-queries';
 import { ScrollProgress } from '@/lib/anim/scroll-progress';
 import { LegacyEnhancer } from '@/lib/anim/legacy-enhancer';
 import '@/lib/anim/legacy-cinematic.css';
@@ -127,6 +129,7 @@ export async function ProtocolPageShell({
 
   const faqs = parseProtocolFaqs(legacyBody);
   const { beforeReviews, afterReviews } = splitLegacyBodyAtReviews(legacyBody);
+  const { reviews: protocolReviews, hasSpecific } = await getReviewsForProtocol(bundle.slug);
 
   return (
     <div className="protocol-page-redesigned">
@@ -188,6 +191,21 @@ export async function ProtocolPageShell({
       {/* ─── Layer 6: legacy body (site-chrome hidden via .legacy-body) ── */}
       <div className="legacy-body" dangerouslySetInnerHTML={{ __html: beforeReviews }} />
       <ProtocolVisualStudies bundleSlug={bundle.slug} />
+      {/* Real reviews replace the legacy "placeholder" reviews-section. */}
+      {protocolReviews.length > 0 && (
+        <div id="reviews">
+          <Reviews
+            reviews={protocolReviews}
+            eyebrow="— What patients say"
+            title={hasSpecific ? `Reviews for the ${bundle.name.replace(/^The\s+/, '')}` : 'What patients say'}
+            subtitle={
+              hasSpecific
+                ? `Verified reviews for the ${bundle.name.replace(/^The\s+/, '')} and the products inside it.`
+                : 'Verified reviews from across the Clarté MD range.'
+            }
+          />
+        </div>
+      )}
       {afterReviews && (
         <div className="legacy-body" dangerouslySetInnerHTML={{ __html: afterReviews }} />
       )}

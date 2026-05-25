@@ -27,6 +27,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.shopify.com' },
       { protocol: 'https', hostname: 'clartemd.com.pk' },
+      // Supabase Storage public buckets (e.g. customer-uploaded review photos).
+      { protocol: 'https', hostname: '*.supabase.co' },
     ],
   },
 

@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { eq } from 'drizzle-orm';
 import { db, schema } from '@/lib/db/client';
 import { ProductDetailPage } from '@/components/product/ProductDetailPage';
+import { Reviews } from '@/components/marketing/Reviews';
+import { getReviewsForProduct } from '@/lib/db/review-queries';
 import { productLd, SITE_URL } from '@/lib/schema/json-ld';
 
 export const dynamic = 'force-dynamic';
@@ -95,6 +97,8 @@ export default async function ProductPage({ params }: PageParams) {
       )
     : [];
 
+  const { reviews: productReviews, hasSpecific } = await getReviewsForProduct(product.sku);
+
   return (
     <>
       <script
@@ -115,6 +119,18 @@ export default async function ProductPage({ params }: PageParams) {
             : null
         }
       />
+      {productReviews.length > 0 && (
+        <Reviews
+          reviews={productReviews}
+          eyebrow="— What patients say"
+          title={hasSpecific ? `Reviews for ${product.name}` : 'What patients say'}
+          subtitle={
+            hasSpecific
+              ? `Verified reviews for ${product.name} and the wider Clarté MD range.`
+              : 'Verified reviews from across the Clarté MD range.'
+          }
+        />
+      )}
     </>
   );
 }

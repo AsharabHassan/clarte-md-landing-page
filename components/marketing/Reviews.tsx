@@ -308,9 +308,19 @@ function Lightbox({
 interface ReviewsProps {
   reviews?: Review[];
   className?: string;
+  /** Override the section heading (e.g. on a product/protocol page). */
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
 }
 
-export function Reviews({ reviews = REVIEWS, className }: ReviewsProps) {
+export function Reviews({
+  reviews = REVIEWS,
+  className,
+  eyebrow = '— What patients say',
+  title,
+  subtitle = 'Verified reviews from patients across Pakistan — many with their own before-and-after photographs.',
+}: ReviewsProps) {
   const stats = useMemo(() => reviewStats(reviews), [reviews]);
   const [filter, setFilter] = useState<Filter>('all');
   const [sort, setSort] = useState<Sort>('recent');
@@ -356,13 +366,18 @@ export function Reviews({ reviews = REVIEWS, className }: ReviewsProps) {
         {/* Header */}
         <Reveal>
           <header className="mb-10 max-w-[44rem] md:mb-12">
-            <Eyebrow className="mb-4 text-cobalt">— What patients say</Eyebrow>
+            <Eyebrow className="mb-4 text-cobalt">{eyebrow}</Eyebrow>
             <h2 className="mb-4 font-display font-light text-navy text-[clamp(32px,5vw,56px)] leading-[1.05] tracking-[-0.02em]">
-              Real skin, <em className="italic">real twelve-week results.</em>
+              {title ? (
+                title
+              ) : (
+                <>
+                  Real skin, <em className="italic">real twelve-week results.</em>
+                </>
+              )}
             </h2>
             <p className="font-display italic text-[clamp(16px,1.6vw,20px)] leading-relaxed text-ink-mute">
-              Verified reviews from patients across Pakistan — many with their own before-and-after
-              photographs.
+              {subtitle}
             </p>
             <Link
               href="/account/reviews/new"

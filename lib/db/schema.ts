@@ -123,12 +123,15 @@ export const reviews = pgTable(
     name: text('name').notNull(),
     location: text('location'),
     rating: integer('rating').notNull(), // 1–5
-    protocol: text('protocol'),
+    protocol: text('protocol'), // free-text display label (e.g. "Clear Skin Protocol · Week 12")
+    // Structured subject so a review can be reliably surfaced on the right page.
+    subjectType: text('subject_type'), // 'product' | 'protocol' | 'general'
+    subjectRef: text('subject_ref'), // product sku or bundle slug (null for general)
     body: text('body').notNull(),
     verified: boolean('verified').notNull().default(false),
     photos: jsonb('photos').$type<ReviewPhoto[]>(),
     status: text('status').notNull().default('pending'), // pending | approved | disapproved
-    source: text('source'), // seed | portal | admin
+    source: text('source'), // seed | seed-demo | portal | admin
     reviewDate: timestamp('review_date', { withTimezone: true }).notNull().defaultNow(),
     clientIpHash: text('client_ip_hash'),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
@@ -136,6 +139,7 @@ export const reviews = pgTable(
   },
   (t) => ({
     statusIdx: index('reviews_status_idx').on(t.status, t.reviewDate),
+    subjectIdx: index('reviews_subject_idx').on(t.subjectType, t.subjectRef, t.status),
   }),
 );
 

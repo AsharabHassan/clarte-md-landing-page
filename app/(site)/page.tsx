@@ -15,7 +15,7 @@ import { EVIDENCE_BY_BUNDLE } from '@/lib/protocols/evidence';
 import { db, schema } from '@/lib/db/client';
 import { ProductCard } from '@/components/product/ProductCard';
 import { Reviews } from '@/components/marketing/Reviews';
-import { getApprovedReviews } from '@/lib/db/review-queries';
+import { getRandomReviews } from '@/lib/db/review-queries';
 import { Button } from '@/components/ui/button';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { SITE_URL } from '@/lib/schema/json-ld';
@@ -92,7 +92,7 @@ async function getCatalog() {
 
 export default async function HomePage() {
   const { bundles, products } = await getCatalog();
-  const approvedReviews = await getApprovedReviews();
+  const approvedReviews = await getRandomReviews(9);
   const ordered = [
     'clear-skin-protocol',
     'even-tone-protocol',
