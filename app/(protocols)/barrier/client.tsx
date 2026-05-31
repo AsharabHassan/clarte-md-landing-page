@@ -6,6 +6,7 @@
 // Same pattern as /acne, /even-tone, /renewal.
 
 import { useEffect } from 'react';
+import { openLeadGate } from '@/lib/lead-gate/lead-gate';
 
 export default function BarrierClient() {
   useEffect(() => {
@@ -210,6 +211,8 @@ export default function BarrierClient() {
     try {
       const afterUrl = USE_MOCK ? await mockGenerate(uploadedImageBlob) : await realGenerate(uploadedImageBlob);
       clearInterval(tick);
+      // Lead-capture gate — must submit name/email/phone before results reveal.
+      await openLeadGate({ surface: 'barrier', concern: 'barrier' });
       document.getElementById('imgBefore').src = uploadedImageURL;
       document.getElementById('imgAfter').src = afterUrl;
       setupCompareSlider();

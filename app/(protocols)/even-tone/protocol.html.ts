@@ -1,11 +1,6 @@
 // Raw HTML body extracted verbatim from even-tone-protocol.html (Folder B) lines 1935-2527.
 // Rendered via dangerouslySetInnerHTML in page.tsx. Same migration approach as /acne (Task 21).
-export const EVEN_TONE_PROTOCOL_BODY = String.raw`<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8VD7TBS"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<!-- TOPBAR -->
+export const EVEN_TONE_PROTOCOL_BODY = String.raw`<!-- TOPBAR -->
 <header class="topbar">
   <div class="container">
     <span>Clarté MD · Established Lahore · MMXXIV</span>

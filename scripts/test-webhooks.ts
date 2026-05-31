@@ -38,6 +38,7 @@ const SAMPLE_ORDER = {
       is_bundle: true,
     },
   ],
+  item_names: 'The Clear Skin Protocol · 4-product kit',
   totals: { subtotal_pkr: 6499, shipping_pkr: 0, total_pkr: 6499 },
   used_ai_preview: false,
   ai_session_id: null,

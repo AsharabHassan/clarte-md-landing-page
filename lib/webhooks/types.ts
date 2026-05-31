@@ -42,6 +42,8 @@ export interface OrderEventPayload {
       unit_price_pkr: number;
       is_bundle: boolean;
     }>;
+    /** Comma-separated product names for GHL tag mapping (e.g. "The Clear Skin Protocol, Niacinamide 10% Serum"). */
+    item_names: string;
     totals: {
       subtotal_pkr: number;
       shipping_pkr: number;

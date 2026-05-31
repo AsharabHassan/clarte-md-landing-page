@@ -6,6 +6,7 @@
 // Same pattern as /acne (Task 22) and /even-tone (S2).
 
 import { useEffect } from 'react';
+import { openLeadGate } from '@/lib/lead-gate/lead-gate';
 
 export default function RenewalClient() {
   useEffect(() => {
@@ -209,6 +210,8 @@ export default function RenewalClient() {
     try {
       const afterUrl = USE_MOCK ? await mockGenerate(uploadedImageBlob) : await realGenerate(uploadedImageBlob);
       clearInterval(tick);
+      // Lead-capture gate — must submit name/email/phone before results reveal.
+      await openLeadGate({ surface: 'renewal', concern: 'renewal' });
       document.getElementById('imgBefore').src = uploadedImageURL;
       document.getElementById('imgAfter').src = afterUrl;
       setupCompareSlider();

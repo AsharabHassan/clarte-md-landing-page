@@ -1,11 +1,6 @@
 // Raw HTML body extracted verbatim from acne-protocol.html lines 2201-2933.
 // Rendered via dangerouslySetInnerHTML in page.tsx. See plan deviation note in commit.
-export const ACNE_PROTOCOL_BODY = String.raw`<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8VD7TBS"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<!-- TOPBAR -->
+export const ACNE_PROTOCOL_BODY = String.raw`<!-- TOPBAR -->
 <header class="topbar">
   <div class="container">
     <span>Clarté MD · Established Lahore · MMXXIV</span>

@@ -45,6 +45,10 @@ export function buildOrderEventPayload(args: {
         unit_price_pkr: i.unitPricePkr,
         is_bundle: i.isBundle,
       })),
+      // Flat, comma-separated product names for GHL tag mapping. Lets the
+      // operator auto-assign tags from the exact products purchased
+      // (e.g. "The Clear Skin Protocol, Niacinamide 10% Serum").
+      item_names: items.map((i) => i.name).join(', '),
       totals: {
         subtotal_pkr: order.subtotalPkr,
         shipping_pkr: order.shippingPkr,

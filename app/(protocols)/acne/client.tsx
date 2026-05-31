@@ -12,6 +12,7 @@
 // benefit; the original code is the source of truth.
 
 import { useEffect } from 'react';
+import { openLeadGate } from '@/lib/lead-gate/lead-gate';
 
 export default function AcneClient() {
   useEffect(() => {
@@ -235,6 +236,8 @@ export default function AcneClient() {
     try {
       const afterUrl = USE_MOCK ? await mockGenerate(uploadedImageBlob) : await realGenerate(uploadedImageBlob);
       clearInterval(tick);
+      // Lead-capture gate — must submit name/email/phone before results reveal.
+      await openLeadGate({ surface: 'acne', concern: 'acne' });
       document.getElementById('imgBefore').src = uploadedImageURL;
       document.getElementById('imgAfter').src = afterUrl;
       setupCompareSlider();

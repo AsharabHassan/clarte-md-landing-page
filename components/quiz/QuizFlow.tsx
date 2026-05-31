@@ -19,6 +19,7 @@ import { SplitReveal } from '@/lib/anim/split-reveal';
 import { Magnetic } from '@/lib/anim/magnetic';
 import { CursorGlow } from '@/lib/anim/cursor-glow';
 import { useReducedMotion } from '@/lib/anim/hooks';
+import { openLeadGate } from '@/lib/lead-gate/lead-gate';
 import { cn } from '@/lib/utils';
 
 type State =
@@ -144,7 +145,14 @@ export function QuizFlow() {
         });
         return;
       }
-      setState({ kind: 'result', data: data.analysis as AnalysisResult });
+      // Lead-capture gate — must submit name/email/phone before results reveal.
+      const analysis = data.analysis as AnalysisResult;
+      await openLeadGate({
+        surface: 'quiz',
+        concern: analysis?.primary_concerns?.[0] ?? 'unknown',
+        ai_session_id: data.ai_session_id,
+      });
+      setState({ kind: 'result', data: analysis });
     } catch (e: unknown) {
       clearInterval(interval);
       setState({

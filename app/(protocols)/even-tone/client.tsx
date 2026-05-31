@@ -7,6 +7,7 @@
 // pattern as Task 22 of Sub-project #2's /acne migration.
 
 import { useEffect } from 'react';
+import { openLeadGate } from '@/lib/lead-gate/lead-gate';
 
 export default function EvenToneClient() {
   useEffect(() => {
@@ -211,6 +212,8 @@ export default function EvenToneClient() {
     try {
       const afterUrl = USE_MOCK ? await mockGenerate(uploadedImageBlob) : await realGenerate(uploadedImageBlob);
       clearInterval(tick);
+      // Lead-capture gate — must submit name/email/phone before results reveal.
+      await openLeadGate({ surface: 'even-tone', concern: 'even-tone' });
       document.getElementById('imgBefore').src = uploadedImageURL;
       document.getElementById('imgAfter').src = afterUrl;
       setupCompareSlider();
