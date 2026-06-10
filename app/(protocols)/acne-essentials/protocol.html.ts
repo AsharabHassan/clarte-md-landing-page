@@ -1,0 +1,1 @@
+export const ACNE_ESSENTIALS_PROTOCOL_BODY = '';

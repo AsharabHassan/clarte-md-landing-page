@@ -111,6 +111,9 @@ export const BUNDLE_META: Record<string, { slug: string; name: string }> = {
   'even-tone-protocol': { slug: 'even-tone-protocol', name: 'The Even Tone Protocol' },
   'renewal-protocol': { slug: 'renewal-protocol', name: 'The Renewal Protocol' },
   'barrier-protocol': { slug: 'barrier-protocol', name: 'The Barrier Protocol' },
+  'acne-essentials-protocol': { slug: 'acne-essentials-protocol', name: 'The Acne Essentials Protocol' },
+  'acne-glow-protocol': { slug: 'acne-glow-protocol', name: 'The Acne Glow Protocol' },
+  'acne-solo-protocol': { slug: 'acne-solo-protocol', name: 'The Acne Solo Protocol' },
 };
 
 /** Highest-conversion upsell SKUs in priority order. SPF is universal, HA helps every routine. */
