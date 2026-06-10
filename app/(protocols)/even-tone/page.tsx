@@ -35,6 +35,7 @@ export default function EvenToneProtocolPage() {
       heroImageSrc={HERO_IMAGE}
       legacyBody={EVEN_TONE_PROTOCOL_BODY}
       legacyClient={<EvenToneClient />}
+      hideEvidence
     />
   );
 }

@@ -35,6 +35,7 @@ export default function BarrierProtocolPage() {
       heroImageSrc={HERO_IMAGE}
       legacyBody={BARRIER_PROTOCOL_BODY}
       legacyClient={<BarrierClient />}
+      hideEvidence
     />
   );
 }

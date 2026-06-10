@@ -35,6 +35,7 @@ export default function AcneGlowProtocolPage() {
       heroImageSrc={HERO_IMAGE}
       legacyBody={ACNE_GLOW_PROTOCOL_BODY}
       legacyClient={<AcneGlowClient />}
+      hideEvidence
     />
   );
 }

@@ -35,6 +35,7 @@ export default function RenewalProtocolPage() {
       heroImageSrc={HERO_IMAGE}
       legacyBody={RENEWAL_PROTOCOL_BODY}
       legacyClient={<RenewalClient />}
+      hideEvidence
     />
   );
 }

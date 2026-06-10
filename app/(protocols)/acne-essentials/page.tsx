@@ -35,6 +35,7 @@ export default function AcneEssentialsProtocolPage() {
       heroImageSrc={HERO_IMAGE}
       legacyBody={ACNE_ESSENTIALS_PROTOCOL_BODY}
       legacyClient={<AcneEssentialsClient />}
+      hideEvidence
     />
   );
 }
