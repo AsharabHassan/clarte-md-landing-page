@@ -99,6 +99,8 @@ export interface ProtocolPageShellProps {
   secondaryLabel?: string;
   /** Protocol-specific hero image, usually /protocols/<slug>/hero-gpt.png. */
   heroImageSrc?: string;
+  /** When true the evidence band (Layer 2) is omitted. Defaults to false. */
+  hideEvidence?: boolean;
 }
 
 /**
@@ -122,6 +124,7 @@ export async function ProtocolPageShell({
   secondaryAnchor = 'ai-generator',
   secondaryLabel = 'Try the 12-week AI projection',
   heroImageSrc,
+  hideEvidence = false,
 }: ProtocolPageShellProps) {
   const data = await getProtocolPageData(bundleSlug);
   if (!data) notFound();
@@ -167,7 +170,7 @@ export async function ProtocolPageShell({
       />
 
       {/* ─── Layer 2: Evidence band — cited active-ingredient research ─ */}
-      <ProtocolEvidence bundleSlug={bundle.slug} panelSize={30} />
+      {!hideEvidence && <ProtocolEvidence bundleSlug={bundle.slug} panelSize={30} />}
 
       {/* ─── Layer 3: NEW numbered-step composition ──────────── */}
       <ProtocolSteps steps={steps} totalWeeks={12} />
