@@ -20,13 +20,14 @@ import { formatPkr } from '@/lib/admin/format';
 
 export const dynamic = 'force-dynamic';
 
-// Slug → public protocol landing route. Custom protocols have no landing
-// page until one is built, so the link is shown only when mapped.
 const PROTOCOL_ROUTES: Record<string, string> = {
   'clear-skin-protocol': '/acne',
   'even-tone-protocol': '/even-tone',
   'renewal-protocol': '/renewal',
   'barrier-protocol': '/barrier',
+  'acne-essentials-protocol': '/acne-essentials',
+  'acne-glow-protocol': '/acne-glow',
+  'acne-solo-protocol': '/acne-solo',
 };
 
 export default async function ProtocolsPage() {
@@ -59,6 +60,7 @@ export default async function ProtocolsPage() {
                 <TableHead>Name</TableHead>
                 <TableHead>Slug</TableHead>
                 <TableHead>Concern</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead className="text-right">Kit price</TableHead>
                 <TableHead className="text-right">Products</TableHead>
                 <TableHead>Page</TableHead>
@@ -76,10 +78,17 @@ export default async function ProtocolsPage() {
                     </TableCell>
                     <TableCell className="font-mono text-xs text-muted-foreground">{b.slug}</TableCell>
                     <TableCell><Badge variant="outline" className="capitalize">{b.concern}</Badge></TableCell>
+                    <TableCell>
+                      {b.active ? (
+                        <Badge variant="outline" className="border-[var(--clarte-success)] text-[var(--clarte-success)]">Visible</Badge>
+                      ) : (
+                        <Badge variant="outline" className="border-destructive text-destructive">Hidden</Badge>
+                      )}
+                    </TableCell>
                     <TableCell className="text-right tabular-nums">{formatPkr(b.pricePkr)}</TableCell>
                     <TableCell className="text-right tabular-nums">{countFor(b.id)}</TableCell>
                     <TableCell>
-                      {route ? (
+                      {route && b.active ? (
                         <a
                           href={route}
                           target="_blank"
@@ -89,7 +98,7 @@ export default async function ProtocolsPage() {
                           {route} <ExternalLink className="size-3.5" />
                         </a>
                       ) : (
-                        <span className="text-sm text-muted-foreground">—</span>
+                        <span className="text-sm text-muted-foreground">{route ?? '—'}</span>
                       )}
                     </TableCell>
                   </TableRow>

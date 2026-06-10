@@ -163,7 +163,7 @@ export async function ProtocolPageShell({
         outcomeSub={outcome.sub}
         secondaryAnchor={secondaryAnchor}
         secondaryLabel={secondaryLabel}
-        heroImageSrc={heroImageSrc ?? bundleCinematicPath(bundle.slug)}
+        heroImageSrc={bundle.heroImageUrl ?? heroImageSrc ?? bundleCinematicPath(bundle.slug)}
       />
 
       {/* ─── Layer 2: Evidence band — cited active-ingredient research ─ */}

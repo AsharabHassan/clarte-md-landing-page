@@ -24,6 +24,7 @@ export const UpdateBundleSchema = z
     name: z.string().trim().min(1).max(200).optional(),
     concern: z.string().trim().min(1).max(80).optional(),
     pricePkr: z.coerce.number().int().min(0).max(100_000_000).optional(),
+    active: z.boolean().optional(),
     // Ordered list of product ids — replaces the whole composition.
     items: z.array(z.string().uuid()).max(20).optional(),
   })

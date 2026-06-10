@@ -44,6 +44,11 @@ export const bundles = pgTable('bundles', {
   name: text('name').notNull(),
   concern: text('concern').notNull(),
   pricePkr: integer('price_pkr').notNull(),
+  // Admin-uploaded hero image stored in Supabase Storage (protocol-heroes bucket).
+  // Null means the protocol page falls back to its static public/protocols/<slug>/hero.webp.
+  heroImageUrl: text('hero_image_url'),
+  // When false the landing page returns 404; the bundle slug still works for cart/orders.
+  active: boolean('active').notNull().default(true),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });

@@ -122,7 +122,7 @@ export async function getProtocolPageData(
     .from(schema.bundles)
     .where(eq(schema.bundles.slug, slug))
     .limit(1);
-  if (!bundle) return null;
+  if (!bundle || !bundle.active) return null;
 
   const items = await db
     .select()

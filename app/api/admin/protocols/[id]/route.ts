@@ -40,7 +40,7 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
 
   // Field updates.
   const patch: Record<string, unknown> = { updatedAt: new Date() };
-  for (const k of ['name', 'concern', 'pricePkr'] as const) {
+  for (const k of ['name', 'concern', 'pricePkr', 'active'] as const) {
     if (k in d && d[k] !== undefined) patch[k] = d[k];
   }
 
