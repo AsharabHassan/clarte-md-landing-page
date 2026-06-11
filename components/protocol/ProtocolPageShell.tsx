@@ -11,6 +11,7 @@ import { bundleCinematicPath } from '@/lib/products/content';
 import { ProtocolHero } from './ProtocolHero';
 import { ProtocolEvidence } from './ProtocolEvidence';
 import { ProtocolSteps } from './ProtocolSteps';
+import { ProtocolUsageSequence } from './ProtocolUsageSequence';
 import { ProtocolSavings } from './ProtocolSavings';
 import { ProtocolDivider } from './ProtocolDivider';
 import { ProtocolVisualStudies } from './ProtocolVisualStudies';
@@ -101,6 +102,7 @@ export interface ProtocolPageShellProps {
   heroImageSrc?: string;
   /** When true the evidence band (Layer 2) is omitted. Defaults to false. */
   hideEvidence?: boolean;
+  hideUsageSequence?: boolean;
 }
 
 /**
@@ -125,6 +127,7 @@ export async function ProtocolPageShell({
   secondaryLabel = 'Try the 12-week AI projection',
   heroImageSrc,
   hideEvidence = false,
+  hideUsageSequence = false,
 }: ProtocolPageShellProps) {
   const data = await getProtocolPageData(bundleSlug);
   if (!data) notFound();
@@ -174,6 +177,11 @@ export async function ProtocolPageShell({
 
       {/* ─── Layer 3: NEW numbered-step composition ──────────── */}
       <ProtocolSteps steps={steps} totalWeeks={12} />
+
+      {/* ─── Usage & Sequence — AM/PM routine ───────────────── */}
+      {!hideUsageSequence && (
+        <ProtocolUsageSequence steps={steps} concern={bundle.concern} />
+      )}
 
       {/* ─── NEW: Doctor video notes — 4 short explainers ─── */}
       <DoctorVideos variant="compact" />
