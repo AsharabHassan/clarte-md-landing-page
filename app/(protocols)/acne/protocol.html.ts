@@ -537,7 +537,7 @@ export const ACNE_PROTOCOL_BODY = String.raw`<!-- TOPBAR -->
       </details>
       <details class="qa">
         <summary>I'm already on a prescription. Can I use this alongside?</summary>
-        <p class="a">If you're on isotretinoin, topical retinoids (tretinoin, adapalene), or oral antibiotics, please message our team on WhatsApp before ordering. The protocol is designed as a standalone regimen; combining with prescription actives requires staggering to avoid irritation, and we'd rather flag it before you buy.</p>
+        <p class="a">If you're already on a prescription acne treatment — an oral medication, a topical retinoid, or an oral antibiotic — please message our team on WhatsApp before ordering. The protocol is designed as a standalone regimen; combining with prescription actives requires staggering to avoid irritation, and we'd rather flag it before you buy.</p>
       </details>
       <details class="qa">
         <summary>Is this safe during pregnancy or breastfeeding?</summary>

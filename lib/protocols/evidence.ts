@@ -47,7 +47,7 @@ export const EVIDENCE_BY_BUNDLE: Record<string, EvidenceConfig> = {
         figure: 60,
         suffix: '%',
         context: 'reduction in inflammatory lesions at 8 weeks',
-        metric: 'Topical nicotinamide vs clindamycin in inflammatory acne — comparable efficacy, no antibiotic resistance.',
+        metric: 'Topical nicotinamide vs a topical antibiotic in inflammatory acne — comparable efficacy, no antibiotic resistance.',
         population: 'n=76',
         citation: 'Khodaeiani et al., Int J Dermatol 2013',
       },
