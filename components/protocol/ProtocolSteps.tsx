@@ -9,6 +9,7 @@ import { Reveal, RevealGroup } from '@/lib/anim/reveal';
 import { useReducedMotion } from '@/lib/anim/hooks';
 import type { ProtocolStep } from '@/lib/protocols/architecture';
 import { cn } from '@/lib/utils';
+import { BuyNowButton } from './BuyNowButton';
 
 /**
  * Layer 3 — Steps. Mobile-first cinematic composition:
@@ -232,15 +233,15 @@ function CinematicStepCard({
                   '0 0px 0px 0px rgba(0,0,0,0), 0 0 0 0 rgba(0,0,0,0)',
               }
       }
-      className="h-full"
+      className={cn(
+        'flex h-full flex-col overflow-hidden rounded-2xl border bg-card',
+        'transition-[border-color] duration-300',
+        isActive ? 'border-cobalt/60' : 'border-sand/40 hover:border-navy/30',
+      )}
     >
       <Link
         href={`/products/${step.product.sku}`}
-        className={cn(
-          'group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-card',
-          'no-underline text-inherit transition-[border-color] duration-300',
-          isActive ? 'border-cobalt/60' : 'border-sand/40 hover:border-navy/30',
-        )}
+        className="group relative flex flex-1 flex-col no-underline text-inherit"
       >
         {/* ─── Photo + cinematic number overlay ─── */}
         <div
@@ -306,7 +307,7 @@ function CinematicStepCard({
         </div>
 
         {/* ─── Body ─── */}
-        <div className="flex flex-1 flex-col gap-3 p-6">
+        <div className="flex flex-1 flex-col gap-3 p-6 pb-0">
           <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-cobalt">
             Step {step.num.toString().padStart(2, '0')}
           </span>
@@ -332,6 +333,11 @@ function CinematicStepCard({
           </div>
         </div>
       </Link>
+
+      {/* ─── Buy Now — sibling below the PDP link (not nested in <a>) ─── */}
+      <div className="px-6 pb-6">
+        <BuyNowButton sku={step.product.sku} pricePkr={step.product.pricePkr} />
+      </div>
     </motion.div>
   );
 }
