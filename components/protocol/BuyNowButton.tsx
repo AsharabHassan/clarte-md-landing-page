@@ -29,8 +29,14 @@ export function BuyNowButton({
     e.stopPropagation();
     if (busy) return;
     setBusy(true);
-    addProduct(sku);
-    router.push('/checkout');
+    try {
+      addProduct(sku);
+      router.push('/checkout');
+    } catch {
+      // Re-enable the button if the add or navigation throws, so the
+      // user isn't stuck on a permanently-disabled control.
+      setBusy(false);
+    }
   }
 
   return (
