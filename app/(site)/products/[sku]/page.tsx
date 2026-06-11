@@ -76,7 +76,10 @@ export default async function ProductPage({ params }: PageParams) {
     .select()
     .from(schema.products)
     .where(eq(schema.products.active, true));
-  const allBundles = await db.select().from(schema.bundles);
+  const allBundles = await db
+    .select()
+    .from(schema.bundles)
+    .where(eq(schema.bundles.active, true));
 
   const myBundleIds = allBundleItems
     .filter((i) => i.productId === product.id)

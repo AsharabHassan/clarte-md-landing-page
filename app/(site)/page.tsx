@@ -82,7 +82,10 @@ const PROTOCOL_ACCENT_CLASS: Record<string, string> = {
 const PRODUCT_DISPLAY_ORDER = ['prep', 'rescue', 'vitc', 'acne', 'ha', 'reti', 'light', 'spf'];
 
 async function getCatalog() {
-  const bundles = await db.select().from(schema.bundles);
+  const bundles = await db
+    .select()
+    .from(schema.bundles)
+    .where(eq(schema.bundles.active, true));
   const products = await db
     .select()
     .from(schema.products)

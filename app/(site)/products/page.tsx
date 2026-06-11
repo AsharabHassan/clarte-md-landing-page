@@ -44,7 +44,10 @@ async function getCatalog(): Promise<{
     .from(schema.products)
     .where(eq(schema.products.active, true));
 
-  const rawBundles = await db.select().from(schema.bundles);
+  const rawBundles = await db
+    .select()
+    .from(schema.bundles)
+    .where(eq(schema.bundles.active, true));
   const allBundleItems = await db.select().from(schema.bundleItems);
 
   // Map productId → concerns[] via bundle membership
