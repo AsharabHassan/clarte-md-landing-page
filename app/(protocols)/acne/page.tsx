@@ -8,9 +8,9 @@ import { ProtocolPageShell } from '@/components/protocol/ProtocolPageShell';
 const BUNDLE_SLUG = 'clear-skin-protocol';
 const ROUTE = '/acne';
 const HERO_IMAGE = '/protocols/clear-skin-protocol/hero-gpt.webp';
-const TITLE = 'Clear Skin Protocol — Active acne + post-acne marks';
+const TITLE = 'Pimple & Acne Treatment — Clear Skin Protocol';
 const DESCRIPTION =
-  'A 12-week clinical regimen for active breakouts and PIH. Niacinamide 10%, azelaic acid, and 2% salicylic — clinically dosed, dermatologist-formulated, manufactured in Lahore.';
+  'A dermatologist-formulated 12-week pimple & acne treatment for active breakouts, blackheads, whiteheads, and post-acne marks & dark spots. Niacinamide 10%, azelaic acid, and 2% salicylic acid — clinically dosed, made in Lahore. COD across Pakistan.';
 
 export const dynamic = 'force-dynamic';
 

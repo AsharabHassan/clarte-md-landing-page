@@ -3,14 +3,20 @@
  *
  * All builders return plain JS objects ready for
  * `JSON.stringify(...)` inside a `<script type="application/ld+json">`
- * tag. Use the existing canonical SITE_URL fallback so production
- * picks up `lp.clartemd.com.pk` automatically.
+ * tag. SITE_URL is normalized (trailing slash stripped) so that
+ * `${SITE_URL}${route}` concatenation can never emit a double slash,
+ * regardless of how the env var is set at build time.
  */
 
 import type { Product as DbProduct, Bundle as DbBundle } from '@/lib/db/schema';
+import { PRODUCT_SEO, BUNDLE_SEO } from '@/lib/seo/product-seo';
 
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://lp.clartemd.com.pk';
+// Canonical production origin. NEXT_PUBLIC_SITE_URL is inlined at build
+// time, so a wrong value here bakes a broken canonical into the bundle.
+// Strip any trailing slash to keep `${SITE_URL}/path` well-formed.
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://clartemd.com.pk'
+).replace(/\/+$/, '');
 
 const BRAND_NAME = 'Clarté MD';
 const BRAND_DESCRIPTION =
@@ -83,16 +89,31 @@ export function organizationGraphLd() {
  */
 export function productLd(p: DbProduct) {
   const url = `${SITE_URL}/products/${p.sku}`;
+  const seo = PRODUCT_SEO[p.sku];
+  const description = seo
+    ? `${seo.descriptionLead}. Clinically dosed, dermatologist-formulated, manufactured in Lahore. Cash on delivery across Pakistan.`
+    : p.actives
+      ? `${p.name} — ${p.actives}. Clinically dosed, dermatologist-formulated, manufactured in Lahore.`
+      : `${p.name} — clinically dosed, dermatologist-formulated, manufactured in Lahore.`;
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: p.name,
     sku: p.sku,
     url,
-    description: p.actives
-      ? `${p.name} — ${p.actives}. Clinically dosed, dermatologist-formulated, manufactured in Lahore.`
-      : `${p.name} — clinically dosed, dermatologist-formulated, manufactured in Lahore.`,
+    description,
     image: p.imageUrl ? [p.imageUrl] : [`${SITE_URL}/opengraph-image`],
+    ...(seo?.category ? { category: seo.category } : {}),
+    ...(seo?.keywords ? { keywords: seo.keywords } : {}),
+    ...(p.actives
+      ? {
+          additionalProperty: {
+            '@type': 'PropertyValue',
+            name: 'Active ingredients',
+            value: p.actives,
+          },
+        }
+      : {}),
     brand: {
       '@type': 'Brand',
       name: BRAND_NAME,
@@ -121,6 +142,7 @@ export function bundleLd(
   b: DbBundle,
   opts: { url: string; description: string; image?: string },
 ) {
+  const seo = BUNDLE_SEO[b.slug];
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -129,6 +151,8 @@ export function bundleLd(
     url: opts.url,
     description: opts.description,
     image: [opts.image ?? `${SITE_URL}/opengraph-image`],
+    ...(seo?.category ? { category: seo.category } : {}),
+    ...(seo?.keywords ? { keywords: seo.keywords } : {}),
     brand: {
       '@type': 'Brand',
       name: BRAND_NAME,

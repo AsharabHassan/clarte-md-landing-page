@@ -532,6 +532,14 @@ export const ACNE_PROTOCOL_BODY = String.raw`<!-- TOPBAR -->
     </div>
     <div class="faq">
       <details class="qa">
+        <summary>Does this treat pimples, blackheads, and whiteheads — or only severe acne?</summary>
+        <p class="a">All of them. The Clear Skin Protocol is a complete pimple and acne treatment: 2% salicylic acid clears blackheads, whiteheads, and closed comedones by exfoliating inside the pore, while niacinamide 10% and azelaic acid calm active pimples and inflammatory breakouts. Most users see fewer pimples within three to four weeks, with blackheads and surface congestion easing first.</p>
+      </details>
+      <details class="qa">
+        <summary>Will it fade pimple marks, dark spots, and acne scars?</summary>
+        <p class="a">It targets post-acne marks and dark spots — the brown and red pigmentation (PIH) pimples leave behind — with azelaic acid and niacinamide, which interrupt excess pigment and even out tone over eight to twelve weeks. True indented (atrophic) acne scars are a textural change that no topical cream can fully remove, but clearing active breakouts and fading the marks around them visibly smooths the overall look of the skin.</p>
+      </details>
+      <details class="qa">
         <summary>Will the routine make my skin worse before it gets better?</summary>
         <p class="a">Mild purging is real with active ingredients like salicylic acid and niacinamide — clogged microcomedones surface and clear faster than they otherwise would. It typically peaks around day ten to fourteen and resolves by week four. If breakouts worsen significantly after week four, WhatsApp our team with a photograph; the adjustment is usually a frequency change, not the wrong product.</p>
       </details>

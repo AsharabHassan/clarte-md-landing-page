@@ -6,6 +6,7 @@ import { ProductDetailPage } from '@/components/product/ProductDetailPage';
 import { Reviews } from '@/components/marketing/Reviews';
 import { getReviewsForProduct } from '@/lib/db/review-queries';
 import { productLd, SITE_URL } from '@/lib/schema/json-ld';
+import { PRODUCT_SEO } from '@/lib/seo/product-seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,13 +22,18 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     .where(eq(schema.products.sku, sku))
     .limit(1);
   if (!p) return { title: 'Product not found' };
-  const description = p.actives
-    ? `${p.name} — ${p.actives}. Clinically dosed, dermatologist-formulated, manufactured in Lahore.`
-    : `${p.name} — clinically dosed, dermatologist-formulated, manufactured in Lahore.`;
+  const seo = PRODUCT_SEO[p.sku];
+  const description = seo
+    ? `${seo.descriptionLead}. Clinically dosed, dermatologist-formulated, manufactured in Lahore. COD across Pakistan.`
+    : p.actives
+      ? `${p.name} — ${p.actives}. Clinically dosed, dermatologist-formulated, manufactured in Lahore.`
+      : `${p.name} — clinically dosed, dermatologist-formulated, manufactured in Lahore.`;
+  const title = seo?.seoTitle ?? p.name;
   const canonical = `${SITE_URL}/products/${p.sku}`;
   return {
-    title: p.name,
+    title,
     description,
+    keywords: seo?.keywords,
     alternates: { canonical },
     openGraph: {
       title: `${p.name} · Clarté MD`,

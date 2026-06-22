@@ -66,31 +66,14 @@ export function ProductDetailPage({
 
   const heroSrc = content ? gallery[activeImage] : product.imageUrl;
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    description: product.actives ?? 'Clinically dosed dermatologist-formulated product.',
-    sku: product.sku,
-    brand: { '@type': 'Brand', name: 'Clarté MD' },
-    image: content ? gallery : product.imageUrl ? [product.imageUrl] : undefined,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'PKR',
-      price: String(product.pricePkr),
-      availability: product.active
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/OutOfStock',
-      url: `/products/${product.sku}`,
-    },
-  };
+  // Product JSON-LD is emitted once, authoritatively, by the page
+  // (productLd() in app/(site)/products/[sku]/page.tsx) — with absolute
+  // URLs, keyword-rich description, category, and keywords. Emitting a
+  // second, barer Product schema here produced duplicate/conflicting
+  // structured data (and relative offer URLs), so it was removed.
 
   return (
     <div className="bg-canvas">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
 
       {/* Full-bleed cinematic hero band — dark gradient over hero shot */}
       <CinematicHero
