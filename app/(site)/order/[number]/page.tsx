@@ -18,6 +18,8 @@ import { Input } from '@/components/ui/input';
 import { TrustStrip } from '@/components/marketing/TrustStrip';
 import { UpsellRow } from '@/components/marketing/UpsellRow';
 import { Reveal, RevealGroup } from '@/lib/anim/reveal';
+import { PurchaseConversion } from '@/components/analytics/PurchaseConversion';
+import { getPurchaseConversionData } from '@/lib/marketing/purchase-conversion';
 import { cn } from '@/lib/utils';
 
 interface PageParams {
@@ -206,8 +208,23 @@ export default async function OrderPage({ params, searchParams }: PageParams) {
   const isDead = order.status === 'cancelled' || order.status === 'refunded';
   const activeIdx = TIMELINE_INDEX[order.status] ?? 0;
 
+  // Google Ads purchase conversion — fire once, only on the fresh
+  // post-checkout view (?placed=1). Re-validates phone ownership so
+  // email/phone for enhanced conversions never leak on later lookups.
+  const conversion = isFirstVisit ? await getPurchaseConversionData(number, phone) : null;
+
   return (
     <div className="bg-canvas pb-24">
+      {conversion && (
+        <PurchaseConversion
+          transactionId={conversion.transactionId}
+          value={conversion.value}
+          currency={conversion.currency}
+          items={conversion.items}
+          email={conversion.email}
+          phone={conversion.phone}
+        />
+      )}
       {/* ───── Cinematic celebration band — only after a fresh checkout submit ───── */}
       {isFirstVisit && (
         <section className="relative isolate overflow-hidden bg-navy-deep text-white">
