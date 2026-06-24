@@ -6,7 +6,8 @@
  * `{ total: 1 }` and place an order for one rupee.
  */
 
-export const FLAT_SHIPPING_PKR = 250;
+// Shipping is free on all orders, nationwide.
+export const FLAT_SHIPPING_PKR = 0;
 
 export interface ComputeTotalsItem {
   sku: string;

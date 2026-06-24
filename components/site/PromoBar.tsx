@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 /**
  * Sticky promo band that sits above the main nav.
  *
- * Shows: flat shipping + COD policy + a fake "offer ends in" countdown
+ * Shows: free shipping + COD policy + a fake "offer ends in" countdown
  * (per the marketing urgency system in lib/marketing/*). Swap the
  * countdown to a real promo end date by editing CountdownTimer's
  * windowHours prop or hooking it to a real env-configured end.
@@ -22,7 +22,7 @@ export function PromoBar() {
       )}
     >
       <div className="mx-auto flex h-9 max-w-[82rem] items-center justify-center gap-3 px-5 text-center">
-        <span className="hidden sm:inline">Flat Rs. 250 shipping</span>
+        <span className="hidden sm:inline">Free shipping nationwide</span>
         <span aria-hidden="true" className="hidden text-cobalt-glow/60 sm:inline">
           ·
         </span>

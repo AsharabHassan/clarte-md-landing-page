@@ -39,7 +39,7 @@ export default function EvenToneClient() {
     { sku: 'reti',   why: 'Retinol accelerates cell turnover and pigment clearance.' },
   ];
   const AI_PROMPT = 'Generate a photorealistic projection of this person\'s skin after 12 weeks of consistent pigmentation treatment with an L-Ascorbic 15% + Tranexamic 3% + Alpha-Arbutin + Kojic + SPF 50 regimen. Show: faded melasma patches, reduced dark spots and post-inflammatory hyperpigmentation, more even overall complexion, softer pigment edges. Critical: keep identity, ethnicity, age, hair, lighting, framing, and pose IDENTICAL. Do not lighten the natural skin tone — only target areas of hyperpigmentation. Realistic clinical improvement only.';
-  const FREE_SHIP_MIN = 4000;
+  const FREE_SHIP_MIN = 0; // free shipping on all orders
 
   let bundleInCart = false;
   let crossSellCart = {};

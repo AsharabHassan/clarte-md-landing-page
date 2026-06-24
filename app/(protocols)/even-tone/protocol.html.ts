@@ -485,7 +485,7 @@ export const EVEN_TONE_PROTOCOL_BODY = String.raw`<!-- TOPBAR -->
         <p class="a">It is the single most important variable. Pigmentation is fundamentally a photo-response; without daily, properly-applied SPF 50, you will undo two weeks of clinical fade in one weekend of unprotected sun. Reapply every two hours outdoors. The Barrier Restore SPF is broad-spectrum and non-comedogenic — there is no excuse to skip it.</p>
       </details>
       <details class="qa">
-        <summary>I'm already on a prescription cream — hydroquinone or tretinoin. Can I combine?</summary>
+        <summary>I'm already on a prescription cream — hydroquinone or another active. Can I combine?</summary>
         <p class="a">If you're on hydroquinone or topical retinoids, please message our team on WhatsApp before ordering. The protocol is designed as a standalone regimen — combining with hydroquinone in particular requires careful staggering, and prolonged hydroquinone use carries its own risks (ochronosis) we'd rather flag before you buy.</p>
       </details>
       <details class="qa">

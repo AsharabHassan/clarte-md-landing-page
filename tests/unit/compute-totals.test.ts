@@ -13,20 +13,21 @@ describe('computeTotals', () => {
       isBundle: o.isBundle ?? false,
     }));
 
-  it('charges flat shipping on a small order', () => {
+  it('applies free shipping on a small order', () => {
     const items = sampleItems([{ price: 2100 }]);
     const r = computeTotals(items);
     expect(r.subtotal).toBe(2100);
-    expect(r.shipping).toBe(FLAT_SHIPPING_PKR);
-    expect(r.total).toBe(2100 + FLAT_SHIPPING_PKR);
+    expect(FLAT_SHIPPING_PKR).toBe(0);
+    expect(r.shipping).toBe(0);
+    expect(r.total).toBe(2100);
   });
 
-  it('still charges flat shipping on a large order (no free-ship threshold)', () => {
+  it('applies free shipping on a large order too', () => {
     const items = sampleItems([{ price: 10000 }]);
     const r = computeTotals(items);
     expect(r.subtotal).toBe(10000);
-    expect(r.shipping).toBe(FLAT_SHIPPING_PKR);
-    expect(r.total).toBe(10000 + FLAT_SHIPPING_PKR);
+    expect(r.shipping).toBe(0);
+    expect(r.total).toBe(10000);
   });
 
   it('handles multiple items with quantities', () => {

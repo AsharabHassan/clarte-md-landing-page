@@ -37,7 +37,7 @@ export default function RenewalClient() {
     { sku: 'light',  why: 'For sun-induced dark spots that resist retinol alone.' },
   ];
   const AI_PROMPT = 'Generate a photorealistic projection of this person\'s skin after 12 weeks of consistent anti-ageing treatment with a Retinol 0.3% + L-Ascorbic 15% + ceramides + Hyaluronic Acid + SPF 50 regimen. Show: softened fine lines around eyes and mouth, firmer skin tone, brighter and more even complexion, reduced sun damage, healthier skin radiance. Critical: keep identity, ethnicity, age, hair, lighting, framing, and pose IDENTICAL. Realistic clinical improvement only — no airbrushing, no excessive smoothing.';
-  const FREE_SHIP_MIN = 4000;
+  const FREE_SHIP_MIN = 0; // free shipping on all orders
 
   let bundleInCart = false;
   let crossSellCart = {};

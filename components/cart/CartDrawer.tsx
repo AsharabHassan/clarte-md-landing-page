@@ -24,7 +24,7 @@ import { cn } from '@/lib/utils';
  * Composition rules:
  *   - Items list shows human-friendly names via /api/cart/preview (same
  *     endpoint OrderSummary uses).
- *   - Shipping is flat Rs. 250 — surfaced as a fact, not a threshold,
+ *   - Shipping is free on all orders — surfaced as a fact, not a threshold,
  *     per feedback_unverified_claims.
  *   - WhatsApp concierge link in the footer (04-cart.md + 06-thank-you.md):
  *     the Bader empty-bag pattern translated to PK's WhatsApp-first market.
@@ -249,8 +249,12 @@ export function CartDrawer({
                     <dd>Rs. {preview.totals.subtotal_pkr.toLocaleString('en-PK')}</dd>
                   </div>
                   <div className="flex justify-between font-body text-sm text-ink-mute">
-                    <dt>Shipping · flat rate</dt>
-                    <dd>Rs. {preview.totals.shipping_pkr.toLocaleString('en-PK')}</dd>
+                    <dt>Shipping</dt>
+                    <dd>
+                      {preview.totals.shipping_pkr === 0
+                        ? 'FREE'
+                        : `Rs. ${preview.totals.shipping_pkr.toLocaleString('en-PK')}`}
+                    </dd>
                   </div>
                   <div className="flex justify-between border-t border-rule pt-2 font-display text-base font-medium text-navy">
                     <dt>Total</dt>

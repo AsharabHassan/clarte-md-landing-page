@@ -583,7 +583,7 @@ export default async function HomePage() {
                 <HowStep
                   num="03"
                   title="Pay on arrival"
-                  body="Cash on delivery across Pakistan. Flat Rs. 250 shipping. If anything's wrong, our team is on WhatsApp within two hours."
+                  body="Cash on delivery across Pakistan. Free shipping nationwide. If anything's wrong, our team is on WhatsApp within two hours."
                 />
               </Reveal>
             </ol>
@@ -737,7 +737,7 @@ export default async function HomePage() {
                 icon={<HandCoins className="h-6 w-6" strokeWidth={1.4} />}
                 headline="Cash"
                 unit="on delivery"
-                body="Pay the courier when your parcel arrives. Flat Rs. 250 shipping, anywhere in Pakistan."
+                body="Pay the courier when your parcel arrives. Free shipping, anywhere in Pakistan."
               />
             </Reveal>
             <Reveal>

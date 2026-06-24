@@ -44,7 +44,7 @@ export default function AcneClient() {
     { sku: 'light', why: 'For melasma or stubborn marks that resist niacinamide alone.' },
   ];
   const AI_PROMPT = 'Generate a photorealistic projection of this person\'s skin after 12 weeks of consistent acne treatment with a niacinamide 10% + azelaic + 2% BHA + SPF 50 regimen. Show: cleared active breakouts, faded post-inflammatory hyperpigmentation, smoother skin texture, healthier barrier. Critical: keep identity, ethnicity, age, hair, lighting, framing, and pose IDENTICAL. Realistic clinical improvement only — no airbrushing, no idealization beyond what a dermatologist would expect.';
-  const FREE_SHIP_MIN = 4000;
+  const FREE_SHIP_MIN = 0; // free shipping on all orders
 
   let bundleInCart = false;
   let crossSellCart = {};

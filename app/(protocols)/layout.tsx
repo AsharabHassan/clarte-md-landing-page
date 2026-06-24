@@ -14,7 +14,7 @@ import '@/components/checkout/checkout.css';
  * INSIDE the site, not as standalone landings.
  *
  * What this brings to every protocol page:
- *   - PromoBar with the "Flat Rs. 250 shipping · COD" trust strip
+ *   - PromoBar with the "Free shipping nationwide · COD" trust strip
  *   - SiteHeader nav with Protocols / Products / Ingredients / Quiz / About
  *   - Persistent CartIcon that opens the cart drawer (Phase 3b.1)
  *   - SiteFooter with newsletter, legal links, brand attribution

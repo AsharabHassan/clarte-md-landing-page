@@ -18,7 +18,7 @@ const SIGNALS: TrustSignal[] = [
   {
     icon: <Truck className="h-4 w-4" strokeWidth={1.5} />,
     label: 'Nationwide shipping',
-    body: 'Flat Rs. 250 across Pakistan. Dispatched within 24 hours.',
+    body: 'Free shipping across Pakistan. Dispatched within 24 hours.',
   },
   {
     icon: <RotateCcw className="h-4 w-4" strokeWidth={1.5} />,

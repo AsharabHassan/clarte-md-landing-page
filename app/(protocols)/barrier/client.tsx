@@ -38,7 +38,7 @@ export default function BarrierClient() {
     { sku: 'light', why: 'For sun spots or post-acne marks — once redness has fully settled.' },
   ];
   const AI_PROMPT = 'Generate a photorealistic projection of this person\'s skin after 12 weeks of consistent barrier-repair treatment with a gentle pH 5.5 cleanser + Hyaluronic Acid + ceramides + B5 + SPF 50 regimen, with NO active ingredients. Show: reduced redness and inflammation, plumper hydrated skin, calmer complexion, smaller-appearing pores from improved hydration, healthier glow. Critical: keep identity, ethnicity, age, hair, lighting, framing, and pose IDENTICAL. The goal is calmer, more hydrated, less reactive skin — not dramatic transformation.';
-  const FREE_SHIP_MIN = 4000;
+  const FREE_SHIP_MIN = 0; // free shipping on all orders
 
   let bundleInCart = false;
   let crossSellCart = {};

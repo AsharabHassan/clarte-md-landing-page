@@ -261,7 +261,7 @@ export function ProtocolHero({
               <li aria-hidden="true" className="text-white/40">&middot;</li>
               <li>Cash on delivery</li>
               <li aria-hidden="true" className="text-white/40">&middot;</li>
-              <li>Flat Rs. 250 shipping</li>
+              <li>Free shipping</li>
               <li aria-hidden="true" className="text-white/40">&middot;</li>
               <li>Made in Pakistan</li>
             </ul>

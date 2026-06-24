@@ -243,7 +243,7 @@ export function ProtocolSavings({
         <Reveal>
           <div className="mt-10 flex flex-col items-start gap-6 md:mt-12 md:flex-row md:items-center md:justify-between">
             <p className="font-display italic text-[15px] leading-relaxed text-ink-mute md:max-w-[28rem]">
-              Cash on delivery across Pakistan · flat Rs. 250 shipping · no
+              Cash on delivery across Pakistan · free shipping · no
               advance payment.
             </p>
             {bundleSlug && (
