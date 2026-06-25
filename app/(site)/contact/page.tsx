@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Eyebrow } from '@/components/ui/eyebrow';
 import { cn } from '@/lib/utils';
+import { pushLeadConversion } from '@/lib/marketing/lead-conversion';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -40,6 +41,12 @@ export default function ContactPage() {
         setErr(data.error || 'Could not send. Please try again or WhatsApp us.');
         return;
       }
+      // Google Ads "Lead — form submit" conversion (GTM generate_lead).
+      pushLeadConversion({
+        surface: 'contact',
+        email: String(fd.get('email') || ''),
+        phone: String(fd.get('phone') || ''),
+      });
       setStatus('success');
     } catch (e: unknown) {
       setStatus('error');

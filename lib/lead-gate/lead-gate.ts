@@ -20,7 +20,11 @@
  *    down, so this path is only hit on genuine network failure.)
  *  - SSR-safe: no `document`/`window` access at module load — only inside
  *    `openLeadGate`, which runs from a browser event handler.
+ *  - On a successful submit it fires a GTM `generate_lead` conversion event
+ *    (see `lib/marketing/lead-conversion.ts`) before resolving.
  */
+
+import { pushLeadConversion } from '@/lib/marketing/lead-conversion';
 
 export type LeadSurface = 'quiz' | 'acne' | 'barrier' | 'even-tone' | 'renewal';
 
@@ -192,6 +196,13 @@ export function openLeadGate(ctx: LeadGateContext): Promise<void> {
           }),
         });
         if (res.ok) {
+          // Google Ads "Lead — form submit" conversion (GTM generate_lead).
+          pushLeadConversion({
+            surface: ctx.surface,
+            email,
+            phone,
+            concern: ctx.concern,
+          });
           cleanup();
           resolve();
           return;
