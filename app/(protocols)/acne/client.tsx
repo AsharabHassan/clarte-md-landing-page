@@ -51,6 +51,7 @@ export default function AcneClient() {
   let uploadedImageBlob = null;
   let uploadedImageURL = null;
   let lastAiSessionId = null;
+  let lastSkinMap = null;
 
   function renderCrossSell() {
     const grid = document.getElementById('crossSellGrid');
@@ -237,7 +238,7 @@ export default function AcneClient() {
       const afterUrl = USE_MOCK ? await mockGenerate(uploadedImageBlob) : await realGenerate(uploadedImageBlob);
       clearInterval(tick);
       // Lead-capture gate — must submit name/email/phone before results reveal.
-      await openLeadGate({ surface: 'acne', concern: 'acne' });
+      await openLeadGate({ surface: 'acne', concern: 'acne', ai_session_id: lastAiSessionId || undefined, skin_map: lastSkinMap || undefined });
       document.getElementById('imgBefore').src = uploadedImageURL;
       document.getElementById('imgAfter').src = afterUrl;
       setupCompareSlider();
@@ -287,7 +288,7 @@ export default function AcneClient() {
     const data = await res.json();
     if (!data.image) throw new Error('No image returned by the AI.');
     if (data.ai_session_id) lastAiSessionId = data.ai_session_id;
-    if (data.skin_map) renderSkinMap(data.skin_map);
+    if (data.skin_map) { lastSkinMap = data.skin_map; renderSkinMap(data.skin_map); }
     return data.image.startsWith('data:') ? data.image : `data:image/jpeg;base64,${data.image}`;
   }
 
@@ -337,6 +338,15 @@ export default function AcneClient() {
         <p class="skin-map-warning">⚠ ${map.warnings.map(escapeHTML).join(' · ')}</p>
       ` : ''}
     `;
+
+    // On-image overlay: severity badge + primary concerns over the compare slider.
+    const compareEl = document.getElementById('compare');
+    if (compareEl) {
+      let ov = document.getElementById('skinOverlay');
+      if (!ov) { ov = document.createElement('div'); ov.id = 'skinOverlay'; ov.className = 'skin-overlay'; compareEl.appendChild(ov); }
+      const ovConcerns = (map.primary_concerns || []).slice(0, 3).map(escapeHTML).join(' · ');
+      ov.innerHTML = `${sev ? `<span class="skin-ov-badge sev-${escapeHTML(sev)}">${escapeHTML(sev)}</span>` : ''}${ovConcerns ? `<span class="skin-ov-concerns">${ovConcerns}</span>` : ''}`;
+    }
   }
 
   function escapeHTML(s) {

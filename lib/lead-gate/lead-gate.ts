@@ -28,6 +28,12 @@ export interface LeadGateContext {
   surface: LeadSurface;
   concern?: string;
   ai_session_id?: string;
+  /**
+   * The AI scan's detected-issues object (the on-screen "skin map"). Forwarded
+   * verbatim to /api/lead, which flattens it into per-issue GHL webhook fields.
+   * Optional — the quiz and the mock path have no map.
+   */
+  skin_map?: unknown;
 }
 
 const STYLE_ID = 'clg-styles';
@@ -182,6 +188,7 @@ export function openLeadGate(ctx: LeadGateContext): Promise<void> {
             surface: ctx.surface,
             concern: ctx.concern,
             ai_session_id: ctx.ai_session_id,
+            skin_map: ctx.skin_map,
           }),
         });
         if (res.ok) {

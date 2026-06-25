@@ -64,3 +64,5 @@ scripts/smoke-out/
 
 # Codex QA artifacts (generated)
 .codex-qa/
+
+.vercel

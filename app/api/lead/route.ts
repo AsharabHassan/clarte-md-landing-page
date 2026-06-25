@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { LeadSchema, buildLeadWebhookPayload } from '@/lib/validators/lead';
+import { LeadSchema, buildLeadWebhookPayload, leadWebhookEnvName } from '@/lib/validators/lead';
 import { dispatchWebhook } from '@/lib/webhooks/dispatcher';
 
 /**
@@ -26,10 +26,18 @@ export async function POST(req: NextRequest) {
     timestamp: new Date().toISOString(),
   });
 
+  // AI-scan surfaces (acne / even-tone / renewal / barrier) post to their own
+  // per-concern webhook so GHL can route straight into the matching nurture
+  // track. The quiz and anything unmapped use the generic lead webhook; we
+  // also fall back to it if a per-concern hook isn't configured yet, so no
+  // lead is ever dropped mid-rollout.
+  const webhookEnv = leadWebhookEnvName(lead.surface);
+  const url = process.env[webhookEnv] || process.env.WEBHOOK_LEAD_CAPTURED;
+
   await dispatchWebhook(
-    process.env.WEBHOOK_LEAD_CAPTURED,
+    url,
     payload as unknown as Record<string, unknown>,
-    'lead.captured',
+    `lead.captured:${lead.surface}`,
   );
 
   return NextResponse.json({ ok: true });
